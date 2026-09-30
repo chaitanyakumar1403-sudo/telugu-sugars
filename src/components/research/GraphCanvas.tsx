@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Claim, Paper, Relationship } from '../../types/content';
 import { useLanguage } from '../../context/LanguageContext';
-import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Info } from 'lucide-react';
+import { ZoomIn, ZoomOut, RotateCcw, Info } from 'lucide-react';
 
 interface GraphCanvasProps {
   claim: Claim;

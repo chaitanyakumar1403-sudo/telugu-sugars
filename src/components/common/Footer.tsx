@@ -1,6 +1,5 @@
 import React from 'react';
-import { useLanguage } from '../../context/LanguageContext';
-import { ShieldCheck, Mail, ArrowUpRight } from 'lucide-react';
+import { Mail, ArrowUpRight } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (path: string) => void;
@@ -8,7 +7,6 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) => {
-  const { t } = useLanguage();
 
   return (
     <footer className="w-full bg-[#060709] border-t border-white/10 pt-16 pb-24 lg:pb-16 text-slate-400 text-xs">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FoodLabelHotspot } from '../../types/content';
 import { useLanguage } from '../../context/LanguageContext';
-import { AlertTriangle, CheckCircle, ShieldAlert, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle, X } from 'lucide-react';
 
 interface LabelHotspotDetailProps {
   hotspot: FoodLabelHotspot | null;

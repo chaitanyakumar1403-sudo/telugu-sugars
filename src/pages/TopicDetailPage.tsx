@@ -3,7 +3,7 @@ import { getTopicBySlug, getClaims, getStories } from '../services/contentServic
 import { useLanguage } from '../context/LanguageContext';
 import ContentCard from '../components/cards/ContentCard';
 import ClaimComparison from '../components/topics/ClaimComparison';
-import { Tag, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { Tag, ArrowLeft } from 'lucide-react';
 
 interface TopicDetailPageProps {
   slug: string;
@@ -20,7 +20,6 @@ export const TopicDetailPage: React.FC<TopicDetailPageProps> = ({ slug, onNaviga
     return <div className="p-8 text-center text-white">Topic not found.</div>;
   }
 
-  const topicClaims = allClaims.filter((c) => c.topicId === topic.id);
   const title = language === 'te' ? topic.teluguTitle : topic.title;
   const description = language === 'te' ? topic.teluguDescription : topic.description;
 

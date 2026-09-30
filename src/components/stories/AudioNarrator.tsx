@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Volume2, Play, Pause, RotateCcw } from 'lucide-react';
+import { Volume2, Play, Pause } from 'lucide-react';
 
 interface AudioNarratorProps {
   audioUrl?: string;
@@ -40,7 +40,7 @@ export const AudioNarrator: React.FC<AudioNarratorProps> = ({ audioUrl, storyTit
         <button
           onClick={togglePlay}
           className="w-10 h-10 rounded-full bg-amber-400 hover:bg-amber-300 text-black flex items-center justify-center shadow-md transition-transform"
-          aria-label={isPlaying ? 'Pause audio narration' : 'Play audio narration'}
+          aria-label={isPlaying ? `Pause narration for ${storyTitle}` : `Play narration for ${storyTitle}`}
         >
           {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
         </button>

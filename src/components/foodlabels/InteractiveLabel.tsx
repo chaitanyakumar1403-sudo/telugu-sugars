@@ -1,6 +1,5 @@
 import React from 'react';
 import { FoodLabelGuide, FoodLabelHotspot } from '../../types/content';
-import { Sparkles, AlertCircle } from 'lucide-react';
 
 interface InteractiveLabelProps {
   guide: FoodLabelGuide;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TranscriptSegment } from '../../types/content';
 import { useLanguage } from '../../context/LanguageContext';
-import { FileText, MessageSquareQuote } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
 interface InteractiveTranscriptProps {
   transcript: TranscriptSegment[];

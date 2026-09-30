@@ -15,8 +15,14 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 });
 
+// Mock window.scrollTo for JSDOM
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: () => {},
+});
+
 // Mock HTMLCanvasElement.prototype.getContext for JSDOM
-HTMLCanvasElement.prototype.getContext = () => ({
+HTMLCanvasElement.prototype.getContext = (() => ({
   clearRect: () => {},
   beginPath: () => {},
   arc: () => {},
@@ -26,4 +32,4 @@ HTMLCanvasElement.prototype.getContext = () => ({
   lineTo: () => {},
   fillText: () => {},
   measureText: () => ({ width: 0 }),
-} as unknown as RenderingContext);
+})) as unknown as typeof HTMLCanvasElement.prototype.getContext;

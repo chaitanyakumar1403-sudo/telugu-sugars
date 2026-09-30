@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Check, X, ShieldAlert, Sparkles } from 'lucide-react';
+import { Mail, Check, X, Sparkles } from 'lucide-react';
 
 interface NewsletterModalProps {
   isOpen: boolean;

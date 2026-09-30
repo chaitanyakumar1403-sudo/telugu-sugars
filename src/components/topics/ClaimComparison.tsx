@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Claim } from '../../types/content';
 import { useLanguage } from '../../context/LanguageContext';
-import { CheckCircle2, AlertTriangle, HelpCircle, ArrowRightLeft, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, HelpCircle, ArrowRightLeft } from 'lucide-react';
 
 interface ClaimComparisonProps {
   claims: Claim[];

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { FoodLabelGuide, FoodLabelHotspot } from '../types/content';
+import { FoodLabelHotspot } from '../types/content';
 import { getFoodLabelGuides } from '../services/contentService';
-import { useLanguage } from '../context/LanguageContext';
 import InteractiveLabel from '../components/foodlabels/InteractiveLabel';
 import LabelHotspotDetail from '../components/foodlabels/LabelHotspotDetail';
-import { Sparkles, ShieldCheck, Eye, HelpCircle } from 'lucide-react';
+import { Sparkles, ShieldCheck, Eye } from 'lucide-react';
 
 export const FoodLabelsPage: React.FC = () => {
-  const { language } = useLanguage();
   const guides = getFoodLabelGuides();
   const currentGuide = guides[0];
 

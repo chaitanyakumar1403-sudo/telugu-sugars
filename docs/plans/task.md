@@ -11,6 +11,6 @@
 | [x] | Task 7: Video Episode Hub & Live Transcript | Synchronized video player, interactive chapters, live transcript highlighting, and cited DOIs |
 | [x] | Task 8: Story Reader & Glossary Popovers | Longform editorial reader, font scaling (A-/A+), audio narration mode, and Telugu popovers |
 | [x] | Task 9: Topic Hubs & Claim Comparison Matrix | Curated topic pathways and side-by-side claim comparison engine |
-| [/] | Task 10: Global Universal Search Engine | Cmd+K modal, instant suggestions, categorized live results, and no-results recovery |
-| [ ] | Task 11: Editorial Standards & Privacy Consent | Conflict of interest policies, peer review roster, newsletter flow, and zero-cookie tracking banner |
-| [ ] | Task 12: Production Routing & Build Verification | Full routing integration, clipboard deep-linking, cross-device polish, test suite, and vite build |
+| [x] | Task 10: Global Universal Search Engine | Cmd+K modal, instant suggestions, categorized live results, and no-results recovery |
+| [x] | Task 11: Editorial Standards & Privacy Consent | Conflict of interest policies, peer review roster, newsletter flow, and zero-cookie tracking banner |
+| [/] | Task 12: Production Routing & Build Verification | Full routing integration, clipboard deep-linking, cross-device polish, test suite, and vite build |

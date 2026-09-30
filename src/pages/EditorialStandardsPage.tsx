@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, UserCheck, AlertTriangle, FileText, CheckCircle2, History } from 'lucide-react';
+import { ShieldCheck, UserCheck, AlertTriangle, CheckCircle2, History } from 'lucide-react';
 
 export const EditorialStandardsPage: React.FC = () => {
   return (

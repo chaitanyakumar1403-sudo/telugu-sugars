@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GlossaryTerm } from '../../types/content';
 import { useLanguage } from '../../context/LanguageContext';
-import { BookOpen, X, Volume2 } from 'lucide-react';
+import { X } from 'lucide-react';
 
 interface GlossaryPopoverProps {
   term: GlossaryTerm;

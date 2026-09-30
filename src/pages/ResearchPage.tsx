@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Claim, Paper, Relationship } from '../types/content';
+import { Paper } from '../types/content';
 import { getClaims, getPapers, getRelationships } from '../services/contentService';
 import { useLanguage } from '../context/LanguageContext';
 import GraphCanvas from '../components/research/GraphCanvas';
 import GraphFilters from '../components/research/GraphFilters';
 import AccessibleListView from '../components/research/AccessibleListView';
 import PaperDrawer from '../components/research/PaperDrawer';
-import { Compass, BookCheck, ShieldAlert, FileText, ChevronRight } from 'lucide-react';
+import { Compass, ShieldAlert, ChevronRight } from 'lucide-react';
 
 export const ResearchPage: React.FC = () => {
   const { language } = useLanguage();
