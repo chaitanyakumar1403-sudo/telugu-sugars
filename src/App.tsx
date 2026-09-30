@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import Header from './components/common/Header';
 import MobileBottomNav from './components/common/MobileBottomNav';
@@ -18,7 +18,7 @@ import ResearchPage from './pages/ResearchPage';
 import FoodLabelsPage from './pages/FoodLabelsPage';
 import EditorialStandardsPage from './pages/EditorialStandardsPage';
 
-export function AppContent(): React.JSX.Element {
+export function AppContent() {
   const [currentPath, setCurrentPath] = useState<string>('/');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
@@ -159,10 +159,12 @@ export function AppContent(): React.JSX.Element {
   );
 }
 
-export default function App(): React.JSX.Element {
+export function App() {
   return (
     <LanguageProvider>
       <AppContent />
     </LanguageProvider>
   );
 }
+
+export default App;
