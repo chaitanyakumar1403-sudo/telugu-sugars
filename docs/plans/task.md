@@ -13,4 +13,4 @@
 | [x] | Task 9: Topic Hubs & Claim Comparison Matrix | Curated topic pathways and side-by-side claim comparison engine |
 | [x] | Task 10: Global Universal Search Engine | Cmd+K modal, instant suggestions, categorized live results, and no-results recovery |
 | [x] | Task 11: Editorial Standards & Privacy Consent | Conflict of interest policies, peer review roster, newsletter flow, and zero-cookie tracking banner |
-| [/] | Task 12: Production Routing & Build Verification | Full routing integration, clipboard deep-linking, cross-device polish, test suite, and vite build |
+| [x] | Task 12: Production Routing & Build Verification | Full routing integration, clipboard deep-linking, cross-device polish, test suite, and vite build |
