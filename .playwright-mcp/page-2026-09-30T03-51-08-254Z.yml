@@ -1,0 +1,128 @@
+- generic [ref=e3]:
+  - link "Skip to main content" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - button "Telugu Sugars Home" [ref=e7] [cursor=pointer]:
+        - generic [ref=e8]: TS
+        - generic [ref=e9]:
+          - generic [ref=e358]: TELUGU SUGARS
+          - generic [ref=e359]: తెలుగు సుగర్స్ • ఎవిడెన్స్ జర్నల్
+      - generic [ref=e33]:
+        - button "Search articles, studies, food labels" [ref=e34] [cursor=pointer]
+        - button "Switch to Telugu" [ref=e38] [cursor=pointer]: తెలుగు
+  - main [ref=e42]:
+    - generic [ref=e500]:
+      - generic [ref=e501]:
+        - generic [ref=e502]: Interactive Consumer Defense Tool
+        - heading "Interactive Food Label Walkthrough" [level=1] [ref=e506]
+        - paragraph [ref=e507]: Click the numbered pulsating hotspots on the mock packaged food label below to discover how modern food processors hide high-glycemic sugars behind traditional health claims.
+      - generic [ref=e508]:
+        - generic [ref=e509]:
+          - generic [ref=e510]: Tap numbered pins on label to inspect
+          - generic [ref=e514]:
+            - generic [ref=e515]:
+              - generic [ref=e516]:
+                - generic [ref=e517]: Supermarket Brand Specimen
+                - generic [ref=e518]: 100% Traditional
+              - heading "Heritage Ragi & Jaggery Cookies" [level=3] [ref=e519]
+              - paragraph [ref=e520]: "\"Crafted with pure Anakapalle Jaggery & Ancient Ragi Millets\""
+            - generic [ref=e521]:
+              - heading "Nutrition Facts" [level=4] [ref=e522]
+              - generic [ref=e523]:
+                - generic [ref=e524]: "Serving Size: 1 cookie (12g)"
+                - generic [ref=e525]: "Servings Per Pack: ~10"
+            - generic [ref=e526]:
+              - generic [ref=e527]:
+                - generic [ref=e528]: Amount Per Serving
+                - generic [ref=e529]: Calories 48
+              - generic [ref=e530]: "Per 100g: 400 kcal"
+            - generic [ref=e531]:
+              - generic [ref=e532]:
+                - generic [ref=e533]: Total Fat 2.2g
+                - generic [ref=e534]: 3% DV
+              - generic [ref=e535]:
+                - generic [ref=e536]: Saturated Fat 0.8g
+                - generic [ref=e537]: 4% DV
+              - generic [ref=e538]:
+                - generic [ref=e539]: Total Carbohydrate 9.8g
+                - generic [ref=e540]: 4% DV
+              - generic [ref=e541]:
+                - generic [ref=e542]: Dietary Fiber 0.6g
+                - generic [ref=e543]: 2% DV
+              - generic [ref=e544]:
+                - generic [ref=e545]: Total Sugars 3.4g
+                - generic [ref=e546]: "--"
+              - generic [ref=e547]:
+                - generic [ref=e548]: Includes 3.4g Added Sugars
+                - generic [ref=e549]: 7% DV
+              - generic [ref=e550]:
+                - generic [ref=e551]: Protein 0.8g
+                - generic [ref=e552]: "--"
+            - generic [ref=e553]:
+              - strong [ref=e554]: "INGREDIENTS:"
+              - text: Finger Millet Flour (Ragi 26%), Refined Wheat Flour (Maida), Unrefined Jaggery (20%), Edible Vegetable Oil (Palm), Maltodextrin (14%), Liquid Invert Syrup (8%), Raising Agents (INS 500ii), Added Identical Flavorings.
+            - 'button "Inspect hotspot: Serving Size Gimmick" [ref=e555] [cursor=pointer]': "1"
+            - 'button "Inspect hotspot: Hidden Maltodextrin Loophole" [ref=e556] [cursor=pointer]': "2"
+            - 'button "Inspect hotspot: \"100% Traditional\" Front Stamp" [ref=e557] [cursor=pointer]': "3"
+        - generic [ref=e558]:
+          - generic [ref=e559]:
+            - generic [ref=e560]:
+              - generic [ref=e561]:
+                - generic [ref=e562]: "!"
+                - generic [ref=e563]:
+                  - text: Label Investigation Hotspot
+                  - heading "Hidden Maltodextrin Loophole" [level=4] [ref=e564]
+              - button "Close hotspot detail" [ref=e565] [cursor=pointer]
+            - generic [ref=e569]:
+              - text: "What the Packaging Claims:"
+              - generic [ref=e570]: "\"\"Zero Refined White Cane Sugar\"\""
+            - generic [ref=e571]:
+              - generic [ref=e572]: "How Brands Disguise Added Sugars:"
+              - paragraph [ref=e576]: Replaced cane sugar with maltodextrin (GI ~130), causing a faster and higher blood sugar spike than regular glucose.
+            - generic [ref=e577]:
+              - generic [ref=e578]: "Telugu Sugars Buyer Checklist:"
+              - paragraph [ref=e583]: "Check ingredient order: items listed 1st, 2nd, and 3rd make up over 70% of the entire product weight."
+          - generic [ref=e584]:
+            - heading "Common Sugar Aliases Found in Telugu Supermarkets" [level=4] [ref=e585]
+            - generic [ref=e590]:
+              - generic [ref=e591]: MaltodextrinStarch derivative • GI ~130
+              - generic [ref=e592]: Invert SugarCleaved liquid sucrose • GI ~65
+              - generic [ref=e593]: Dextrose / Corn SyrupPure glucose syrup • GI ~100
+              - generic [ref=e594]: Date / Rice SyrupConcentrated free sugar • GI ~80
+  - contentinfo [ref=e287]:
+    - generic [ref=e288]:
+      - generic [ref=e289]:
+        - generic [ref=e290]:
+          - generic [ref=e291]:
+            - generic [ref=e292]: TS
+            - generic [ref=e293]:
+              - generic [ref=e388]: TELUGU SUGARS
+              - generic [ref=e389]: తెలుగు సుగర్స్ • ఎవిడెన్స్ జర్నల్
+          - paragraph [ref=e294]: An independent, evidence-first digital publication and interactive research platform investigating dietary sugars, sweeteners, and metabolic truth across Andhra Pradesh, Telangana, and the global Telugu diaspora.
+          - button "Subscribe to Monthly Evidence Dispatch" [ref=e295] [cursor=pointer]
+        - generic [ref=e299]:
+          - heading "Investigations & Tools" [level=4] [ref=e300]
+          - generic [ref=e301]:
+            - button "/stories — All Investigations" [ref=e302] [cursor=pointer]
+            - button "/watch — Video Episodes & Transcripts" [ref=e303] [cursor=pointer]
+            - button "/research — Connected Papers Graph" [ref=e304] [cursor=pointer]
+            - button "/food-labels — Interactive Label Walkthrough" [ref=e305] [cursor=pointer]
+            - button "/topics — Curated Metabolic Pathways" [ref=e306] [cursor=pointer]
+        - generic [ref=e307]:
+          - heading "Editorial Standards" [level=4] [ref=e308]
+          - generic [ref=e309]:
+            - button "/about/editorial-standards" [ref=e310] [cursor=pointer]
+            - paragraph [ref=e314]: Telugu Sugars operates under strict conflict-of-interest firewalls. We accept zero financial contributions, sponsored content, or review products from food, beverage, or sweetener corporations.
+      - generic [ref=e315]:
+        - paragraph [ref=e316]:
+          - strong [ref=e317]: "Medical Disclaimer:"
+          - text: Telugu Sugars is an investigative science publication, not a clinical healthcare provider. Content is for educational, journalistic, and public interest purposes and must never replace personalized consultation with a licensed endocrinologist or certified physician.
+        - generic [ref=e318]: © 2026 Telugu Sugars. All Rights Reserved.
+  - navigation "Mobile Bottom Navigation" [ref=e319]:
+    - generic [ref=e320]:
+      - button "Home" [ref=e321] [cursor=pointer]
+      - button "Stories" [ref=e326] [cursor=pointer]
+      - button "Watch" [ref=e330] [cursor=pointer]
+      - button "Research Graph" [ref=e334] [cursor=pointer]
+      - button "Food Labels" [active] [ref=e339] [cursor=pointer]

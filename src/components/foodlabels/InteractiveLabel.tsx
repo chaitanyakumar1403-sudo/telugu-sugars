@@ -13,7 +13,7 @@ export const InteractiveLabel: React.FC<InteractiveLabelProps> = ({
   onSelectHotspot,
 }) => {
   return (
-    <div className="relative w-full max-w-md mx-auto bg-[#faf8f5] text-black font-sans rounded-2xl p-6 sm:p-8 shadow-2xl border-4 border-black select-none">
+    <div className="relative w-full max-w-md mx-auto mock-label-paper rounded-2xl p-6 sm:p-8 shadow-2xl border-4 border-black select-none">
       {/* Front of Pack Marketing Teaser Stamp */}
       <div className="border-b-8 border-black pb-4 mb-4">
         <div className="flex items-center justify-between text-xs font-bold tracking-widest uppercase mb-1">
