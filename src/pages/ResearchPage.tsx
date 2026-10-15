@@ -47,26 +47,26 @@ export const ResearchPage: React.FC = () => {
     : null;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl flex flex-col gap-8 pb-24">
+    <div className="container flex flex-col gap-8 pb-24 pt-12 sm:pt-16">
       {/* Header & Page Title */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+      <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 border-b border-white/10 pb-8">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 text-teal-300 text-xs font-bold uppercase tracking-wider mb-2 border border-teal-500/30">
             <Compass className="w-3.5 h-3.5" />
-            <span>Research Explorer (Connected Papers Engine)</span>
+            <span>Research explorer</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white">
+          <h1 className="font-display text-4xl sm:text-5xl font-extrabold leading-[1.05] text-white">
             Interactive Evidence Network
           </h1>
-          <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Trace health claims to primary clinical evidence. Visual proximity serves as a navigation aid to explore peer-reviewed studies without sensational verdicts.
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-400">
+            Trace each health claim back to the studies behind it — what supports it, what challenges it, and what only adds context.
           </p>
         </div>
 
         {/* Claim Selector Dropdown */}
         <div className="flex flex-col gap-1 w-full sm:w-auto">
           <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-            Select Active Claim:
+            Claim
           </label>
           <select
             value={selectedClaimId}
@@ -75,12 +75,12 @@ export const ResearchPage: React.FC = () => {
               setSelectedPaper(null);
               setIsDrawerOpen(false);
             }}
-            className="bg-[#12151c] border border-amber-500/40 text-amber-300 font-semibold rounded-xl px-4 py-2.5 text-xs focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-[#101216] px-4 py-2.5 text-sm font-medium text-white focus:border-amber-400/60 focus:outline-none lg:w-96"
             aria-label="Select claim to explore"
           >
             {claims.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.claimId.replace('claim-', '').replace(/-/g, ' ').toUpperCase()}: {c.claimText.slice(0, 48)}...
+                {c.claimText.length > 60 ? c.claimText.slice(0, 59) + "…" : c.claimText}
               </option>
             ))}
           </select>
@@ -92,7 +92,7 @@ export const ResearchPage: React.FC = () => {
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              Center Claim Node:
+              Claim under review
             </span>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
@@ -150,7 +150,7 @@ export const ResearchPage: React.FC = () => {
           {/* Mobile-Friendly Study Carousel (PDF Section 7 requirement) */}
           <div className="md:hidden flex flex-col gap-3">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              Swipeable Studies for This Claim:
+              Studies for this claim
             </span>
             <div className="flex gap-3 overflow-x-auto pb-2 snap-x">
               {filteredPapers.map((paper) => {
@@ -174,7 +174,7 @@ export const ResearchPage: React.FC = () => {
                       </p>
                     </div>
                     <button className="mt-3 text-xs text-amber-400 font-bold flex items-center gap-1">
-                      <span>View Full Paper Dossier</span>
+                      <span>Open study</span>
                       <ChevronRight className="w-3.5 h-3.5" />
                     </button>
                   </div>

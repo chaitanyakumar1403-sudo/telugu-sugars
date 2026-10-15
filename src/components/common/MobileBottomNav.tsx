@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Home, Film, Compass, Sparkles, BookOpen } from 'lucide-react';
+import { Home, Film, Compass, Sparkles, Leaf } from 'lucide-react';
 
 interface MobileBottomNavProps {
   activePath: string;
@@ -12,9 +12,9 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activePath, on
 
   const navTabs = [
     { path: '/', label: 'Home', icon: Home },
-    { path: '/stories', labelKey: 'nav_stories', icon: BookOpen },
+    { path: '/atlas', label: 'Atlas', icon: Leaf },
     { path: '/watch', labelKey: 'nav_watch', icon: Film },
-    { path: '/research', labelKey: 'nav_research', icon: Compass },
+    { path: '/research', label: 'Research', icon: Compass },
     { path: '/food-labels', labelKey: 'nav_food_labels', icon: Sparkles },
   ];
 

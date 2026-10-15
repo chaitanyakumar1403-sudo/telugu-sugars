@@ -15,6 +15,6 @@ describe('Interactive Food Label Walkthrough', () => {
     expect(hotspot).toBeInTheDocument();
     fireEvent.click(hotspot);
 
-    expect(screen.getByText(/How Brands Disguise Added Sugars/i)).toBeInTheDocument();
+    expect(screen.getByText(/What is really going on/i)).toBeInTheDocument();
   });
 });

@@ -15,6 +15,7 @@ const TRANSLATIONS: Record<string, { en: string; te: string }> = {
   nav_research: { en: 'Research Graph', te: 'పరిశోధన గ్రాఫ్' },
   nav_food_labels: { en: 'Food Labels', te: 'ఫుడ్ లేబుల్స్' },
   nav_standards: { en: 'Standards', te: 'ప్రమాణాలు' },
+  nav_atlas: { en: 'Ingredient Atlas', te: 'పదార్థాల అట్లాస్' },
   search_placeholder: { en: 'Search articles, studies, food labels...', te: 'వ్యాసాలు, పరిశోధనలు, ఫుడ్ లేబుల్స్ శోధించండి...' },
   switch_to_telugu: { en: 'తెలుగు', te: 'English' },
   cta_explore: { en: 'Explore the Latest', te: 'తాజా పరిశోధనలను చూడండి' },

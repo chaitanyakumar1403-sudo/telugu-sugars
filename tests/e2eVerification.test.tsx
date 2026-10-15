@@ -17,7 +17,7 @@ describe('Full Application Production Flow', () => {
     // 3. Navigate to Food Labels
     const labelLinks = screen.getAllByRole('button', { name: /food labels|లేబుల్స్/i });
     fireEvent.click(labelLinks[0]);
-    expect(screen.getByText(/Interactive Food Label Walkthrough/i)).toBeInTheDocument();
+    expect(screen.getByText(/Read the Label/i)).toBeInTheDocument();
 
     // 4. Navigate to Watch
     const watchLinks = screen.getAllByRole('button', { name: /watch|వీడియోలు/i });

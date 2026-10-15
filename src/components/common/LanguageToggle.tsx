@@ -16,7 +16,7 @@ export const LanguageToggle: React.FC<{ className?: string }> = ({ className = '
       aria-label={language === 'en' ? 'Switch to Telugu' : 'Switch to English'}
       title={language === 'en' ? 'తెలుగులోకి మార్చండి' : 'Switch to English'}
     >
-      <Globe className="w-3.5 h-3.5 text-amber-400" />
+      <Globe className="hidden w-3.5 h-3.5 text-amber-400 sm:block" />
       <span>{language === 'en' ? 'తెలుగు' : 'English'}</span>
     </button>
   );

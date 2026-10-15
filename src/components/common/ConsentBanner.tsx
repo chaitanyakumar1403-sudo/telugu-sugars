@@ -25,14 +25,14 @@ export const ConsentBanner: React.FC = () => {
 
   return (
     <aside
-      className="fixed bottom-16 lg:bottom-4 left-4 right-4 sm:left-auto sm:right-4 z-40 max-w-md p-5 rounded-2xl bg-[#0e1218]/95 backdrop-blur-xl border border-amber-500/30 shadow-2xl text-xs text-slate-300 flex flex-col gap-3"
+      className="fixed bottom-20 lg:bottom-5 left-4 right-4 sm:left-auto sm:right-5 z-40 sm:max-w-sm p-4 rounded-2xl bg-[#0e1014]/95 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/60 text-xs text-slate-300 flex flex-col gap-3"
       role="region"
       aria-label="Privacy and analytics consent"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2 text-white font-bold text-sm">
           <ShieldCheck className="w-4 h-4 text-teal-400" />
-          <span>Privacy & Editorial Ethics</span>
+          <span>Your privacy</span>
         </div>
         <button
           onClick={handleDecline}
@@ -44,7 +44,7 @@ export const ConsentBanner: React.FC = () => {
       </div>
 
       <p className="leading-relaxed">
-        Telugu Sugars is 100% reader-first. We collect zero third-party advertising trackers and never sell your reading habits or health interests. We use privacy-conscious analytics only to improve content clarity.
+        No ad trackers, ever. We only use privacy-friendly analytics to improve our reporting.
       </p>
 
       <div className="flex items-center justify-end gap-2 pt-1">
@@ -52,13 +52,13 @@ export const ConsentBanner: React.FC = () => {
           onClick={handleDecline}
           className="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium"
         >
-          Essential Only
+          Essential only
         </button>
         <button
           onClick={handleAccept}
-          className="px-4 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-black font-bold shadow-md transition-colors"
+          className="px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-bold shadow-md transition-colors"
         >
-          Accept Preferences
+          Accept preferences
         </button>
       </div>
     </aside>

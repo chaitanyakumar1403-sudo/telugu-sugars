@@ -27,7 +27,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
   // Center node coordinate
   const centerX = 360;
   const centerY = 240;
-  const radius = 170;
+  const radius = 165;
 
   // Compute radial positions for satellite paper nodes
   const nodePositions = papers.map((paper, idx) => {
@@ -168,39 +168,15 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
 
         {/* Center Node: Claim */}
         <g className="cursor-default select-none">
-          <circle cx={centerX} cy={centerY} r={64} fill="#14181f" stroke="#d4a359" strokeWidth="2.5" />
-          <circle cx={centerX} cy={centerY} r={80} fill="url(#centerGlow)" pointerEvents="none" />
-          <text
-            x={centerX}
-            y={centerY - 12}
-            textAnchor="middle"
-            fill="#d4a359"
-            fontSize="10"
-            fontWeight="bold"
-            letterSpacing="0.08em"
-          >
-            CLAIM AT CENTER
-          </text>
-          <text
-            x={centerX}
-            y={centerY + 6}
-            textAnchor="middle"
-            fill="#ffffff"
-            fontSize="11"
-            fontWeight="600"
-            width="100"
-          >
-            {claimText.length > 36 ? `${claimText.slice(0, 36)}...` : claimText}
-          </text>
-          <text
-            x={centerX}
-            y={centerY + 22}
-            textAnchor="middle"
-            fill="#94a3b8"
-            fontSize="9"
-          >
-            Grade: {claim.evidenceGrade}
-          </text>
+          <circle cx={centerX} cy={centerY} r={96} fill="url(#centerGlow)" pointerEvents="none" />
+          <circle cx={centerX} cy={centerY} r={78} fill="#12151b" stroke="#d4a359" strokeWidth="2" />
+          <foreignObject x={centerX - 62} y={centerY - 52} width={124} height={104}>
+            <div className="flex h-full flex-col items-center justify-center text-center">
+              <span className="font-mono text-[8px] font-bold uppercase tracking-[0.16em] text-amber-400">Claim</span>
+              <span className="mt-1 line-clamp-3 text-[10.5px] font-semibold leading-snug text-white">{claimText}</span>
+              <span className="mt-1 text-[8.5px] text-slate-400">Grade: {claim.evidenceGrade}</span>
+            </div>
+          </foreignObject>
         </g>
 
         {/* Satellite Paper Nodes */}
@@ -228,32 +204,21 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
               <circle
                 cx={x}
                 cy={y}
-                r={isSelected ? 30 : 25}
+                r={isSelected ? 28 : 24}
                 fill="#10141a"
                 stroke={color}
-                strokeWidth={isSelected ? 3.5 : 2}
-                className="transition-all duration-200 group-hover:scale-110"
+                strokeWidth={isSelected ? 3 : 2}
+                style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                className="transition-transform duration-200 group-hover:scale-110"
               />
-              <text
-                x={x}
-                y={y - 2}
-                textAnchor="middle"
-                fill="#f8fafc"
-                fontSize="10"
-                fontWeight="bold"
-              >
+              <text x={x} y={y + 4} textAnchor="middle" fill="#f8fafc" fontSize="11" fontWeight="700">
                 {paper.year}
               </text>
-              <text
-                x={x}
-                y={y + 11}
-                textAnchor="middle"
-                fill={color}
-                fontSize="8"
-                fontWeight="600"
-                className="uppercase"
-              >
-                {rel?.relationshipType || 'Paper'}
+              <text x={x} y={y < centerY - 20 ? y - 50 : y + 42} textAnchor="middle" fill={color} fontSize="8.5" fontWeight="700" letterSpacing="0.1em">
+                {(rel?.relationshipType || "paper").toUpperCase()}
+              </text>
+              <text x={x} y={y < centerY - 20 ? y - 37 : y + 55} textAnchor="middle" fill="#94a3b8" fontSize="9">
+                {paper.title.length > 34 ? paper.title.slice(0, 33) + "…" : paper.title}
               </text>
             </g>
           );

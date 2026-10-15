@@ -11,7 +11,7 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const stories = getStories();
   const claims = getClaims();
   const papers = getPapers();
@@ -20,9 +20,50 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const heroVideoStory = stories.find((s) => s.type === 'Video') || stories[0];
 
   return (
-    <div className="w-full flex flex-col gap-20 pb-20">
+    <div className="w-full flex flex-col gap-24 pb-24">
       {/* Hero Section */}
       <HomeHero onNavigate={onNavigate} />
+
+      {/* Ingredient Atlas feature */}
+      <section className="container" aria-label="Ingredient Atlas">
+        <button
+          onClick={() => onNavigate('/atlas')}
+          className="group relative grid w-full grid-cols-1 items-center gap-10 overflow-hidden rounded-3xl border border-amber-500/25 bg-gradient-to-br from-[#16130f] via-[#0e0f12] to-[#08090b] p-8 text-left transition-colors hover:border-amber-400/50 sm:p-12 lg:grid-cols-2"
+        >
+          <div className="flex flex-col gap-4">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400">Interactive · New</span>
+            <h2 className="font-display text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl">
+              {t('nav_atlas')}
+            </h2>
+            <p className="max-w-md text-base leading-relaxed text-slate-300">
+              Check ingredients and additives for infants, youth, adults and elders — and see exactly how each one
+              connects to health concerns.
+            </p>
+            <span className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-bold text-black transition group-hover:bg-amber-300">
+              Open the Atlas
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </div>
+
+          {/* Miniature of the atlas relationship map */}
+          <svg viewBox="0 0 400 260" className="h-auto w-full max-w-lg justify-self-center" aria-hidden="true">
+            <g stroke="rgba(255,255,255,0.12)" strokeWidth="1.2">
+              <line x1="200" y1="130" x2="90" y2="60" /><line x1="200" y1="130" x2="70" y2="170" />
+              <line x1="200" y1="130" x2="150" y2="225" /><line x1="200" y1="130" x2="300" y2="50" />
+              <line x1="200" y1="130" x2="330" y2="150" /><line x1="200" y1="130" x2="260" y2="225" />
+              <line x1="300" y1="50" x2="370" y2="90" /><line x1="90" y1="60" x2="40" y2="100" />
+              <line x1="330" y1="150" x2="370" y2="90" /><line x1="70" y1="170" x2="40" y2="100" />
+            </g>
+            <circle cx="200" cy="130" r="22" fill="#CDB8A8" />
+            {[[90, 60], [70, 170], [300, 50], [330, 150]].map(([x, y]) => (
+              <circle key={`i${x}`} cx={x} cy={y} r="11" fill="#FF922B" />
+            ))}
+            {[[150, 225], [260, 225], [370, 90], [40, 100]].map(([x, y]) => (
+              <circle key={`d${x}`} cx={x} cy={y} r="8" fill="#FFD166" />
+            ))}
+          </svg>
+        </button>
+      </section>
 
       {/* Featured Video Episode Banner (PDF Section 5) */}
       <section className="container mx-auto px-4" aria-label="Featured Investigation Episode">
@@ -48,7 +89,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               {heroVideoStory.chapters && (
                 <div className="flex flex-col gap-2 pt-2">
                   <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                    Interactive Chapters:
+                    Interactive Chapters
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {heroVideoStory.chapters.slice(0, 3).map((ch, idx) => (
@@ -187,7 +228,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
           <div className="w-full md:w-72 bg-black/60 border border-amber-500/40 rounded-xl p-5 font-mono text-xs shadow-xl">
             <div className="text-amber-400 font-bold border-b border-white/10 pb-2 mb-3">
-              Nutrition Facts (Mock Label)
+              Nutrition Facts
             </div>
             <div className="flex justify-between py-1 border-b border-white/5 text-slate-300">
               <span>Serving Size</span>

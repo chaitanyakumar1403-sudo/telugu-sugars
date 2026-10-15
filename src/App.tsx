@@ -17,6 +17,7 @@ import TopicDetailPage from './pages/TopicDetailPage';
 import ResearchPage from './pages/ResearchPage';
 import FoodLabelsPage from './pages/FoodLabelsPage';
 import EditorialStandardsPage from './pages/EditorialStandardsPage';
+import AtlasPage from './pages/AtlasPage';
 
 export function AppContent() {
   const [currentPath, setCurrentPath] = useState<string>('/');
@@ -101,6 +102,10 @@ export function AppContent() {
 
     if (currentPath.startsWith('/food-labels')) {
       return <FoodLabelsPage />;
+    }
+
+    if (currentPath === '/atlas') {
+      return <AtlasPage />;
     }
 
     if (currentPath === '/about/editorial-standards') {

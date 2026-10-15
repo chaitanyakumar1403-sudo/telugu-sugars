@@ -21,7 +21,7 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
   return (
     <div
       data-testid="hotspot-detail-card"
-      className="glass-card p-6 rounded-2xl border-amber-500/50 shadow-2xl flex flex-col gap-4 bg-[#12151b]"
+      className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-[#0e1014] p-6 shadow-2xl shadow-black/40 sm:p-7"
     >
       <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
@@ -30,9 +30,9 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
           </div>
           <div>
             <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block">
-              Label Investigation Hotspot
+              Label hotspot
             </span>
-            <h4 className="text-lg font-bold text-white leading-tight">
+            <h4 className="font-display text-xl font-extrabold text-white leading-tight">
               {title}
             </h4>
           </div>
@@ -50,10 +50,10 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
       {/* Claimed Marketing */}
       <div className="bg-black/40 rounded-xl p-3.5 border border-white/5">
         <span className="text-xs font-semibold text-slate-400 block mb-1">
-          What the Packaging Claims:
+          What the pack claims
         </span>
         <div className="text-sm font-bold text-amber-300 italic">
-          "{hotspot.claimedMarketing}"
+          {hotspot.claimedMarketing}
         </div>
       </div>
 
@@ -61,9 +61,9 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
       <div className="flex flex-col gap-1.5">
         <div className="text-xs font-bold text-rose-400 flex items-center gap-1.5 uppercase tracking-wider">
           <AlertTriangle className="w-4 h-4" />
-          <span>How Brands Disguise Added Sugars:</span>
+          <span>What is really going on</span>
         </div>
-        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed bg-rose-500/10 border-l-2 border-rose-500 p-3 rounded-r-lg">
+        <p className="text-sm text-slate-200 leading-relaxed bg-rose-500/10 border-l-2 border-rose-500 p-3 rounded-r-lg">
           {hotspot.scientificReality}
         </p>
       </div>
@@ -72,9 +72,9 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
       <div className="flex flex-col gap-1.5 pt-1">
         <div className="text-xs font-bold text-teal-400 flex items-center gap-1.5 uppercase tracking-wider">
           <CheckCircle className="w-4 h-4" />
-          <span>Telugu Sugars Buyer Checklist:</span>
+          <span>Buyer checklist</span>
         </div>
-        <p className="text-xs text-slate-300 leading-relaxed bg-teal-500/10 border-l-2 border-teal-500 p-3 rounded-r-lg">
+        <p className="text-sm text-slate-200 leading-relaxed bg-teal-500/10 border-l-2 border-teal-500 p-3 rounded-r-lg">
           {hotspot.consumerAdvice}
         </p>
       </div>

@@ -51,31 +51,31 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
                 onClick={() => onNavigate('/stories')}
                 className="text-left hover:text-amber-400 transition-colors"
               >
-                /stories — All Investigations
+                All Investigations
               </button>
               <button
                 onClick={() => onNavigate('/watch')}
                 className="text-left hover:text-amber-400 transition-colors"
               >
-                /watch — Video Episodes & Transcripts
+                Video Episodes & Transcripts
               </button>
               <button
                 onClick={() => onNavigate('/research')}
                 className="text-left hover:text-amber-400 transition-colors"
               >
-                /research — Connected Papers Graph
+                Research Graph
               </button>
               <button
                 onClick={() => onNavigate('/food-labels')}
                 className="text-left hover:text-amber-400 transition-colors"
               >
-                /food-labels — Interactive Label Walkthrough
+                Food Label Walkthrough
               </button>
               <button
                 onClick={() => onNavigate('/topics')}
                 className="text-left hover:text-amber-400 transition-colors"
               >
-                /topics — Curated Metabolic Pathways
+                Metabolic Topics
               </button>
             </div>
           </div>
@@ -90,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
                 onClick={() => onNavigate('/about/editorial-standards')}
                 className="text-left hover:text-amber-400 transition-colors flex items-center gap-1"
               >
-                <span>/about/editorial-standards</span>
+                <span>Read our standards</span>
                 <ArrowUpRight className="w-3 h-3 text-slate-500" />
               </button>
               <p className="text-[11px] text-slate-500 leading-relaxed mt-1">
