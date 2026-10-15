@@ -49,7 +49,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onNavigate }) => {
         className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[min(1180px,210vw)] max-w-none -translate-x-[58%] sm:w-[min(1180px,120vw)]"
       />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[55%] bg-gradient-to-t from-[#08090b] via-[#08090b]/85 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[55%] bg-gradient-to-t from-(--bg-obsidian) via-(--bg-obsidian)/85 to-transparent" />
 
       <div className="pointer-events-none container relative z-30 flex flex-col items-center pb-12 pt-[52svh] text-center sm:pb-16">
         <p className="max-w-xl text-lg font-light leading-relaxed text-slate-200 sm:text-xl">
@@ -65,7 +65,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onNavigate }) => {
             <span>{t('nav_atlas')}</span>
           </button>
           <button
-            onClick={() => onNavigate('/stories')}
+            onClick={() => onNavigate('/watch')}
             className="flex w-full items-center justify-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:border-amber-400/40 hover:bg-white/10 sm:w-auto"
           >
             <span>{t('cta_explore')}</span>

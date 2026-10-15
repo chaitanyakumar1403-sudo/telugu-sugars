@@ -7,11 +7,10 @@ import MobileBottomNav from '../src/components/common/MobileBottomNav';
 describe('Navigation & Bilingual Switcher', () => {
   it('switches language between English and Telugu', () => {
     const onNavigate = vi.fn();
-    const onOpenSearch = vi.fn();
 
     render(
       <LanguageProvider>
-        <Header activePath="/" onNavigate={onNavigate} onOpenSearch={onOpenSearch} />
+        <Header activePath="/" onNavigate={onNavigate} />
         <MobileBottomNav activePath="/" onNavigate={onNavigate} />
       </LanguageProvider>
     );
@@ -21,17 +20,16 @@ describe('Navigation & Bilingual Switcher', () => {
     fireEvent.click(langBtn);
 
     // Both desktop and mobile nav display translated labels
-    expect(screen.getAllByText(/పరిశోధన గ్రాఫ్/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/కథనాలు/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/పరిశోధన/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/వీడియోలు/i).length).toBeGreaterThan(0);
   });
 
   it('triggers navigation when links are clicked', () => {
     const onNavigate = vi.fn();
-    const onOpenSearch = vi.fn();
 
     render(
       <LanguageProvider>
-        <Header activePath="/" onNavigate={onNavigate} onOpenSearch={onOpenSearch} />
+        <Header activePath="/" onNavigate={onNavigate} />
       </LanguageProvider>
     );
 

@@ -75,7 +75,7 @@ export const ResearchPage: React.FC = () => {
               setSelectedPaper(null);
               setIsDrawerOpen(false);
             }}
-            className="w-full rounded-xl border border-white/10 bg-[#101216] px-4 py-2.5 text-sm font-medium text-white focus:border-amber-400/60 focus:outline-none lg:w-96"
+            className="w-full rounded-xl border border-white/10 bg-(--bg-panel) px-4 py-2.5 text-sm font-medium text-white focus:border-amber-400/60 focus:outline-none lg:w-96"
             aria-label="Select claim to explore"
           >
             {claims.map((c) => (
@@ -88,7 +88,7 @@ export const ResearchPage: React.FC = () => {
       </div>
 
       {/* Selected Claim Banner */}
-      <div className="p-6 rounded-2xl bg-[#10141b] border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
+      <div className="p-6 rounded-2xl bg-(--bg-panel) border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">

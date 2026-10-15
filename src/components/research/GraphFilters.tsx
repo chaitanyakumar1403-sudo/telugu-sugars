@@ -31,7 +31,7 @@ export const GraphFilters: React.FC<GraphFiltersProps> = ({
         <select
           value={studyTypeFilter}
           onChange={(e) => onStudyTypeChange(e.target.value)}
-          className="bg-black/50 border border-white/15 text-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:border-amber-400 focus:outline-none"
+          className="bg-scrim/50 border border-white/15 text-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:border-amber-400 focus:outline-none"
           aria-label="Filter studies by design"
         >
           <option value="all">All Study Designs</option>
@@ -45,7 +45,7 @@ export const GraphFilters: React.FC<GraphFiltersProps> = ({
         <select
           value={relationshipFilter}
           onChange={(e) => onRelationshipChange(e.target.value)}
-          className="bg-black/50 border border-white/15 text-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:border-amber-400 focus:outline-none"
+          className="bg-scrim/50 border border-white/15 text-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:border-amber-400 focus:outline-none"
           aria-label="Filter by relationship"
         >
           <option value="all">All Relationships</option>

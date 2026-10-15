@@ -28,7 +28,7 @@ export const GlossaryPopover: React.FC<GlossaryPopoverProps> = ({ term, children
 
       {isOpen && (
         <span
-          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 sm:w-80 p-4 rounded-xl bg-[#12161f] border border-amber-500/40 shadow-2xl text-left z-40 block"
+          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 sm:w-80 p-4 rounded-xl bg-(--bg-panel) border border-amber-500/40 shadow-2xl text-left z-40 block"
           role="tooltip"
         >
           <span className="flex items-start justify-between gap-2 border-b border-white/10 pb-2 mb-2">

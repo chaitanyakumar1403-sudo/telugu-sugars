@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { ChevronDown, Search } from 'lucide-react';
 import { BY, CATNAME, CATS, DISH, GR, ING, LV, byName, dishRating, hay, type AtlasItem } from '../../data/atlasData';
 import { Chip, LEVEL_BORDER, LevelPill } from './atlasUi';
 
@@ -10,6 +10,8 @@ interface SafetyCheckProps {
 
 export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) => {
   const [q, setQ] = useState('');
+  const [listOpen, setListOpen] = useState(true);
+  const resultRef = useRef<HTMLDivElement>(null);
   const query = q.trim().toLowerCase();
 
   const blocks: { title: string; items: AtlasItem[] }[] = [
@@ -22,22 +24,41 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) =>
 
   const n = BY[checkSel];
 
+  // Close the list after a pick and bring the result into view so the click visibly lands
+  const pick = (id: string) => {
+    onPick(id);
+    setListOpen(false);
+    setQ('');
+    requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  };
+
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
       {/* Picker */}
-      <div className="flex flex-col rounded-2xl border border-white/10 bg-[#0e1014] lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)]">
+      <div className="flex flex-col rounded-2xl border border-white/10 bg-(--bg-panel) lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)]">
         <label className="relative m-3 block">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <input
             type="search"
             value={q}
-            onChange={(e) => setQ(e.target.value)}
+            onChange={(e) => { setQ(e.target.value); setListOpen(true); }}
+            onFocus={() => setListOpen(true)}
             placeholder="Try maltodextrin, E621 or tartrazine"
             aria-label="Find an ingredient, additive or dish"
-            className="w-full rounded-xl border border-white/10 bg-black/30 py-2.5 pl-10 pr-3 text-base text-white placeholder:text-slate-500 focus:border-amber-400/60 focus:outline-none sm:text-sm"
+            className="w-full rounded-xl border border-white/10 bg-scrim/30 py-2.5 pl-10 pr-3 text-base text-white placeholder:text-slate-500 focus:border-amber-400/60 focus:outline-none sm:text-sm"
           />
         </label>
-        <div className="max-h-[50vh] overflow-y-auto px-3 pb-3 lg:max-h-none">
+        {!listOpen && (
+          <button
+            onClick={() => setListOpen(true)}
+            aria-expanded={false}
+            className="mx-3 mb-3 flex items-center justify-between gap-3 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-left text-sm"
+          >
+            <span className="font-semibold text-amber-200">{n.name}</span>
+            <span className="flex items-center gap-1 text-xs text-slate-400">Change <ChevronDown className="h-4 w-4" /></span>
+          </button>
+        )}
+        {listOpen && <div className="max-h-[50vh] overflow-y-auto px-3 pb-3 lg:max-h-none">
           {blocks.length === 0 && <p className="p-2 text-sm text-slate-400">No match. Try another name or E-number.</p>}
           {blocks.map((b) => (
             <div key={b.title} className="mb-2">
@@ -45,7 +66,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) =>
               {b.items.map((x) => (
                 <button
                   key={x.id}
-                  onClick={() => onPick(x.id)}
+                  onClick={() => pick(x.id)}
                   aria-current={x.id === checkSel || undefined}
                   className={`block w-full rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors ${
                     x.id === checkSel ? 'bg-amber-400/15 font-semibold text-amber-200' : 'text-slate-300 hover:bg-white/5 hover:text-white'
@@ -56,11 +77,11 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) =>
               ))}
             </div>
           ))}
-        </div>
+        </div>}
       </div>
 
       {/* Result */}
-      <div className="rounded-2xl border border-white/10 bg-[#0e1014] p-6 sm:p-8">
+      <div ref={resultRef} className="scroll-mt-24 rounded-2xl border border-white/10 bg-(--bg-panel) p-6 sm:p-8">
         <h2 className="font-display text-3xl font-extrabold text-white">{n.name}</h2>
         {n.kind === 'ing' && (
           <p className="mt-2 text-sm text-slate-400">

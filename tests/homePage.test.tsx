@@ -18,7 +18,7 @@ describe('HomePage Hero and Interactive Wordmark', () => {
     expect(wordmark).toHaveClass('is-revealed');
   });
 
-  it('renders evidence cards with "What the study found" and "What it cannot tell us"', () => {
+  it('shows only feature names and both video chapters', () => {
     const onNavigate = vi.fn();
     render(
       <LanguageProvider>
@@ -26,7 +26,11 @@ describe('HomePage Hero and Interactive Wordmark', () => {
       </LanguageProvider>
     );
 
-    expect(screen.getAllByText(/What the study found/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/What it cannot tell us/i).length).toBeGreaterThan(0);
+    expect(screen.getByRole('heading', { name: 'How it started' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'How it’s going' })).toBeInTheDocument();
+    expect(screen.getByText(/Coming soon/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /Food Labels/ }));
+    expect(onNavigate).toHaveBeenCalledWith('/food-labels');
+    expect(screen.queryByText(/Jaggery Illusion/i)).not.toBeInTheDocument();
   });
 });

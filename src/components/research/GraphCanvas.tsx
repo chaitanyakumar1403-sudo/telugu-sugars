@@ -53,9 +53,9 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[520px] rounded-2xl bg-[#090b0e] border border-white/10 overflow-hidden shadow-2xl flex items-center justify-center">
+    <div className="relative w-full h-[520px] rounded-2xl bg-(--bg-obsidian) border border-white/10 overflow-hidden shadow-2xl flex items-center justify-center">
       {/* Controls Bar */}
-      <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 p-1 rounded-xl bg-black/60 border border-white/10 backdrop-blur-md">
+      <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 p-1 rounded-xl bg-scrim/60 border border-white/10 backdrop-blur-md">
         <button
           onClick={() => setZoomLevel((z) => Math.min(1.4, z + 0.1))}
           className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
@@ -92,7 +92,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-20 flex flex-wrap items-center gap-3 p-2 rounded-xl bg-black/60 border border-white/10 text-[11px] text-slate-300 backdrop-blur-md">
+      <div className="absolute bottom-4 left-4 z-20 flex flex-wrap items-center gap-3 p-2 rounded-xl bg-scrim/60 border border-white/10 text-[11px] text-slate-300 backdrop-blur-md">
         <span className="flex items-center gap-1.5 font-bold">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" /> Supports
         </span>
@@ -106,8 +106,8 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
 
       {/* "How to read this map" Explanatory Modal (PDF Section 6 Requirement) */}
       {showHowToRead && (
-        <div className="absolute inset-0 z-30 bg-black/85 backdrop-blur-md p-6 flex flex-col justify-center items-center text-center">
-          <div className="max-w-md bg-[#12151b] border border-amber-500/40 rounded-2xl p-6 shadow-2xl">
+        <div className="absolute inset-0 z-30 bg-scrim/85 backdrop-blur-md p-6 flex flex-col justify-center items-center text-center">
+          <div className="max-w-md bg-(--bg-panel) border border-amber-500/40 rounded-2xl p-6 shadow-2xl">
             <h4 className="text-lg font-bold text-amber-300 mb-2 flex items-center justify-center gap-2">
               <Info className="w-5 h-5" />
               <span>How to Read This Evidence Map</span>

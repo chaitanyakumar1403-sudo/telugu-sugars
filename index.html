@@ -7,10 +7,18 @@
     <title>Telugu Sugars | తెలుగు సుగర్స్ — Evidence-Based Metabolic Science & Editorial Journal</title>
     <meta name="description" content="Telugu Sugars is an independent, evidence-first digital publication and interactive research platform investigating dietary sugars, sweeteners, and metabolic truth across Telugu communities." />
     
-    <!-- Premium Fonts: Syne, Cormorant Garamond, Plus Jakarta Sans, Noto Sans Telugu, Mandali -->
+    <!-- Fonts: Bricolage Grotesque (body), Plus Jakarta Sans (headings), Syne, Cormorant Garamond, Noto Sans Telugu, Mandali -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Mandali&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Mandali&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    <script>
+      // Set theme before first paint: saved choice, else the OS preference
+      try {
+        var t = localStorage.getItem('telugusugars_theme');
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

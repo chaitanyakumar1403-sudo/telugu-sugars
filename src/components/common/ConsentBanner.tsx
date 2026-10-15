@@ -25,7 +25,7 @@ export const ConsentBanner: React.FC = () => {
 
   return (
     <aside
-      className="fixed bottom-20 lg:bottom-5 left-4 right-4 sm:left-auto sm:right-5 z-40 sm:max-w-sm p-4 rounded-2xl bg-[#0e1014]/95 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/60 text-xs text-slate-300 flex flex-col gap-3"
+      className="fixed bottom-20 lg:bottom-5 left-4 right-4 sm:left-auto sm:right-5 z-40 sm:max-w-sm p-4 rounded-2xl bg-(--bg-panel)/95 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/60 text-xs text-slate-300 flex flex-col gap-3"
       role="region"
       aria-label="Privacy and analytics consent"
     >

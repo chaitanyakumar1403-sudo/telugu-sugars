@@ -28,7 +28,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
   const dataB = getComparisonData(claimB);
 
   return (
-    <div className="glass-card p-6 sm:p-8 rounded-2xl bg-[#0e1117] flex flex-col gap-8 shadow-2xl">
+    <div className="glass-card p-6 sm:p-8 rounded-2xl bg-(--bg-panel) flex flex-col gap-8 shadow-2xl">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2 border border-amber-500/30">
@@ -53,7 +53,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
           <select
             value={claimAId}
             onChange={(e) => setClaimAId(e.target.value)}
-            className="bg-black/60 border border-amber-500/40 text-amber-200 rounded-xl p-3 text-xs focus:outline-none"
+            className="bg-scrim/60 border border-amber-500/40 text-amber-200 rounded-xl p-3 text-xs focus:outline-none"
             aria-label="Select Claim A"
           >
             {claims.map((c) => (
@@ -71,7 +71,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
           <select
             value={claimBId}
             onChange={(e) => setClaimBId(e.target.value)}
-            className="bg-black/60 border border-teal-500/40 text-teal-200 rounded-xl p-3 text-xs focus:outline-none"
+            className="bg-scrim/60 border border-teal-500/40 text-teal-200 rounded-xl p-3 text-xs focus:outline-none"
             aria-label="Select Claim B"
           >
             {claims.map((c) => (

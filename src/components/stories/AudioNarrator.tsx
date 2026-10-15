@@ -59,7 +59,7 @@ export const AudioNarrator: React.FC<AudioNarratorProps> = ({ audioUrl, storyTit
       <div className="flex items-center gap-2">
         <button
           onClick={cycleSpeed}
-          className="px-2 py-1 rounded bg-black/40 text-[11px] font-mono font-bold text-amber-300 border border-white/10"
+          className="px-2 py-1 rounded bg-scrim/40 text-[11px] font-mono font-bold text-amber-300 border border-white/10"
           title="Change playback speed"
         >
           {playbackRate}x

@@ -91,12 +91,12 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 sm:pt-20"
+      className="fixed inset-0 z-50 bg-scrim/80 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 sm:pt-20"
       role="dialog"
       aria-modal="true"
       aria-label="Universal Search Engine"
     >
-      <div className="w-full max-w-2xl bg-[#0e1117] border border-white/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+      <div className="w-full max-w-2xl bg-(--bg-panel) border border-white/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
         {/* Search Input Bar */}
         <div className="p-4 border-b border-white/10 flex items-center gap-3">
           <Search className="w-5 h-5 text-amber-400 flex-shrink-0" />
@@ -127,7 +127,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
         {/* Category Tabs */}
         {query && (
-          <div className="flex items-center gap-1.5 px-4 py-2 border-b border-white/5 bg-black/30 overflow-x-auto text-xs">
+          <div className="flex items-center gap-1.5 px-4 py-2 border-b border-white/5 bg-scrim/30 overflow-x-auto text-xs">
             {(['all', 'story', 'claim', 'paper', 'glossary'] as const).map((tab) => (
               <button
                 key={tab}
@@ -186,7 +186,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         </div>
 
         {/* Footer info */}
-        <div className="p-3 bg-black/40 border-t border-white/10 text-center text-[11px] text-slate-400">
+        <div className="p-3 bg-scrim/40 border-t border-white/10 text-center text-[11px] text-slate-400">
           Search indexed across peer-reviewed papers, video transcripts, and Telugu food labels.
         </div>
       </div>

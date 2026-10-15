@@ -21,7 +21,7 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
   return (
     <div
       data-testid="hotspot-detail-card"
-      className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-[#0e1014] p-6 shadow-2xl shadow-black/40 sm:p-7"
+      className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-(--bg-panel) p-6 shadow-2xl shadow-black/40 sm:p-7"
     >
       <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
       </div>
 
       {/* Claimed Marketing */}
-      <div className="bg-black/40 rounded-xl p-3.5 border border-white/5">
+      <div className="bg-scrim/40 rounded-xl p-3.5 border border-white/5">
         <span className="text-xs font-semibold text-slate-400 block mb-1">
           What the pack claims
         </span>

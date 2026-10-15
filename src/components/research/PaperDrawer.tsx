@@ -41,7 +41,7 @@ export const PaperDrawer: React.FC<PaperDrawerProps> = ({
   return (
     <div
       data-testid="paper-drawer"
-      className="fixed inset-y-0 right-0 z-50 w-full max-w-xl bg-[#0d1014] border-l border-white/10 shadow-2xl flex flex-col justify-between overflow-y-auto transform transition-transform duration-300 ease-out"
+      className="fixed inset-y-0 right-0 z-50 w-full max-w-xl bg-(--bg-panel) border-l border-white/10 shadow-2xl flex flex-col justify-between overflow-y-auto transform transition-transform duration-300 ease-out"
       role="dialog"
       aria-modal="true"
       aria-label="Research Study Inspection Dossier"
@@ -131,7 +131,7 @@ export const PaperDrawer: React.FC<PaperDrawerProps> = ({
       </div>
 
       {/* Drawer Footer with Reviewer Credentials and Direct DOI Link */}
-      <div className="p-6 bg-black/60 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
+      <div className="p-6 bg-scrim/60 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
         <div className="flex flex-col gap-0.5 text-slate-400">
           <span className="flex items-center gap-1 text-[11px] font-mono">
             <UserCheck className="w-3.5 h-3.5 text-teal-400" /> Verified by {paper.reviewedBy}

@@ -19,7 +19,7 @@ export const EditorialStandardsPage: React.FC = () => {
       </div>
 
       {/* 1. Conflict of Interest Disclosure */}
-      <section className="glass-card p-6 sm:p-8 rounded-2xl bg-[#0f1217] flex flex-col gap-4">
+      <section className="glass-card p-6 sm:p-8 rounded-2xl bg-(--bg-panel) flex flex-col gap-4">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
           <CheckCircle2 className="w-5 h-5 text-teal-400" />
           <span>Conflict of Interest Disclosure</span>
@@ -41,7 +41,7 @@ export const EditorialStandardsPage: React.FC = () => {
       </section>
 
       {/* 2. Peer Review & Evidence Sourcing Protocol */}
-      <section className="glass-card p-6 sm:p-8 rounded-2xl bg-[#0f1217] flex flex-col gap-4">
+      <section className="glass-card p-6 sm:p-8 rounded-2xl bg-(--bg-panel) flex flex-col gap-4">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
           <UserCheck className="w-5 h-5 text-amber-400" />
           <span>Peer Review Protocol & Evidence Hierarchy</span>
@@ -72,7 +72,7 @@ export const EditorialStandardsPage: React.FC = () => {
       </section>
 
       {/* 3. Formal Corrections Policy */}
-      <section className="glass-card p-6 sm:p-8 rounded-2xl bg-[#0f1217] flex flex-col gap-4">
+      <section className="glass-card p-6 sm:p-8 rounded-2xl bg-(--bg-panel) flex flex-col gap-4">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
           <History className="w-5 h-5 text-rose-400" />
           <span>Formal Corrections Policy & Public Audit Trail</span>

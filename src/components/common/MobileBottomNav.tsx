@@ -14,13 +14,13 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activePath, on
     { path: '/', label: 'Home', icon: Home },
     { path: '/atlas', label: 'Atlas', icon: Leaf },
     { path: '/watch', labelKey: 'nav_watch', icon: Film },
-    { path: '/research', label: 'Research', icon: Compass },
+    { path: '/research', labelKey: 'nav_research', icon: Compass },
     { path: '/food-labels', labelKey: 'nav_food_labels', icon: Sparkles },
   ];
 
   return (
     <nav
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#08090b]/92 backdrop-blur-xl border-t border-white/10 px-2 py-1 shadow-2xl"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-(--bg-obsidian)/92 backdrop-blur-xl border-t border-white/10 px-2 py-1 shadow-2xl"
       aria-label="Mobile Bottom Navigation"
     >
       <div className="flex items-center justify-around max-w-md mx-auto">

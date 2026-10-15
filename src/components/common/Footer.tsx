@@ -9,7 +9,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) => {
 
   return (
-    <footer className="w-full bg-[#060709] border-t border-white/10 pt-16 pb-24 lg:pb-16 text-slate-400 text-xs">
+    <footer className="w-full bg-(--bg-obsidian) border-t border-white/10 pt-16 pb-24 lg:pb-16 text-slate-400 text-xs">
       <div className="container mx-auto px-4 max-w-6xl flex flex-col gap-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start justify-between">
           {/* Brand Info */}
@@ -44,39 +44,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
           {/* Sitemaps (PDF Recommended URL Patterns) */}
           <div className="md:col-span-3 flex flex-col gap-3">
             <h4 className="font-bold text-white uppercase tracking-wider text-xs">
-              Investigations & Tools
+              Explore
             </h4>
             <div className="flex flex-col gap-2">
-              <button
-                onClick={() => onNavigate('/stories')}
-                className="text-left hover:text-amber-400 transition-colors"
-              >
-                All Investigations
-              </button>
-              <button
-                onClick={() => onNavigate('/watch')}
-                className="text-left hover:text-amber-400 transition-colors"
-              >
-                Video Episodes & Transcripts
-              </button>
-              <button
-                onClick={() => onNavigate('/research')}
-                className="text-left hover:text-amber-400 transition-colors"
-              >
-                Research Graph
-              </button>
-              <button
-                onClick={() => onNavigate('/food-labels')}
-                className="text-left hover:text-amber-400 transition-colors"
-              >
-                Food Label Walkthrough
-              </button>
-              <button
-                onClick={() => onNavigate('/topics')}
-                className="text-left hover:text-amber-400 transition-colors"
-              >
-                Metabolic Topics
-              </button>
+              {[
+                ['/atlas', 'Ingredient Atlas'],
+                ['/watch', 'Watch'],
+                ['/research', 'Research'],
+                ['/food-labels', 'Food Labels'],
+              ].map(([path, label]) => (
+                <button key={path} onClick={() => onNavigate(path)} className="text-left hover:text-amber-400 transition-colors">
+                  {label}
+                </button>
+              ))}
             </div>
           </div>
 

@@ -107,7 +107,7 @@ export const AtlasPage: React.FC = () => {
                 <select
                   value={catF}
                   onChange={(e) => setCatF(e.target.value)}
-                  className="w-full appearance-none rounded-xl border border-white/10 bg-[#101216] py-2.5 pl-3.5 pr-10 text-sm text-white focus:border-amber-400/60 focus:outline-none lg:w-64"
+                  className="w-full appearance-none rounded-xl border border-white/10 bg-(--bg-panel) py-2.5 pl-3.5 pr-10 text-sm text-white focus:border-amber-400/60 focus:outline-none lg:w-64"
                 >
                   <option value="all">All groups ({ING.length})</option>
                   {CATS.map((c) => (

@@ -25,12 +25,12 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-scrim/80 backdrop-blur-md flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-label="Telugu Sugars Evidence Dispatch"
     >
-      <div className="w-full max-w-lg bg-[#0e1117] border border-amber-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
+      <div className="w-full max-w-lg bg-(--bg-panel) border border-amber-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-white"
@@ -77,7 +77,7 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your.name@example.com"
-                  className="w-full bg-black/60 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none"
+                  className="w-full bg-scrim/60 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none"
                 />
                 <Mail className="w-4 h-4 text-slate-500 absolute right-4 top-3.5" />
               </div>

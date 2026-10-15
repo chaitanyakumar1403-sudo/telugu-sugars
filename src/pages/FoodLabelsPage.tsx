@@ -51,7 +51,7 @@ export const FoodLabelsPage: React.FC = () => {
           />
 
           {/* Quick Guide: Disguised Sugar Aliases */}
-          <div className="rounded-2xl border border-white/10 bg-[#0e1014] p-6">
+          <div className="rounded-2xl border border-white/10 bg-(--bg-panel) p-6">
             <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-teal-400" />
               <span>Common Sugar Aliases Found in Telugu Supermarkets</span>

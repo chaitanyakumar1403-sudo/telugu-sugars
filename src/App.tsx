@@ -1,27 +1,23 @@
 import { useState, useEffect } from 'react';
-import { LanguageProvider } from './context/LanguageContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import Header from './components/common/Header';
 import MobileBottomNav from './components/common/MobileBottomNav';
 import Footer from './components/common/Footer';
 import ConsentBanner from './components/common/ConsentBanner';
 import NewsletterModal from './components/common/NewsletterModal';
-import SearchModal from './components/search/SearchModal';
+import WelcomeGreeting from './components/common/WelcomeGreeting';
 
 // Pages
 import HomePage from './pages/HomePage';
-import StoriesIndexPage from './pages/StoriesIndexPage';
-import StoryDetailPage from './pages/StoryDetailPage';
 import WatchPage from './pages/WatchPage';
-import TopicsPage from './pages/TopicsPage';
-import TopicDetailPage from './pages/TopicDetailPage';
-import ResearchPage from './pages/ResearchPage';
+import ComingSoonPage from './pages/ComingSoonPage';
 import FoodLabelsPage from './pages/FoodLabelsPage';
 import EditorialStandardsPage from './pages/EditorialStandardsPage';
 import AtlasPage from './pages/AtlasPage';
 
 export function AppContent() {
+  const { t } = useLanguage();
   const [currentPath, setCurrentPath] = useState<string>('/');
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
 
   // Initialize path from window.location and sync with popstate
@@ -39,17 +35,20 @@ export function AppContent() {
     }
   }, []);
 
-  // Keyboard shortcut Ctrl+K / Cmd+K for search
+  // Fade sections in as they scroll into view; re-scan whenever the page changes
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsSearchOpen((prev) => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+    const els = document.querySelectorAll('.reveal:not(.is-in)');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add('is-in'), io.unobserve(e.target))),
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [currentPath]);
 
   const navigateTo = (path: string) => {
     if (typeof window !== 'undefined') {
@@ -65,39 +64,12 @@ export function AppContent() {
       return <HomePage onNavigate={navigateTo} />;
     }
 
-    if (currentPath === '/stories') {
-      return (
-        <StoriesIndexPage
-          onSelectStory={(slug) => navigateTo(`/stories/${slug}`)}
-        />
-      );
-    }
-
-    if (currentPath.startsWith('/stories/')) {
-      const slug = currentPath.replace('/stories/', '');
-      return <StoryDetailPage slug={slug} onBack={() => navigateTo('/stories')} />;
-    }
-
     if (currentPath.startsWith('/watch')) {
-      const slug = currentPath.replace('/watch/', '').replace('/watch', '');
-      return <WatchPage episodeSlug={slug || undefined} />;
-    }
-
-    if (currentPath === '/topics') {
-      return (
-        <TopicsPage
-          onSelectTopic={(slug) => navigateTo(`/topics/${slug}`)}
-        />
-      );
-    }
-
-    if (currentPath.startsWith('/topics/')) {
-      const slug = currentPath.replace('/topics/', '');
-      return <TopicDetailPage slug={slug} onNavigate={navigateTo} />;
+      return <WatchPage />;
     }
 
     if (currentPath.startsWith('/research')) {
-      return <ResearchPage />;
+      return <ComingSoonPage title={t('nav_research')} />;
     }
 
     if (currentPath.startsWith('/food-labels')) {
@@ -120,7 +92,7 @@ export function AppContent() {
     <div
       id="app"
       data-testid="telugusugars-root"
-      className="min-h-screen flex flex-col justify-between bg-[#08090b] text-[#f8fafc]"
+      className="min-h-screen flex flex-col justify-between bg-(--bg-obsidian) text-white"
     >
       <a href="#main-content" className="skip-link">
         Skip to main content
@@ -130,7 +102,6 @@ export function AppContent() {
       <Header
         activePath={currentPath}
         onNavigate={navigateTo}
-        onOpenSearch={() => setIsSearchOpen(true)}
       />
 
       {/* Main Content Landmark */}
@@ -147,12 +118,7 @@ export function AppContent() {
       {/* Mobile Sticky Bottom Navigation (48px tap targets) */}
       <MobileBottomNav activePath={currentPath} onNavigate={navigateTo} />
 
-      {/* Global Overlays: Search & Newsletter & Privacy Consent */}
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        onNavigate={navigateTo}
-      />
+      <WelcomeGreeting />
 
       <NewsletterModal
         isOpen={isNewsletterOpen}

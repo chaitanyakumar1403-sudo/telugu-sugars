@@ -91,7 +91,7 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ mode, sel, catF, matchIds, o
   return (
     <div
       ref={stageRef}
-      className="relative h-[clamp(460px,72vh,820px)] overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(ellipse_at_center,#14161c_0%,#0b0c0f_75%)]"
+      className="relative h-[clamp(460px,72vh,820px)] overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(ellipse_at_center,var(--map-a)_0%,var(--map-b)_75%)]"
       style={{ touchAction: 'pan-y pinch-zoom' }}
     >
       {g && (

@@ -38,7 +38,7 @@ const AgeRows: React.FC<{ n: AtlasItem }> = ({ n }) => (
 );
 
 export const AtlasDetail: React.FC<AtlasDetailProps> = ({ sel, onSelect, onOpenCheck }) => {
-  const shell = 'rounded-2xl border border-white/10 bg-[#0e1014] p-6 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto';
+  const shell = 'rounded-2xl border border-white/10 bg-(--bg-panel) p-6 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto';
 
   if (!sel) {
     return (
