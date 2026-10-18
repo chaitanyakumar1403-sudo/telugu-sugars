@@ -41,18 +41,18 @@ export const WelcomeGreeting: React.FC = () => {
       role="status"
       onClick={() => setPhase('out')}
       onAnimationEnd={(e) => e.target === e.currentTarget && phase === 'out' && setPhase('gone')}
-      className={`hero-stage fixed inset-0 z-[100] flex cursor-pointer flex-col items-center justify-center overflow-hidden px-6 text-center ${phase === 'out' ? 'greet-out' : ''}`}
+      className={`fixed inset-0 bg-[#ff6a00] z-[100] flex cursor-pointer flex-col items-center justify-center overflow-hidden px-6 text-center ${phase === 'out' ? 'greet-out' : ''}`}
     >
       {CUBES.map((c, i) => (
         <span key={i} aria-hidden="true" className="sugar-cube top-0" style={{ left: c.left, '--s': c.s, '--d': c.d, '--t': c.t, '--r': c.r } as React.CSSProperties} />
       ))}
-      <p className="greet-word font-telugu text-2xl text-amber-300 sm:text-3xl">నమస్కారం 🙏</p>
-      <h2 className="mt-4 font-display text-6xl font-extrabold leading-[0.95] text-white sm:text-8xl">
+      <p className="greet-word font-telugu text-2xl font-semibold text-[#fff] sm:text-3xl">నమస్కారం 🙏</p>
+      <h2 className="mt-4 font-display text-6xl font-extrabold leading-[0.95] text-[#fff] sm:text-8xl">
         {words.map((w, i) => (
           <span key={i} className="greet-word mr-[0.25em]" style={{ '--d': `${250 + i * 140}ms` } as React.CSSProperties}>{w}</span>
         ))}
       </h2>
-      <p className="greet-word mt-6 text-lg text-slate-300" style={{ '--d': '700ms' } as React.CSSProperties}>
+      <p className="greet-word mt-6 text-lg text-[#fff]/85" style={{ '--d': '700ms' } as React.CSSProperties}>
         {language === 'te' ? 'తెలుగు సుగర్స్‌కి స్వాగతం' : 'Welcome to Telugu Sugars'}
       </p>
     </div>

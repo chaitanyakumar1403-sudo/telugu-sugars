@@ -13,12 +13,18 @@ const MarqueeRow: React.FC<{ outline?: boolean }> = ({ outline = false }) => (
       {/* Two identical halves so the -50% loop is seamless */}
       {Array.from({ length: 8 }, (_, i) => (
         <span key={i} className="marquee__item">
-          <span className="te">తెలుగు</span> SUGARS <span className="inline-block align-middle text-[0.35em] text-amber-400/80">✦</span>
+          <span className="te">తెలుగు</span> SUGARS <span className="inline-block align-middle text-[0.35em] text-amber-500">✦</span>
         </span>
       ))}
     </div>
   </div>
 );
+
+// [left, top, size, delay]
+const SPARKS: [string, string, string, string][] = [
+  ['30%', '62%', '14px', '0s'], ['24%', '72%', '10px', '1.1s'], ['68%', '30%', '12px', '0.6s'],
+  ['74%', '58%', '9px', '1.8s'], ['38%', '24%', '8px', '2.4s'], ['62%', '74%', '11px', '1.4s'],
+];
 
 export const HomeHero: React.FC<HomeHeroProps> = ({ onNavigate }) => {
   const { t } = useLanguage();
@@ -49,6 +55,13 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onNavigate }) => {
         className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[min(1180px,210vw)] max-w-none -translate-x-[58%] sm:w-[min(1180px,120vw)]"
       />
 
+      {/* Sparkles around the portrait */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-20">
+        {SPARKS.map(([l, t, size, d], i) => (
+          <span key={i} className="twinkle" style={{ left: l, top: t, fontSize: size, '--d': d } as React.CSSProperties}>✦</span>
+        ))}
+      </div>
+
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[55%] bg-gradient-to-t from-(--bg-obsidian) via-(--bg-obsidian)/85 to-transparent" />
 
       <div className="pointer-events-none container relative z-30 flex flex-col items-center pb-12 pt-[52svh] text-center sm:pb-16">
@@ -59,14 +72,14 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onNavigate }) => {
         <div className="pointer-events-auto mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
           <button
             onClick={() => onNavigate('/atlas')}
-            className="flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-amber-300 to-amber-500 px-7 py-3.5 text-sm font-bold text-black shadow-lg shadow-amber-500/20 transition hover:-translate-y-0.5 hover:shadow-amber-500/40 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 px-7 py-3.5 text-sm font-bold text-[#fff] shadow-lg shadow-amber-500/30 transition hover:-translate-y-0.5 hover:shadow-amber-500/50 sm:w-auto"
           >
             <Leaf className="h-4 w-4" />
             <span>{t('nav_atlas')}</span>
           </button>
           <button
             onClick={() => onNavigate('/watch')}
-            className="flex w-full items-center justify-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:border-amber-400/40 hover:bg-white/10 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2.5 rounded-full border border-white/15 bg-(--bg-obsidian)/60 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:border-amber-400/50 hover:bg-white/10 sm:w-auto"
           >
             <span>{t('cta_explore')}</span>
             <ArrowRight className="h-4 w-4" />

@@ -17,7 +17,7 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
 
   return (
     <article id={`video-${v.date}`} className="reveal group flex flex-col gap-4 scroll-mt-28">
-      <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-(--bg-panel) shadow-xl transition-shadow duration-500 group-hover:shadow-amber-500/20">
+      <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-(--bg-panel) shadow-xl transition-[box-shadow,border-color] duration-500 group-hover:border-amber-500/40 group-hover:shadow-amber-500/25">
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
@@ -35,11 +35,11 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
               className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
             />
             <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-amber-400 text-black shadow-2xl shadow-amber-500/40 transition-transform duration-500 ease-out group-hover:scale-125">
+            <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-amber-400 text-[#fff] shadow-2xl shadow-amber-500/40 transition-transform duration-500 ease-out group-hover:scale-125">
               <Play className="ml-1 h-6 w-6 fill-current" />
             </span>
             {isToday && (
-              <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#fff]">
+              <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#fff]">
                 <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#fff]" /> Today
               </span>
             )}
@@ -107,43 +107,46 @@ const Streak: React.FC = () => {
 };
 
 const Empty: React.FC<{ text: string }> = ({ text }) => (
-  <div className="reveal flex items-center gap-4 rounded-3xl border border-dashed border-white/15 p-8 sm:p-12">
-    <Sparkles className="live-dot h-6 w-6 shrink-0 text-amber-400" />
-    <p className="text-lg text-slate-300">{text}</p>
+  <div className="reveal notice flex items-center gap-4 px-6 py-6 sm:px-8">
+    <Sparkles className="live-dot h-5 w-5 shrink-0 text-amber-500" />
+    <p className="text-base text-slate-200 sm:text-lg">{text}</p>
   </div>
 );
 
-const Heading: React.FC<{ kicker: string; title: string; children?: React.ReactNode }> = ({ kicker, title, children }) => (
+const Heading: React.FC<{ kicker: string; title: string; accent: string; children?: React.ReactNode }> = ({ kicker, title, accent, children }) => (
   <div className="reveal mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
     <div>
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-amber-400">{kicker}</p>
-      <h2 className="mt-2 font-display text-5xl font-extrabold leading-[0.95] text-white sm:text-7xl">{title}</h2>
+      <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">{kicker}</p>
+      <h2 className="display-title mt-3 text-6xl text-white sm:text-8xl">
+        {title} <span className="accent">{accent}</span>
+      </h2>
     </div>
     {children}
   </div>
 );
 
 export const VideoSections: React.FC<{ limit?: number }> = ({ limit }) => {
+  const { t } = useLanguage();
   const going = limit ? GOING.slice(0, limit) : GOING;
   return (
     <div className="flex flex-col gap-28">
       <section className="container" aria-label="How it started">
-        <Heading kicker="Chapter 01" title="How it started" />
+        <Heading kicker={t('ch1_kicker')} title={t('ch1_title')} accent={t('ch1_accent')} />
         {STARTED.length ? (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {STARTED.map((v) => <VideoCard key={v.youtube} v={v} />)}
           </div>
         ) : (
-          <Empty text="The first episodes are on their way." />
+          <Empty text={t('ch1_empty')} />
         )}
       </section>
 
       <section className="container" aria-label="How it's going">
-        <Heading kicker="Chapter 02 · Updated daily" title="How it’s going">
+        <Heading kicker={t('ch2_kicker')} title={t('ch2_title')} accent={t('ch2_accent')}>
           <div className="flex flex-col gap-3 sm:items-end">
             <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300">
-              <span className="live-dot h-2 w-2 rounded-full bg-rose-500" />
-              {GOING.length ? `${GOING.length} days and counting` : 'Day 1 starts soon'}
+              <span className="live-dot h-2 w-2 rounded-full bg-amber-500 shadow-[0_0_10px_#ff6a00]" />
+              {GOING.length ? `${GOING.length} days and counting` : t('ch2_day1')}
             </span>
             <Streak />
           </div>
@@ -153,7 +156,7 @@ export const VideoSections: React.FC<{ limit?: number }> = ({ limit }) => {
             {going.map((v, i) => <VideoCard key={v.youtube} v={v} day={GOING.length - i} />)}
           </div>
         ) : (
-          <Empty text="A new video lands here every day. Check back tomorrow." />
+          <Empty text={t('ch2_empty')} />
         )}
       </section>
     </div>

@@ -6,6 +6,7 @@ import Footer from './components/common/Footer';
 import ConsentBanner from './components/common/ConsentBanner';
 import NewsletterModal from './components/common/NewsletterModal';
 import WelcomeGreeting from './components/common/WelcomeGreeting';
+import CursorRing from './components/common/CursorRing';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -119,6 +120,8 @@ export function AppContent() {
       <MobileBottomNav activePath={currentPath} onNavigate={navigateTo} />
 
       <WelcomeGreeting />
+
+      <CursorRing />
 
       <NewsletterModal
         isOpen={isNewsletterOpen}

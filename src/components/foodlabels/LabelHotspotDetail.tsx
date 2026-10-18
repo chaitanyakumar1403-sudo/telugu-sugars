@@ -21,11 +21,11 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
   return (
     <div
       data-testid="hotspot-detail-card"
-      className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-(--bg-panel) p-6 shadow-2xl shadow-black/40 sm:p-7"
+      className="panel flex flex-col gap-5 p-6 sm:p-7"
     >
       <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
+          <div className="w-8 h-8 rounded-lg bg-amber-500 text-[#fff] shadow-lg shadow-amber-500/30 flex items-center justify-center font-bold">
             !
           </div>
           <div>

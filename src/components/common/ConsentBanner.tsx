@@ -56,7 +56,7 @@ export const ConsentBanner: React.FC = () => {
         </button>
         <button
           onClick={handleAccept}
-          className="px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-bold shadow-md transition-colors"
+          className="px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-[#fff] font-bold shadow-md transition-colors"
         >
           Accept preferences
         </button>

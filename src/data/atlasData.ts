@@ -6,7 +6,13 @@ export interface AgeGroup { id: GroupId; name: string; age: string }
 export interface Category { id: string; name: string }
 export interface Concern { id: string; name: string; d: string }
 export interface Ingredient { id: string; name: string; cat: string; alt?: string[]; tags: string[]; r: Record<GroupId, Rating> }
-export interface Dish { id: string; name: string; ing: string[]; pack?: boolean }
+export type Shelf = 'drink' | 'snack' | 'sweet' | 'mix' | 'home';
+export type PackShape = 'can' | 'slimcan' | 'pouch' | 'biscuit' | 'bar' | 'jar' | 'bottle' | 'tub' | 'loaf' | 'bowl' | 'mug' | 'plate';
+/** Brand, serving and sugar (g per serving) are abridged from Indian packs; recipes change, so cards say "check against pack". */
+export interface Dish {
+  id: string; name: string; ing: string[]; pack?: boolean;
+  shelf: Shelf; serving: string; sugar: number; brand?: string; art: [PackShape, string, string?];
+}
 
 export const LV: Record<Level, { t: string; o: number }> = { ok: { t: "Suitable", o: 0 }, limit: { t: "Limit", o: 1 }, care: { t: "Check first", o: 2 }, avoid: { t: "Avoid", o: 3 } };
 export const LVK: Level[] = ["ok", "limit", "care", "avoid"];
@@ -618,18 +624,33 @@ A('kombucha','Kombucha and fermented drinks','drink',['kombucha','kefir','kanji'
  R(CARE,'Live cultures can be risky if immunity is weak. Check the sugar content.'));
 
 export const DISH: Dish[] = [
- {id:'d-ragi-porridge',name:'Ragi porridge',ing:['ragi','jaggery','milk']},
- {id:'d-chikki',name:'Peanut-sesame chikki',ing:['peanut','jaggery','sesame']},
- {id:'d-haldi-milk',name:'Haldi milk',ing:['turmeric','milk','jaggery']},
- {id:'d-masala-tea',name:'Masala tea',ing:['tea','milk','ginger','sugar']},
- {id:'d-ragi-dosa',name:'Ragi dosa',ing:['ragi','chili','salt','curd']},
- {id:'d-sprout-salad',name:'Sprout salad',ing:['sprouts','chili','salt','spinach']},
- {id:'d-noodles',name:'Instant masala noodles',pack:true,ing:['maida','palm','salt','msg','ig','chili','tbhq']},
- {id:'d-cola',name:'Packaged cola',pack:true,ing:['glucosesyrup','caramel','phosphates','citric','caffeine']},
- {id:'d-chips',name:'Masala potato chips',pack:true,ing:['fried','salt','msg','maltodextrin','palm','chili']},
- {id:'d-gummies',name:'Fruit gummies',pack:true,ing:['sugar','glucosesyrup','gelatin','azo','citric']},
- {id:'d-protein',name:'Protein shake',pack:true,ing:['protein','sucralose','maltodextrin','xanthan','lecithin']},
- {id:'d-bread',name:'Packaged sandwich bread',pack:true,ing:['maida','propionate','monodi','sugar','salt']}
+ // Drinks
+ {id:'d-coke',name:'Coca-Cola',brand:'Coca-Cola',pack:true,shelf:'drink',serving:'300 ml can',sugar:31.8,art:['can','#e3171b'],ing:['sugar','caramel','phosphates','caffeine','flavours']},
+ {id:'d-dietcoke',name:'Diet Coke',brand:'Coca-Cola',pack:true,shelf:'drink',serving:'300 ml can',sugar:0,art:['can','#d81f26','#e5e7eb'],ing:['aspartame','acesulfame','caramel','phosphates','benzoate','caffeine','flavours']},
+ {id:'d-redbull',name:'Red Bull',brand:'Red Bull',pack:true,shelf:'drink',serving:'250 ml can',sugar:27.5,art:['slimcan','#1d4ed8','#cbd5e1'],ing:['sugar','dextrose','citric','caffeine','caramel','flavours']},
+ {id:'d-protein',name:'Protein shake',pack:true,shelf:'drink',serving:'30 g scoop',sugar:2,art:['tub','#6b7280'],ing:['protein','sucralose','maltodextrin','xanthan','lecithin']},
+ // Snacks & instant
+ {id:'d-maggi',name:'Maggi 2-Minute Masala Noodles',brand:'Nestlé',pack:true,shelf:'snack',serving:'70 g pack',sugar:1.2,art:['pouch','#facc15','#dc2626'],ing:['maida','palm','salt','guar','phosphates','ig','caramel','sugar','chili','garlic']},
+ {id:'d-lays',name:'Lay’s Classic Salted',brand:'PepsiCo',pack:true,shelf:'snack',serving:'52 g pack',sugar:0.3,art:['pouch','#fbbf24'],ing:['fried','palm','refinedoil','salt']},
+ {id:'d-chips',name:'Masala potato chips',pack:true,shelf:'snack',serving:'50 g pack',sugar:2,art:['pouch','#2563eb'],ing:['fried','salt','msg','maltodextrin','palm','chili']},
+ {id:'d-bread',name:'Packaged sandwich bread',pack:true,shelf:'snack',serving:'2 slices (50 g)',sugar:2.5,art:['loaf','#f59e0b'],ing:['maida','propionate','monodi','sugar','salt']},
+ // Biscuits & sweets
+ {id:'d-oreo',name:'Oreo Vanilla Creme',brand:'Mondelez',pack:true,shelf:'sweet',serving:'30 g (3 biscuits)',sugar:11.6,art:['biscuit','#1d5fd6','#e0ecff'],ing:['maida','sugar','palm','glucosesyrup','bakingsoda','salt','lecithin','flavours']},
+ {id:'d-dairymilk',name:'Cadbury Dairy Milk',brand:'Mondelez',pack:true,shelf:'sweet',serving:'13 g bar',sugar:7.2,art:['bar','#6d28d9','#a78bfa'],ing:['sugar','milk','flavours']},
+ {id:'d-parleg',name:'Parle-G Glucose Biscuits',brand:'Parle',pack:true,shelf:'sweet',serving:'25 g (about 4 biscuits)',sugar:6.4,art:['biscuit','#facc15','#fff7d6'],ing:['maida','sugar','palm','glucosesyrup','bakingsoda','milk','salt','lecithin','monodi','sulphite','flavours']},
+ {id:'d-kitkat',name:'KitKat',brand:'Nestlé',pack:true,shelf:'sweet',serving:'37 g (4 fingers)',sugar:18.5,art:['bar','#dc2626','#fecaca'],ing:['sugar','maida','milk','palm','lecithin','bakingsoda','flavours']},
+ {id:'d-gummies',name:'Fruit gummies',pack:true,shelf:'sweet',serving:'25 g pack',sugar:14,art:['pouch','#db2777'],ing:['sugar','glucosesyrup','gelatin','azo','citric']},
+ // Mixes & sauces
+ {id:'d-bournvita',name:'Bournvita',brand:'Mondelez',pack:true,shelf:'mix',serving:'20 g (2 scoops)',sugar:6.4,art:['jar','#9a4b2a','#f3d3c0'],ing:['sugar','glucosesyrup','milk','caramel','flavours']},
+ {id:'d-kissan',name:'Kissan Fresh Tomato Ketchup',brand:'HUL',pack:true,shelf:'mix',serving:'15 g (1 tablespoon)',sugar:3.6,art:['bottle','#ef2b1d'],ing:['sugar','salt','vinegar','benzoate']},
+ {id:'d-jam',name:'Mixed fruit jam',pack:true,shelf:'mix',serving:'15 g (1 tablespoon)',sugar:9.8,art:['jar','#e11d74','#fbcfe8'],ing:['sugar','pectin','citric','benzoate']},
+ // Home-cooked (typical recipe)
+ {id:'d-ragi-porridge',name:'Ragi porridge',shelf:'home',serving:'1 bowl, 1 tsp jaggery',sugar:5,art:['bowl','#e8805a'],ing:['ragi','jaggery','milk']},
+ {id:'d-chikki',name:'Peanut-sesame chikki',shelf:'home',serving:'25 g piece',sugar:10,art:['bar','#f97316','#fed7aa'],ing:['peanut','jaggery','sesame']},
+ {id:'d-haldi-milk',name:'Haldi milk',shelf:'home',serving:'1 cup, 1 tsp jaggery',sugar:5,art:['mug','#eab308'],ing:['turmeric','milk','jaggery']},
+ {id:'d-masala-tea',name:'Masala tea',shelf:'home',serving:'1 cup, 2 tsp sugar',sugar:8,art:['mug','#ea7a4b'],ing:['tea','milk','ginger','sugar']},
+ {id:'d-ragi-dosa',name:'Ragi dosa',shelf:'home',serving:'2 dosas',sugar:0,art:['plate','#d9774b'],ing:['ragi','chili','salt','curd']},
+ {id:'d-sprout-salad',name:'Sprout salad',shelf:'home',serving:'1 bowl',sugar:0,art:['bowl','#22c55e'],ing:['sprouts','chili','salt','spinach']}
 ];
 
 export type AtlasItem =
@@ -664,4 +685,31 @@ export function levelFor(n: AtlasItem, g: GroupId): Level | null {
   if (n.kind === 'ing') return n.r[g][0];
   if (n.kind === 'dish') return dishRating(n, g).level;
   return null;
+}
+
+/** Teaspoons of sugar (4 g each), one decimal. */
+export const tsp = (g: number) => Math.round((g / 4) * 10) / 10;
+
+/** Every E/INS code the Atlas knows, e.g. "e951". */
+export const CODES = new Set(ING.flatMap((i) => (i.alt ?? []).filter((a) => /^e\d{3,4}[a-z]?$/.test(a))));
+
+// Longest terms first so "glucose syrup" wins over "glucose"
+const TERMS = ING.flatMap((i) => [i.name.replace(/\s*\(.*\)$/, ''), ...(i.alt ?? [])].map((t) => ({ t: t.toLowerCase(), id: i.id })))
+  .sort((a, b) => b.t.length - a.t.length);
+const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** Ingredient ids found in a pasted label, in label order. "INS 471", "E-471" and a bare "(471)" all read as e471. */
+export function decodeLabel(text: string): string[] {
+  let s = ' ' + text.toLowerCase()
+    .replace(/\b(?:e|ins)\s*-?\s*(\d{3,4}[a-z]?)\b/g, 'e$1')
+    .replace(/(?<![\w.])(\d{3,4}[a-z]?)(?![\d.%]|\s*(?:g|mg|kg|kcal|ml|l)\b)/g, 'e$1') + ' ';
+  const hits: { at: number; id: string }[] = [];
+  for (const { t, id } of TERMS) {
+    const re = new RegExp(`(?<=[^a-z0-9])${esc(t)}(?=[^a-z0-9])`, 'g');
+    s = s.replace(re, (m, at: number) => {
+      hits.push({ at, id });
+      return ' '.repeat(m.length); // consume so shorter terms can't match the same words
+    });
+  }
+  return [...new Set(hits.sort((a, b) => a.at - b.at).map((h) => h.id))];
 }

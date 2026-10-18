@@ -100,7 +100,7 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
             <button
               type="submit"
               disabled={!email || !consentChecked}
-              className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-black font-bold text-sm shadow-lg shadow-amber-500/25 transition-all"
+              className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-[#fff] font-bold text-sm shadow-lg shadow-amber-500/25 transition-all"
             >
               Confirm Free Subscription
             </button>

@@ -145,7 +145,7 @@ export const PaperDrawer: React.FC<PaperDrawerProps> = ({
           href={paper.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs shadow-md transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-[#fff] font-bold text-xs shadow-md transition-colors"
         >
           <span>Open Full DOI Paper</span>
           <ExternalLink className="w-3.5 h-3.5" />

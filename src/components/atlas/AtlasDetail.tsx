@@ -38,7 +38,7 @@ const AgeRows: React.FC<{ n: AtlasItem }> = ({ n }) => (
 );
 
 export const AtlasDetail: React.FC<AtlasDetailProps> = ({ sel, onSelect, onOpenCheck }) => {
-  const shell = 'rounded-2xl border border-white/10 bg-(--bg-panel) p-6 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto';
+  const shell = 'panel p-6 lg:sticky lg:top-44 lg:max-h-[calc(100vh-12rem)] lg:overflow-y-auto';
 
   if (!sel) {
     return (
@@ -53,7 +53,7 @@ export const AtlasDetail: React.FC<AtlasDetailProps> = ({ sel, onSelect, onOpenC
   const openCheck = (
     <button
       onClick={() => onOpenCheck(n.id)}
-      className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-amber-400 px-5 py-2.5 text-sm font-bold text-black transition-colors hover:bg-amber-300"
+      className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-amber-400 px-5 py-2.5 text-sm font-bold text-[#fff] transition-colors hover:bg-amber-300"
     >
       Open full safety check <ArrowRight className="h-4 w-4" />
     </button>

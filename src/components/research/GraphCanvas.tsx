@@ -120,7 +120,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
             </p>
             <button
               onClick={() => setShowHowToRead(false)}
-              className="px-5 py-2 rounded-xl bg-amber-400 text-black font-bold text-xs hover:bg-amber-300 transition-colors"
+              className="px-5 py-2 rounded-xl bg-amber-400 text-[#fff] font-bold text-xs hover:bg-amber-300 transition-colors"
             >
               Understood
             </button>

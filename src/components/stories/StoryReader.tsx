@@ -66,7 +66,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({ story, glossaryTerms }
           <button
             onClick={() => setFontSize('normal')}
             className={`px-2.5 py-1 rounded font-bold ${
-              fontSize === 'normal' ? 'bg-amber-400 text-black' : 'bg-white/5 text-slate-300'
+              fontSize === 'normal' ? 'bg-amber-400 text-[#fff]' : 'bg-white/5 text-slate-300'
             }`}
             aria-label="Normal Font Size"
           >
@@ -75,7 +75,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({ story, glossaryTerms }
           <button
             onClick={() => setFontSize('lg')}
             className={`px-2.5 py-1 rounded font-bold ${
-              fontSize === 'lg' ? 'bg-amber-400 text-black' : 'bg-white/5 text-slate-300'
+              fontSize === 'lg' ? 'bg-amber-400 text-[#fff]' : 'bg-white/5 text-slate-300'
             }`}
             aria-label="Increase Font A+"
           >
@@ -84,7 +84,7 @@ export const StoryReader: React.FC<StoryReaderProps> = ({ story, glossaryTerms }
           <button
             onClick={() => setFontSize('xl')}
             className={`px-2.5 py-1 rounded font-bold ${
-              fontSize === 'xl' ? 'bg-amber-400 text-black' : 'bg-white/5 text-slate-300'
+              fontSize === 'xl' ? 'bg-amber-400 text-[#fff]' : 'bg-white/5 text-slate-300'
             }`}
             aria-label="Increase Font A++"
           >

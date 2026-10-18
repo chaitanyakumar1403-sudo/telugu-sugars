@@ -1,14 +1,16 @@
 import React, { useRef, useState } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
-import { BY, CATNAME, CATS, DISH, GR, ING, LV, byName, dishRating, hay, type AtlasItem } from '../../data/atlasData';
+import { BY, CATNAME, CATS, DISH, GR, ING, LV, byName, dishRating, hay, type AtlasItem, type GroupId } from '../../data/atlasData';
 import { Chip, LEVEL_BORDER, LevelPill } from './atlasUi';
 
 interface SafetyCheckProps {
   checkSel: string;
   onPick: (id: string) => void;
+  /** Age group to highlight, from the Atlas "Who's eating?" control */
+  focus?: GroupId;
 }
 
-export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) => {
+export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focus }) => {
   const [q, setQ] = useState('');
   const [listOpen, setListOpen] = useState(true);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -35,7 +37,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) =>
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
       {/* Picker */}
-      <div className="flex flex-col rounded-2xl border border-white/10 bg-(--bg-panel) lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)]">
+      <div className="panel flex flex-col lg:sticky lg:top-44 lg:max-h-[calc(100vh-12rem)]">
         <label className="relative m-3 block">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <input
@@ -81,7 +83,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) =>
       </div>
 
       {/* Result */}
-      <div ref={resultRef} className="scroll-mt-24 rounded-2xl border border-white/10 bg-(--bg-panel) p-6 sm:p-8">
+      <div ref={resultRef} className="panel scroll-mt-44 p-6 sm:p-8">
         <h2 className="font-display text-3xl font-extrabold text-white">{n.name}</h2>
         {n.kind === 'ing' && (
           <p className="mt-2 text-sm text-slate-400">
@@ -102,7 +104,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick }) =>
           {GR.map((g) => {
             const level = n.kind === 'ing' ? n.r[g.id][0] : n.kind === 'dish' ? dishRating(n, g.id).level : 'ok';
             return (
-              <div key={g.id} className={`rounded-xl border border-white/10 border-l-4 bg-white/[0.02] p-5 ${LEVEL_BORDER[level]}`}>
+              <div key={g.id} className={`rounded-xl border border-white/10 border-l-4 bg-white/[0.02] p-5 transition-shadow ${LEVEL_BORDER[level]} ${g.id === focus ? 'ring-2 ring-amber-500/70 shadow-lg shadow-amber-500/20' : ''}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="text-base font-bold text-white">{g.name}</h3>
