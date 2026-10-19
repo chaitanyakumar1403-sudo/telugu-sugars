@@ -1,7 +1,8 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { BY, GR, LVK, LV, levelFor, type GroupId } from '../../data/atlasData';
+import { BY, LVK, levelFor, type GroupId } from '../../data/atlasData';
 import { applyFilter, buildGraph, clamp, resize, step, type Graph, type GNode } from './forceLayout';
 import { LEVEL_FILL, TYPE_FILL } from './atlasUi';
+import { useAtlasText } from './useAtlasText';
 
 export type ColourMode = 'type' | GroupId;
 
@@ -15,6 +16,7 @@ interface AtlasMapProps {
 }
 
 export const AtlasMap: React.FC<AtlasMapProps> = ({ mode, sel, catF, matchIds, onSelect, onFiltered }) => {
+  const A = useAtlasText();
   const stageRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const graph = useRef<Graph | null>(null);
@@ -86,7 +88,7 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ mode, sel, catF, matchIds, o
   const crowded = (g?.actN.filter((n) => n.kind === 'ing').length ?? 0) > 34;
   const fillFor = (n: GNode) =>
     mode === 'type' || n.kind === 'con' ? TYPE_FILL[n.kind] : LEVEL_FILL[levelFor(BY[n.id], mode)!];
-  const groupName = GR.find((x) => x.id === mode)?.name;
+  const groupName = mode === 'type' ? '' : A.groupName(mode);
 
   return (
     <div
@@ -99,7 +101,7 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ mode, sel, catF, matchIds, o
           ref={svgRef}
           className="block h-full w-full select-none"
           role="img"
-          aria-label="Network of ingredients, additives, sample dishes and health concerns"
+          aria-label={A.t('m_aria')}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
@@ -133,12 +135,12 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ mode, sel, catF, matchIds, o
                 crowded && n.kind === 'ing' && !hl && n.id !== sel && 'no-label',
               ].filter(Boolean).join(' ');
               return (
-                <g key={n.id} data-id={n.id} className={cls} transform={`translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`} tabIndex={0} role="button" aria-label={n.label}>
+                <g key={n.id} data-id={n.id} className={cls} transform={`translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`} tabIndex={0} role="button" aria-label={A.name(n.id)}>
                   <circle className="hit" r={n.r + 8} />
                   {n.kind === 'dish'
                     ? <rect className="shape" x={-n.r} y={-n.r} width={n.r * 2} height={n.r * 2} rx={4} fill={fillFor(n)} />
                     : <circle className="shape" r={n.r} fill={fillFor(n)} />}
-                  <text y={n.r + 13}>{n.label}</text>
+                  <text y={n.r + 13}>{A.name(n.id)}</text>
                 </g>
               );
             })}
@@ -147,20 +149,20 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ mode, sel, catF, matchIds, o
       )}
 
       <div className="pointer-events-none absolute right-4 top-3 font-mono text-[11px] text-slate-500">
-        drag nodes · click to open
+        {A.t('m_hint')}
       </div>
 
       <div className="pointer-events-none absolute inset-x-4 bottom-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-400">
         {mode === 'type' ? (
           <>
-            <Swatch color={TYPE_FILL.ing}>Ingredient or additive</Swatch>
-            <Swatch color={TYPE_FILL.dish} square>Sample dish</Swatch>
-            <Swatch color={TYPE_FILL.con}>Health concern</Swatch>
+            <Swatch color={TYPE_FILL.ing}>{A.t('m_leg_ing')}</Swatch>
+            <Swatch color={TYPE_FILL.dish} square>{A.t('m_leg_dish')}</Swatch>
+            <Swatch color={TYPE_FILL.con}>{A.t('m_leg_con')}</Swatch>
           </>
         ) : (
           <>
             <span className="font-semibold text-slate-300">{groupName}:</span>
-            {LVK.map((k) => <Swatch key={k} color={LEVEL_FILL[k]}>{LV[k].t}</Swatch>)}
+            {LVK.map((k) => <Swatch key={k} color={LEVEL_FILL[k]}>{A.level(k)}</Swatch>)}
           </>
         )}
       </div>

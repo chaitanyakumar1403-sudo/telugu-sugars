@@ -277,6 +277,10 @@
   text-transform: none;
 }
 
+/* Tracking pulls Telugu letter clusters apart, and mono spaces leave wide gaps, so Telugu labels drop both */
+html:lang(te) [class*='tracking-'] { letter-spacing: normal; }
+html:lang(te) .font-mono { font-family: var(--font-telugu); }
+
 @media (prefers-reduced-motion: reduce) {
   .marquee { animation: none; }
 }

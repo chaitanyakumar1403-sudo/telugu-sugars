@@ -11,8 +11,8 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activePath, on
   const { t } = useLanguage();
 
   const navTabs = [
-    { path: '/', label: 'Home', icon: Home },
-    { path: '/atlas', label: 'Atlas', icon: Leaf },
+    { path: '/', labelKey: 'nav_home', icon: Home },
+    { path: '/atlas', labelKey: 'nav_atlas_short', icon: Leaf },
     { path: '/watch', labelKey: 'nav_watch', icon: Film },
     { path: '/research', labelKey: 'nav_research', icon: Compass },
     { path: '/food-labels', labelKey: 'nav_food_labels', icon: Sparkles },
@@ -21,7 +21,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activePath, on
   return (
     <nav
       className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-(--bg-obsidian)/92 backdrop-blur-xl border-t border-white/10 px-2 py-1 shadow-2xl"
-      aria-label="Mobile Bottom Navigation"
+      aria-label={t('nav_mobile_aria')}
     >
       <div className="flex items-center justify-around max-w-md mx-auto">
         {navTabs.map((tab) => {
@@ -37,7 +37,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activePath, on
               className={`flex flex-col items-center justify-center min-w-[56px] min-h-[50px] py-1 px-1 rounded-xl transition-all ${
                 isActive ? 'text-amber-400 font-bold' : 'text-slate-400 hover:text-slate-200'
               }`}
-              aria-label={tab.label || (tab.labelKey ? t(tab.labelKey) : '')}
+              aria-label={t(tab.labelKey)}
             >
               <div
                 className={`p-1 rounded-lg transition-transform ${
@@ -47,7 +47,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activePath, on
                 <Icon className="w-5 h-5" />
               </div>
               <span className="text-[10px] tracking-tight mt-0.5 font-medium truncate max-w-[64px]">
-                {tab.label || (tab.labelKey ? t(tab.labelKey) : '')}
+                {t(tab.labelKey)}
               </span>
             </button>
           );

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
-import { BY, CATNAME, CATS, DISH, GR, ING, LV, byName, dishRating, hay, type AtlasItem, type GroupId } from '../../data/atlasData';
+import { BY, CATS, DISH, GR, ING, dishRating, hay, type AtlasItem, type GroupId } from '../../data/atlasData';
 import { Chip, LEVEL_BORDER, LevelPill } from './atlasUi';
+import { useAtlasText } from './useAtlasText';
 
 interface SafetyCheckProps {
   checkSel: string;
@@ -11,15 +12,16 @@ interface SafetyCheckProps {
 }
 
 export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focus }) => {
+  const A = useAtlasText();
   const [q, setQ] = useState('');
   const [listOpen, setListOpen] = useState(true);
   const resultRef = useRef<HTMLDivElement>(null);
   const query = q.trim().toLowerCase();
 
   const blocks: { title: string; items: AtlasItem[] }[] = [
-    ...CATS.map((c) => ({ title: c.name, items: ING.filter((i) => i.cat === c.id).sort(byName).map((i) => BY[i.id]) })),
-    { title: 'Menu examples', items: DISH.filter((d) => !d.pack).map((d) => BY[d.id]) },
-    { title: 'Packaged product examples', items: DISH.filter((d) => d.pack).map((d) => BY[d.id]) },
+    ...CATS.map((c) => ({ title: A.cat(c.id), items: ING.filter((i) => i.cat === c.id).sort(A.byName).map((i) => BY[i.id]) })),
+    { title: A.t('c_menu'), items: DISH.filter((d) => !d.pack).map((d) => BY[d.id]) },
+    { title: A.t('c_packs'), items: DISH.filter((d) => d.pack).map((d) => BY[d.id]) },
   ]
     .map((b) => ({ ...b, items: b.items.filter((x) => !query || hay(x).includes(query)) }))
     .filter((b) => b.items.length);
@@ -45,8 +47,8 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
             value={q}
             onChange={(e) => { setQ(e.target.value); setListOpen(true); }}
             onFocus={() => setListOpen(true)}
-            placeholder="Try maltodextrin, E621 or tartrazine"
-            aria-label="Find an ingredient, additive or dish"
+            placeholder={A.t('c_ph')}
+            aria-label={A.t('c_aria')}
             className="w-full rounded-xl border border-white/10 bg-scrim/30 py-2.5 pl-10 pr-3 text-base text-white placeholder:text-slate-500 focus:border-amber-400/60 focus:outline-none sm:text-sm"
           />
         </label>
@@ -56,12 +58,12 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
             aria-expanded={false}
             className="mx-3 mb-3 flex items-center justify-between gap-3 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-left text-sm"
           >
-            <span className="font-semibold text-amber-200">{n.name}</span>
-            <span className="flex items-center gap-1 text-xs text-slate-400">Change <ChevronDown className="h-4 w-4" /></span>
+            <span className="font-semibold text-amber-200">{A.name(n.id)}</span>
+            <span className="flex items-center gap-1 text-xs text-slate-400">{A.t('c_change')} <ChevronDown className="h-4 w-4" /></span>
           </button>
         )}
         {listOpen && <div className="max-h-[50vh] overflow-y-auto px-3 pb-3 lg:max-h-none">
-          {blocks.length === 0 && <p className="p-2 text-sm text-slate-400">No match. Try another name or E-number.</p>}
+          {blocks.length === 0 && <p className="p-2 text-sm text-slate-400">{A.t('c_none')}</p>}
           {blocks.map((b) => (
             <div key={b.title} className="mb-2">
               <h3 className="px-2 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{b.title}</h3>
@@ -74,7 +76,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
                     x.id === checkSel ? 'bg-amber-400/15 font-semibold text-amber-200' : 'text-slate-300 hover:bg-white/5 hover:text-white'
                   }`}
                 >
-                  {x.name}
+                  {A.name(x.id)}
                 </button>
               ))}
             </div>
@@ -84,17 +86,20 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
 
       {/* Result */}
       <div ref={resultRef} className="panel scroll-mt-44 p-6 sm:p-8">
-        <h2 className="font-display text-3xl font-extrabold text-white">{n.name}</h2>
+        <h2 className="font-display text-3xl font-extrabold text-white">{A.name(n.id)}</h2>
         {n.kind === 'ing' && (
           <p className="mt-2 text-sm text-slate-400">
-            {CATNAME[n.cat]}. Concerns: {n.tags.length ? n.tags.map((t) => BY[t].name.toLowerCase()).join(', ') : 'none flagged'}.
+            {A.t('c_concerns', {
+              cat: A.cat(n.cat),
+              list: n.tags.length ? n.tags.map((t) => (A.te ? A.name(t) : A.name(t).toLowerCase())).join(', ') : A.t('c_none_flagged'),
+            })}
           </p>
         )}
         {n.kind === 'dish' && (
           <>
             <p className="mt-2 max-w-2xl text-sm text-slate-400">
-              {n.pack ? 'Packaged product example built from a typical ingredient list. Real products vary, so check the label. ' : 'Sample menu item. '}
-              Each rating is the strictest one among its ingredients, so changing the recipe changes the result.
+              {A.t(n.pack ? 'c_pack_note' : 'c_menu_note')}
+              {A.t('c_strict')}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">{n.ing.map((i) => <Chip key={i} id={i} />)}</div>
           </>
@@ -107,24 +112,24 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
               <div key={g.id} className={`rounded-xl border border-white/10 border-l-4 bg-white/[0.02] p-5 transition-shadow ${LEVEL_BORDER[level]} ${g.id === focus ? 'ring-2 ring-amber-500/70 shadow-lg shadow-amber-500/20' : ''}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-base font-bold text-white">{g.name}</h3>
-                    <p className="text-xs text-slate-500">{g.age}</p>
+                    <h3 className="text-base font-bold text-white">{A.groupName(g.id)}</h3>
+                    <p className="text-xs text-slate-500">{A.groupAge(g.id)}</p>
                   </div>
                   <LevelPill level={level} />
                 </div>
-                {n.kind === 'ing' && <p className="mt-3 text-sm leading-relaxed text-slate-300">{n.r[g.id][1]}</p>}
+                {n.kind === 'ing' && <p className="mt-3 text-sm leading-relaxed text-slate-300">{A.note(n.id, g.id)}</p>}
                 {n.kind === 'dish' && (() => {
                   const dr = dishRating(n, g.id);
                   return dr.drivers.length ? (
                     <ul className="mt-3 space-y-2 text-sm leading-relaxed text-slate-300">
                       {dr.drivers.map((d) => (
                         <li key={d.id}>
-                          <b className="text-white">{BY[d.id].name}</b> · {LV[d.lv].t.toLowerCase()}. {d.note}
+                          <b className="text-white">{A.name(d.id)}</b> · {A.te ? A.level(d.lv) : A.level(d.lv).toLowerCase()}. {A.note(d.id, g.id)}
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="mt-3 text-sm text-slate-300">Every ingredient is suitable for this group.</p>
+                    <p className="mt-3 text-sm text-slate-300">{A.t('c_all_ok')}</p>
                   );
                 })()}
               </div>
@@ -133,7 +138,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
         </div>
 
         <p className="mt-6 text-xs leading-relaxed text-slate-500">
-          Check with a doctor or dietitian if the person has an allergy, a chronic condition or takes regular medicine.
+          {A.t('c_doctor')}
         </p>
       </div>
     </div>

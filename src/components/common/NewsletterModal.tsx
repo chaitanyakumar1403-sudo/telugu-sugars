@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Check, X, Sparkles } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface NewsletterModalProps {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface NewsletterModalProps {
 }
 
 export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -28,13 +30,13 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
       className="fixed inset-0 z-50 bg-scrim/80 backdrop-blur-md flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Telugu Sugars Evidence Dispatch"
+      aria-label={t('nl_aria')}
     >
       <div className="w-full max-w-lg bg-(--bg-panel) border border-amber-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-white"
-          aria-label="Close modal"
+          aria-label={t('nl_close')}
         >
           <X className="w-5 h-5" />
         </button>
@@ -44,30 +46,30 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
             <div className="w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center">
               <Check className="w-6 h-6" />
             </div>
-            <h4 className="text-xl font-bold text-white">Subscription Confirmed!</h4>
+            <h4 className="text-xl font-bold text-white">{t('nl_done_t')}</h4>
             <p className="text-xs text-slate-300 max-w-sm">
-              Thank you for trusting Telugu Sugars. You will receive our monthly peer-reviewed clinical dossier with zero promotional noise.
+              {t('nl_done_d')}
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-4 h-4" />
-              <span>Evidence Dispatch • ఉచిత సబ్‌స్క్రిప్షన్</span>
+              <span>{t('nl_kicker')}</span>
             </div>
 
             <div>
               <h3 className="text-2xl font-extrabold text-white">
-                Stay Grounded in Metabolic Truth
+                {t('nl_title')}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
-                Receive our monthly forensic breakdowns of supermarket food deceptions, clinical sweetener research, and Telugu dietary investigations.
+                {t('nl_lead')}
               </p>
             </div>
 
             <div className="flex flex-col gap-1.5">
               <label htmlFor="newsletter-email" className="text-xs font-bold text-slate-400">
-                Email Address:
+                {t('nl_email')}
               </label>
               <div className="relative">
                 <input
@@ -93,7 +95,7 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
                 className="mt-0.5 rounded border-white/20 text-amber-500 focus:ring-amber-400 accent-amber-500"
               />
               <span className="leading-snug">
-                I explicitly consent to receiving monthly scientific updates. Telugu Sugars guarantees 1-click unsubscribe and promises never to collect sensitive personal medical records or sell subscriber data.
+                {t('nl_consent')}
               </span>
             </label>
 
@@ -102,7 +104,7 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
               disabled={!email || !consentChecked}
               className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-[#fff] font-bold text-sm shadow-lg shadow-amber-500/25 transition-all"
             >
-              Confirm Free Subscription
+              {t('nl_submit')}
             </button>
           </form>
         )}

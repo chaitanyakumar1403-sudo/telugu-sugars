@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Moon, Smartphone, Sun, Type } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 type Theme = 'system' | 'light' | 'dark';
 type Size = 'normal' | 'big' | 'bigger';
@@ -13,19 +14,20 @@ const write = (k: string, v: string | null) => {
 };
 const systemTheme = () => (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
 
-const THEMES: { id: Theme; label: string; icon: typeof Sun }[] = [
-  { id: 'system', label: 'System (same as phone)', icon: Smartphone },
-  { id: 'light', label: 'Light', icon: Sun },
-  { id: 'dark', label: 'Dark', icon: Moon },
+const THEMES: { id: Theme; icon: typeof Sun }[] = [
+  { id: 'system', icon: Smartphone },
+  { id: 'light', icon: Sun },
+  { id: 'dark', icon: Moon },
 ];
-const SIZES: { id: Size; label: string; cls: string }[] = [
-  { id: 'normal', label: 'Normal', cls: 'text-xs' },
-  { id: 'big', label: 'Big', cls: 'text-sm' },
-  { id: 'bigger', label: 'Bigger', cls: 'text-base' },
+const SIZES: { id: Size; cls: string }[] = [
+  { id: 'normal', cls: 'text-xs' },
+  { id: 'big', cls: 'text-sm' },
+  { id: 'bigger', cls: 'text-base' },
 ];
 
 /** Display menu: colour scheme + text size. index.html applies both before first paint. */
 export const ThemeToggle: React.FC = () => {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>(() => {
     const t = read(THEME_KEY);
@@ -74,7 +76,7 @@ export const ThemeToggle: React.FC = () => {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="true"
-        aria-label="Display settings: colours and text size"
+        aria-label={t('disp_aria')}
         className={`flex h-9 items-center gap-1.5 rounded-full border px-3 transition ${
           open ? 'border-amber-500 bg-amber-500/15 text-amber-400' : 'border-white/10 bg-white/5 text-amber-400 hover:border-amber-400/50'
         }`}
@@ -85,17 +87,17 @@ export const ThemeToggle: React.FC = () => {
 
       {open && (
         <div className="panel absolute right-0 top-12 z-50 w-64 bg-(--bg-panel) p-3 animate-[greet-in_350ms_var(--ease-spring)]">
-          <p className="px-1 pb-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">Colours</p>
+          <p className="px-1 pb-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{t('theme_title')}</p>
           <div className="flex flex-col gap-1">
-            {THEMES.map(({ id, label, icon: Icon }) => (
+            {THEMES.map(({ id, icon: Icon }) => (
               <button key={id} onClick={() => setTheme(id)} aria-pressed={theme === id} className={opt(theme === id)}>
-                <Icon className="h-4 w-4" /> {label}
+                <Icon className="h-4 w-4" /> {t(`theme_${id}`)}
               </button>
             ))}
           </div>
-          <p className="px-1 pb-1.5 pt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">Text size</p>
+          <p className="px-1 pb-1.5 pt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{t('size_title')}</p>
           <div className="grid grid-cols-3 gap-1.5">
-            {SIZES.map(({ id, label, cls }) => (
+            {SIZES.map(({ id, cls }) => (
               <button
                 key={id}
                 onClick={() => setSize(id)}
@@ -104,7 +106,7 @@ export const ThemeToggle: React.FC = () => {
                   size === id ? 'border-amber-500 bg-amber-500 text-[#fff]' : 'border-white/10 text-slate-300 hover:border-white/25 hover:text-white'
                 }`}
               >
-                {label}
+                {t(`size_${id}`)}
               </button>
             ))}
           </div>

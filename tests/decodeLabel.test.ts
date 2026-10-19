@@ -9,6 +9,10 @@ describe('decodeLabel', () => {
     expect(ids).not.toContain('dextrose'); // "glucose" consumed by "glucose syrup"
   });
 
+  it('reads ingredients written in Telugu', () => {
+    expect(decodeLabel('చక్కెర, మైదా, పామాయిల్, ఉప్పు')).toEqual(['sugar', 'maida', 'palm', 'salt']);
+  });
+
   it('ignores quantities and returns nothing for empty text', () => {
     expect(decodeLabel('Energy 450 kcal, 100 g')).toEqual([]);
     expect(decodeLabel('')).toEqual([]);

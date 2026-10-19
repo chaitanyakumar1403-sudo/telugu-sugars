@@ -5,11 +5,11 @@ import { GOING, STARTED, youtubeId, type Video } from '../../data/videos';
 
 const today = () => new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
 
-const fmt = (date: string) =>
-  new Date(date + 'T00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+const fmt = (date: string, lang: string) =>
+  new Date(date + 'T00:00').toLocaleDateString(lang === 'te' ? 'te-IN' : 'en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
 const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [playing, setPlaying] = useState(false);
   const id = youtubeId(v.youtube);
   const title = language === 'te' && v.te ? v.te : v.title;
@@ -40,12 +40,12 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
             </span>
             {isToday && (
               <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#fff]">
-                <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#fff]" /> Today
+                <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#fff]" /> {t('vid_today')}
               </span>
             )}
             {day && (
               <span className="absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 font-mono text-[11px] font-bold text-[#fff] backdrop-blur">
-                Day {day}
+                {t('vid_day', { n: day })}
               </span>
             )}
           </button>
@@ -53,13 +53,13 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
       </div>
 
       <div>
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">{fmt(v.date)}</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">{fmt(v.date, language)}</p>
         <h3 className="mt-1 text-lg font-bold leading-snug text-white transition-colors group-hover:text-amber-300">{title}</h3>
       </div>
 
       {v.links?.length ? (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">Affiliate</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{t('vid_affiliate')}</span>
           {v.links.map((l) => (
             <a
               key={l.url}
@@ -79,6 +79,7 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
 
 /** Last 21 days as squares; filled days had a video. Clicking jumps to it. */
 const Streak: React.FC = () => {
+  const { language, t } = useLanguage();
   const posted = new Set(GOING.map((v) => v.date));
   const days = Array.from({ length: 21 }, (_, i) => {
     const d = new Date();
@@ -86,15 +87,15 @@ const Streak: React.FC = () => {
     return d.toLocaleDateString('en-CA');
   });
   return (
-    <div className="flex flex-wrap items-center gap-1.5" aria-label="Last 21 days of videos">
+    <div className="flex flex-wrap items-center gap-1.5" aria-label={t('vid_streak')}>
       {days.map((d) => {
         const on = posted.has(d);
         return (
           <button
             key={d}
             disabled={!on}
-            title={on ? fmt(d) : `${fmt(d)} · no video`}
-            aria-label={on ? `Jump to video from ${fmt(d)}` : `${fmt(d)}, no video`}
+            title={on ? fmt(d, language) : `${fmt(d, language)} · ${t('vid_none')}`}
+            aria-label={on ? t('vid_jump', { d: fmt(d, language) }) : `${fmt(d, language)}, ${t('vid_none')}`}
             onClick={() => document.getElementById(`video-${d}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
             className={`h-3.5 w-3.5 rounded-[4px] transition-transform ${
               on ? 'bg-amber-400 hover:scale-150' : 'bg-white/10'
@@ -130,7 +131,7 @@ export const VideoSections: React.FC<{ limit?: number }> = ({ limit }) => {
   const going = limit ? GOING.slice(0, limit) : GOING;
   return (
     <div className="flex flex-col gap-28">
-      <section className="container" aria-label="How it started">
+      <section className="container" aria-label={`${t('ch1_title')} ${t('ch1_accent')}`}>
         <Heading kicker={t('ch1_kicker')} title={t('ch1_title')} accent={t('ch1_accent')} />
         {STARTED.length ? (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -141,12 +142,12 @@ export const VideoSections: React.FC<{ limit?: number }> = ({ limit }) => {
         )}
       </section>
 
-      <section className="container" aria-label="How it's going">
+      <section className="container" aria-label={`${t('ch2_title')} ${t('ch2_accent')}`}>
         <Heading kicker={t('ch2_kicker')} title={t('ch2_title')} accent={t('ch2_accent')}>
           <div className="flex flex-col gap-3 sm:items-end">
             <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300">
               <span className="live-dot h-2 w-2 rounded-full bg-amber-500 shadow-[0_0_10px_#ff6a00]" />
-              {GOING.length ? `${GOING.length} days and counting` : t('ch2_day1')}
+              {GOING.length ? t('vid_count', { n: GOING.length }) : t('ch2_day1')}
             </span>
             <Streak />
           </div>

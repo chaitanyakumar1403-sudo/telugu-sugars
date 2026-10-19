@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mail, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface FooterProps {
   onNavigate: (path: string) => void;
@@ -7,7 +8,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) => {
-
+  const { t } = useLanguage();
   return (
     <footer className="site-footer w-full pt-16 pb-24 lg:pb-16 text-xs text-[#fff]/85">
       <div className="container mx-auto px-4 max-w-6xl flex flex-col gap-12">
@@ -29,7 +30,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
             </div>
 
             <p className="text-[#fff]/90 text-sm leading-relaxed max-w-sm">
-              An independent, evidence-first digital publication and interactive research platform investigating dietary sugars, sweeteners, and metabolic truth across Andhra Pradesh, Telangana, and the global Telugu diaspora.
+              {t('f_about')}
             </p>
 
             <button
@@ -37,24 +38,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#fff] text-[#e85d00] font-bold shadow-lg shadow-black/10 hover:-translate-y-0.5 transition-colors w-fit"
             >
               <Mail className="w-3.5 h-3.5" />
-              <span>Subscribe to Monthly Evidence Dispatch</span>
+              <span>{t('f_sub')}</span>
             </button>
           </div>
 
           {/* Sitemaps (PDF Recommended URL Patterns) */}
           <div className="md:col-span-3 flex flex-col gap-3">
             <h4 className="font-mono font-bold text-[#fff] uppercase tracking-[0.16em] text-[11px]">
-              Explore
+              {t('f_explore')}
             </h4>
             <div className="flex flex-col gap-2">
               {[
-                ['/atlas', 'Ingredient Atlas'],
-                ['/watch', 'Watch'],
-                ['/research', 'Research'],
-                ['/food-labels', 'Food Labels'],
-              ].map(([path, label]) => (
+                ['/atlas', 'nav_atlas'],
+                ['/watch', 'nav_watch'],
+                ['/research', 'nav_research'],
+                ['/food-labels', 'nav_food_labels'],
+              ].map(([path, key]) => (
                 <button key={path} onClick={() => onNavigate(path)} className="text-left text-sm hover:text-[#fff] hover:underline underline-offset-4 transition-colors">
-                  {label}
+                  {t(key)}
                 </button>
               ))}
             </div>
@@ -63,18 +64,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
           {/* Institutional Transparency */}
           <div className="md:col-span-4 flex flex-col gap-3">
             <h4 className="font-mono font-bold text-[#fff] uppercase tracking-[0.16em] text-[11px]">
-              Editorial Standards
+              {t('f_standards')}
             </h4>
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => onNavigate('/about/editorial-standards')}
                 className="text-left text-sm hover:text-[#fff] hover:underline underline-offset-4 transition-colors flex items-center gap-1"
               >
-                <span>Read our standards</span>
+                <span>{t('f_read')}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
               <p className="text-xs text-[#fff]/80 leading-relaxed mt-1">
-                Telugu Sugars operates under strict conflict-of-interest firewalls. We accept zero financial contributions, sponsored content, or review products from food, beverage, or sweetener corporations.
+                {t('f_firewall')}
               </p>
             </div>
           </div>
@@ -83,10 +84,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
         {/* Safety Disclaimer (PDF Page 3 & 6 Directive) */}
         <div className="pt-6 border-t border-[#fff]/25 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#fff]/80">
           <p className="max-w-3xl">
-            <strong>Medical Disclaimer:</strong> Telugu Sugars is an investigative science publication, not a clinical healthcare provider. Content is for educational, journalistic, and public interest purposes and must never replace personalized consultation with a licensed endocrinologist or certified physician.
+            <strong>{t('f_disclaimer_label')}</strong> {t('f_disclaimer')}
           </p>
           <div>
-            © {new Date().getFullYear()} Telugu Sugars. All Rights Reserved.
+            © {new Date().getFullYear()} {t('f_rights')}
           </div>
         </div>
       </div>

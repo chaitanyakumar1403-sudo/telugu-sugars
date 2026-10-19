@@ -1,6 +1,7 @@
 import React from 'react';
-import { BY, LV, type Level } from '../../data/atlasData';
+import type { Level } from '../../data/atlasData';
 import type { NodeKind } from './forceLayout';
+import { useAtlasText } from './useAtlasText';
 
 export const TYPE_FILL: Record<NodeKind, string> = {
   ing: '#fb923c',
@@ -31,27 +32,32 @@ export const LEVEL_BORDER: Record<Level, string> = {
   avoid: 'border-l-rose-500',
 };
 
-export const LevelPill: React.FC<{ level: Level }> = ({ level }) => (
-  <span
-    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold ring-1 ring-inset ${PILL[level]}`}
-  >
-    <span aria-hidden="true">{SYMBOL[level]}</span> {LV[level].t}
-  </span>
-);
+export const LevelPill: React.FC<{ level: Level }> = ({ level }) => {
+  const { level: label } = useAtlasText();
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold ring-1 ring-inset ${PILL[level]}`}
+    >
+      <span aria-hidden="true">{SYMBOL[level]}</span> {label(level)}
+    </span>
+  );
+};
 
-export const Chip: React.FC<{ id: string; onClick?: (id: string) => void }> = ({ id, onClick }) =>
-  onClick ? (
+export const Chip: React.FC<{ id: string; onClick?: (id: string) => void }> = ({ id, onClick }) => {
+  const { name } = useAtlasText();
+  return onClick ? (
     <button
       onClick={() => onClick(id)}
       className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-slate-200 transition-colors hover:border-amber-400/50 hover:text-amber-200"
     >
-      {BY[id].name}
+      {name(id)}
     </button>
   ) : (
     <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-slate-200">
-      {BY[id].name}
+      {name(id)}
     </span>
   );
+};
 
 export const Eyebrow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-amber-400/90">{children}</p>

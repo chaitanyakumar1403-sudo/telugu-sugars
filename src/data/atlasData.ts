@@ -1,4 +1,5 @@
 // Ingredient Atlas data, ported verbatim from the atlas prototype (resources/ingredient atlas.html).
+import { TE_CON, TE_DISH, TE_ING, TE_TERMS } from './atlasTe';
 export type Level = "ok" | "limit" | "care" | "avoid";
 export type GroupId = "inf" | "youth" | "mid" | "old";
 export type Rating = [Level, string];
@@ -663,8 +664,9 @@ CON.forEach((c) => { BY[c.id] = { ...c, kind: 'con' }; });
 ING.forEach((i) => { BY[i.id] = { ...i, kind: 'ing' }; });
 DISH.forEach((d) => { BY[d.id] = { ...d, kind: 'dish' }; });
 
+// Telugu names are searchable whatever the page language
 export const hay = (x: AtlasItem) =>
-  (x.name + ' ' + ('alt' in x && x.alt ? x.alt.join(' ') : '')).toLowerCase();
+  (x.name + ' ' + ('alt' in x && x.alt ? x.alt.join(' ') : '') + ' ' + (TE_ING[x.id]?.[0] ?? TE_CON[x.id]?.[0] ?? TE_DISH[x.id]?.[0] ?? '')).toLowerCase();
 
 export const byName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name);
 
@@ -695,6 +697,7 @@ export const CODES = new Set(ING.flatMap((i) => (i.alt ?? []).filter((a) => /^e\
 
 // Longest terms first so "glucose syrup" wins over "glucose"
 const TERMS = ING.flatMap((i) => [i.name.replace(/\s*\(.*\)$/, ''), ...(i.alt ?? [])].map((t) => ({ t: t.toLowerCase(), id: i.id })))
+  .concat(TE_TERMS.map(([t, id]) => ({ t, id })))
   .sort((a, b) => b.t.length - a.t.length);
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 

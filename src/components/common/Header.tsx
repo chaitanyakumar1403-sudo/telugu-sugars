@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
         <button
           onClick={() => onNavigate('/')}
           className="flex min-w-0 items-center gap-2.5 text-left sm:gap-3"
-          aria-label="Telugu Sugars Home"
+          aria-label={t('nav_brand_aria')}
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 font-display text-base font-extrabold text-[#fff] shadow-lg shadow-amber-500/30">
             TS
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
         </button>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main Navigation">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label={t('nav_main_aria')}>
           {navItems.map((item) => {
             const isActive = activePath === item.path || activePath.startsWith(item.path + '/');
             return (

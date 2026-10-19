@@ -1,5 +1,6 @@
 import React from 'react';
 import { FoodLabelGuide, FoodLabelHotspot } from '../../types/content';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface InteractiveLabelProps {
   guide: FoodLabelGuide;
@@ -10,6 +11,7 @@ interface InteractiveLabelProps {
 const TEST_IDS = ['hotspot-serving-size', 'hotspot-added-sugars', 'hotspot-front-stamp'];
 
 export const InteractiveLabel: React.FC<InteractiveLabelProps> = ({ guide, selectedHotspot, onSelectHotspot }) => {
+  const { language, t } = useLanguage();
   // Pins are anchored to the label element they explain (hotspot order: serving size, maltodextrin, front stamp).
   const pin = (index: number) => {
     const hs = guide.hotspots[index];
@@ -19,7 +21,7 @@ export const InteractiveLabel: React.FC<InteractiveLabelProps> = ({ guide, selec
       <button
         data-testid={TEST_IDS[index]}
         onClick={() => onSelectHotspot(hs)}
-        aria-label={`Inspect hotspot: ${hs.title}`}
+        aria-label={t('fl_pin_aria', { t: language === 'te' ? hs.teluguTitle : hs.title })}
         aria-pressed={isSelected}
         className={`relative inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full align-middle font-sans text-[11px] font-bold transition-transform hover:scale-110 ${
           isSelected ? 'bg-rose-600 ring-4 ring-rose-300' : 'bg-black'

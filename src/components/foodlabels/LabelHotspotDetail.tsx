@@ -12,11 +12,12 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
   hotspot,
   onClose,
 }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   if (!hotspot) return null;
 
-  const title = language === 'te' ? hotspot.teluguTitle : hotspot.title;
+  const te = language === 'te';
+  const title = te ? hotspot.teluguTitle : hotspot.title;
 
   return (
     <div
@@ -30,7 +31,7 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
           </div>
           <div>
             <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block">
-              Label hotspot
+              {t('hs_kicker')}
             </span>
             <h4 className="font-display text-xl font-extrabold text-white leading-tight">
               {title}
@@ -41,7 +42,7 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
         <button
           onClick={onClose}
           className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
-          aria-label="Close hotspot detail"
+          aria-label={t('hs_close')}
         >
           <X className="w-4 h-4" />
         </button>
@@ -50,10 +51,10 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
       {/* Claimed Marketing */}
       <div className="bg-scrim/40 rounded-xl p-3.5 border border-white/5">
         <span className="text-xs font-semibold text-slate-400 block mb-1">
-          What the pack claims
+          {t('hs_claims')}
         </span>
         <div className="text-sm font-bold text-amber-300 italic">
-          {hotspot.claimedMarketing}
+          {te ? hotspot.teluguClaimedMarketing : hotspot.claimedMarketing}
         </div>
       </div>
 
@@ -61,10 +62,10 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
       <div className="flex flex-col gap-1.5">
         <div className="text-xs font-bold text-rose-400 flex items-center gap-1.5 uppercase tracking-wider">
           <AlertTriangle className="w-4 h-4" />
-          <span>What is really going on</span>
+          <span>{t('hs_reality')}</span>
         </div>
         <p className="text-sm text-slate-200 leading-relaxed bg-rose-500/10 border-l-2 border-rose-500 p-3 rounded-r-lg">
-          {hotspot.scientificReality}
+          {te ? hotspot.teluguScientificReality : hotspot.scientificReality}
         </p>
       </div>
 
@@ -72,10 +73,10 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
       <div className="flex flex-col gap-1.5 pt-1">
         <div className="text-xs font-bold text-teal-400 flex items-center gap-1.5 uppercase tracking-wider">
           <CheckCircle className="w-4 h-4" />
-          <span>Buyer checklist</span>
+          <span>{t('hs_advice')}</span>
         </div>
         <p className="text-sm text-slate-200 leading-relaxed bg-teal-500/10 border-l-2 border-teal-500 p-3 rounded-r-lg">
-          {hotspot.consumerAdvice}
+          {te ? hotspot.teluguConsumerAdvice : hotspot.consumerAdvice}
         </p>
       </div>
     </div>

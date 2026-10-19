@@ -96,7 +96,7 @@ export function AppContent() {
       className="min-h-screen flex flex-col justify-between bg-(--bg-obsidian) text-white"
     >
       <a href="#main-content" className="skip-link">
-        Skip to main content
+        {t('skip_main')}
       </a>
 
       {/* Global Sticky Header */}

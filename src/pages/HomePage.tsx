@@ -105,7 +105,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
       <WhatWeDo />
 
-      <section className="container" aria-label="Features">
+      <section className="container" aria-label={t('home_features')}>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {FEATURES.map(({ path, key, icon: Icon, span, soon }, i) => (
             <button

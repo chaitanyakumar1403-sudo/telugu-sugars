@@ -131,6 +131,9 @@ export interface FoodLabelHotspot {
   claimedMarketing: string;
   scientificReality: string;
   consumerAdvice: string;
+  teluguClaimedMarketing: string;
+  teluguScientificReality: string;
+  teluguConsumerAdvice: string;
 }
 
 export interface FoodLabelGuide {

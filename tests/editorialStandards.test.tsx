@@ -18,7 +18,11 @@ describe('Editorial Standards & Privacy Consent (PDF Sections 8 & 9)', () => {
   });
 
   it('respects user consent choices with plain-language explanation', () => {
-    render(<ConsentBanner />);
+    render(
+      <LanguageProvider>
+        <ConsentBanner />
+      </LanguageProvider>,
+    );
     const acceptBtn = screen.getByRole('button', { name: /accept preferences/i });
     expect(acceptBtn).toBeInTheDocument();
     fireEvent.click(acceptBtn);

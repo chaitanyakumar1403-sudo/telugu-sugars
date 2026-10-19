@@ -15,7 +15,7 @@ export const ComingSoonPage: React.FC<{ title: string }> = ({ title }) => {
         <div className="reveal notice flex max-w-xl items-center gap-3 px-6 py-4 text-left" style={{ '--d': '240ms' } as React.CSSProperties}>
           <span className="live-dot h-2 w-2 shrink-0 rounded-full bg-amber-500" />
           <p className="text-sm text-slate-300 sm:text-base">
-            Studies, sources and the evidence behind every video, gathered in one place. We are building it now.
+            {t('soon_research')}
           </p>
         </div>
       </div>
