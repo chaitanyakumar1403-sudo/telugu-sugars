@@ -47,7 +47,7 @@ export const WelcomeGreeting: React.FC = () => {
         <span key={i} aria-hidden="true" className="sugar-cube top-0" style={{ left: c.left, '--s': c.s, '--d': c.d, '--t': c.t, '--r': c.r } as React.CSSProperties} />
       ))}
       <p className="greet-word font-telugu text-2xl font-semibold text-[#fff] sm:text-3xl">నమస్కారం 🙏</p>
-      <h2 className="mt-4 font-display text-6xl font-extrabold leading-[0.95] text-[#fff] sm:text-8xl">
+      <h2 className="mt-4 max-w-full font-display text-[clamp(2.25rem,10vw,6rem)] font-extrabold leading-[0.95] text-[#fff] [overflow-wrap:anywhere]">
         {words.map((w, i) => (
           <span key={i} className="greet-word mr-[0.25em]" style={{ '--d': `${250 + i * 140}ms` } as React.CSSProperties}>{w}</span>
         ))}

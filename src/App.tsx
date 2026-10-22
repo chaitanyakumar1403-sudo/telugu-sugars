@@ -15,6 +15,7 @@ import ComingSoonPage from './pages/ComingSoonPage';
 import FoodLabelsPage from './pages/FoodLabelsPage';
 import EditorialStandardsPage from './pages/EditorialStandardsPage';
 import AtlasPage from './pages/AtlasPage';
+import CreatorsPage from './pages/CreatorsPage';
 
 export function AppContent() {
   const { t } = useLanguage();
@@ -79,6 +80,10 @@ export function AppContent() {
 
     if (currentPath === '/atlas') {
       return <AtlasPage />;
+    }
+
+    if (currentPath === '/creators') {
+      return <CreatorsPage />;
     }
 
     if (currentPath === '/about/editorial-standards') {

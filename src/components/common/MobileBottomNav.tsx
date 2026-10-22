@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Home, Film, Compass, Sparkles, Leaf } from 'lucide-react';
+import { Home, Film, Compass, Sparkles, Leaf, Users } from 'lucide-react';
 
 interface MobileBottomNavProps {
   activePath: string;
@@ -16,6 +16,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activePath, on
     { path: '/watch', labelKey: 'nav_watch', icon: Film },
     { path: '/research', labelKey: 'nav_research', icon: Compass },
     { path: '/food-labels', labelKey: 'nav_food_labels', icon: Sparkles },
+    { path: '/creators', labelKey: 'nav_creators', icon: Users },
   ];
 
   return (

@@ -171,7 +171,7 @@ export const AtlasPage: React.FC = () => {
             className="w-full rounded-2xl border border-white/10 bg-white/[0.04] py-4 pl-12 pr-4 text-base text-white shadow-xl shadow-black/20 placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none"
           />
           {found.length > 0 && (
-            <ul className="panel absolute inset-x-0 top-full mt-2 overflow-hidden bg-(--bg-panel) p-1.5">
+            <ul className="panel absolute inset-x-0 top-full mt-2 overflow-hidden p-1.5" style={{ background: 'var(--bg-panel)' }}>
               {found.map((x) => (
                 <li key={x.id}>
                   <button onClick={() => goTo(x.id)} className="flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm text-slate-200 hover:bg-amber-500/10 hover:text-white">
