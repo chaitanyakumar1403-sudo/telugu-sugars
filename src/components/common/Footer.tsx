@@ -60,6 +60,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
                 ['/research', 'nav_research'],
                 ['/food-labels', 'nav_food_labels'],
                 ['/creators', 'nav_creators'],
+                ['/founder', 'nav_founder'],
               ].map(([path, key]) => (
                 <button key={path} onClick={() => onNavigate(path)} className="text-left text-sm hover:text-[#fff] hover:underline underline-offset-4 transition-colors">
                   {t(key)}

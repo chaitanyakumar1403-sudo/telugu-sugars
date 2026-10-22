@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  ArrowUpRight, Compass, Film, HandCoins, Leaf, Microscope, MessagesSquare, ScanLine, Search, Square, UsersRound, UtensilsCrossed, Volume2,
+  ArrowUpRight, Compass, Film, HandCoins, Leaf, Microscope, MessagesSquare, ScanLine, Search, UsersRound, UtensilsCrossed,
 } from 'lucide-react';
 import HomeHero from '../components/home/HomeHero';
 import VideoSections from '../components/watch/VideoSections';
+import ListenButton from '../components/common/ListenButton';
+import FounderTeaser from '../components/home/FounderTeaser';
 import { useLanguage } from '../context/LanguageContext';
 
 interface HomePageProps {
@@ -26,25 +28,10 @@ const DOES = [
   { n: 6, icon: UtensilsCrossed },
 ];
 
-/** "What does Telugu Sugars do?" with a read-aloud button (browser speech, no audio files). */
+/** "What does Telugu Sugars do?" with read-aloud: Dheeraj's recording (public/audio/<lang>/what.mp3), else the device voice. */
 const WhatWeDo: React.FC = () => {
-  const { t, language } = useLanguage();
-  const [speaking, setSpeaking] = useState(false);
-  const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
-
-  useEffect(() => () => { if (canSpeak) speechSynthesis.cancel(); }, [canSpeak, language]);
-
-  const listen = () => {
-    if (speaking) { speechSynthesis.cancel(); setSpeaking(false); return; }
-    const text = [`${t('what_title')} ${t('what_accent')}`, t('what_lead'), ...DOES.flatMap(({ n }) => [t(`do${n}_t`), t(`do${n}_d`)])].join('. ');
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = language === 'te' ? 'te-IN' : 'en-IN';
-    u.rate = 0.95;
-    u.onend = u.onerror = () => setSpeaking(false);
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
-    setSpeaking(true);
-  };
+  const { t } = useLanguage();
+  const spoken = () => [`${t('what_title')} ${t('what_accent')}`, t('what_lead'), ...DOES.flatMap(({ n }) => [t(`do${n}_t`), t(`do${n}_d`)])].join('. ');
 
   return (
     <section className="container" aria-labelledby="what-we-do">
@@ -55,16 +42,7 @@ const WhatWeDo: React.FC = () => {
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">{t('what_lead')}</p>
         </div>
-        {canSpeak && (
-          <button
-            onClick={listen}
-            aria-pressed={speaking}
-            className="inline-flex w-fit items-center gap-2 rounded-full bg-amber-500 px-6 py-3 text-sm font-bold text-[#fff] shadow-lg shadow-amber-500/30 transition hover:-translate-y-0.5 hover:bg-amber-600"
-          >
-            {speaking ? <Square className="h-4 w-4 fill-current" /> : <Volume2 className="h-4 w-4" />}
-            {t(speaking ? 'listen_stop' : 'listen')}
-          </button>
-        )}
+        <ListenButton rec="what" text={spoken} />
       </div>
 
       <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -135,6 +113,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           ))}
         </div>
       </section>
+
+      <FounderTeaser onNavigate={onNavigate} />
 
       <VideoSections limit={6} />
     </div>
