@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { InstagramLink, InstagramIcon } from './InstagramLink';
 
 interface FooterProps {
   onNavigate: (path: string) => void;
@@ -40,6 +41,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
               <Mail className="w-3.5 h-3.5" />
               <span>{t('f_sub')}</span>
             </button>
+
+            <InstagramLink className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#fff]/40 text-[#fff] font-bold hover:bg-[#fff]/10 hover:-translate-y-0.5 transition-all w-fit">
+              <InstagramIcon className="w-3.5 h-3.5" />
+              <span>{t('contact_us')}</span>
+            </InstagramLink>
           </div>
 
           {/* Sitemaps (PDF Recommended URL Patterns) */}

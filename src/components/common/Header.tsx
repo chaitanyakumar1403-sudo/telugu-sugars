@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { InstagramLink, InstagramIcon } from './InstagramLink';
 import { useLanguage } from '../../context/LanguageContext';
 import LanguageToggle from './LanguageToggle';
 import ThemeToggle from './ThemeToggle';
@@ -39,15 +40,16 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
         {/* Brand Wordmark */}
         <button
           onClick={() => onNavigate('/')}
-          className="flex min-w-0 items-center gap-2.5 text-left sm:gap-3"
+          className="flex min-w-0 items-center gap-2 text-left sm:gap-3"
           aria-label={t('nav_brand_aria')}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 font-display text-base font-extrabold text-[#fff] shadow-lg shadow-amber-500/30">
+          <div className="flex h-9 w-9 shrink-0 items-center sm:h-10 sm:w-10 justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 font-display text-base font-extrabold text-[#fff] shadow-lg shadow-amber-500/30">
             TS
           </div>
-          <div className="flex flex-col leading-tight">
-            <span className="whitespace-nowrap font-display text-sm font-extrabold tracking-tight text-white sm:text-base">TELUGU SUGARS</span>
-            <span className="font-telugu text-xs font-medium text-amber-400">తెలుగు సుగర్స్</span>
+          <div className="flex min-w-0 flex-col overflow-hidden leading-tight">
+            {/* Wordmark is too wide beside the toggles on very narrow phones; the TS mark and Telugu name carry the brand there */}
+            <span className="whitespace-nowrap font-display text-xs font-extrabold max-[379px]:hidden tracking-tight text-white sm:text-base">TELUGU SUGARS</span>
+            <span className="whitespace-nowrap font-telugu text-xs font-medium text-amber-400">తెలుగు సుగర్స్</span>
           </div>
         </button>
 
@@ -73,7 +75,11 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
         </nav>
 
         {/* Action Controls: Search & Language Switcher */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+          <InstagramLink className="hidden h-9 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 text-xs font-bold text-slate-200 transition-colors hover:border-amber-400/50 hover:text-white xl:inline-flex">
+            <InstagramIcon className="h-3.5 w-3.5 text-amber-400" />
+            {t('contact_us')}
+          </InstagramLink>
           <ThemeToggle />
           <LanguageToggle />
         </div>

@@ -8,7 +8,7 @@ export const LanguageToggle: React.FC<{ className?: string }> = ({ className = '
   return (
     <button
       onClick={toggleLanguage}
-      className={`inline-flex items-center gap-2 h-9 px-3.5 rounded-full text-xs font-bold border transition-colors ${
+      className={`inline-flex items-center gap-2 h-9 px-3 sm:px-3.5 rounded-full text-xs font-bold border transition-colors ${
         language === 'te'
           ? 'bg-amber-500/15 text-amber-300 border-amber-500/50'
           : 'bg-white/5 text-slate-200 border-white/10 hover:border-amber-400/50'

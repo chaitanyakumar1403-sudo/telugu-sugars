@@ -77,7 +77,7 @@ export const ThemeToggle: React.FC = () => {
         aria-expanded={open}
         aria-haspopup="true"
         aria-label={t('disp_aria')}
-        className={`flex h-9 items-center gap-1.5 rounded-full border px-3 transition ${
+        className={`flex h-9 items-center gap-1.5 rounded-full border px-2.5 transition sm:px-3 ${
           open ? 'border-amber-500 bg-amber-500/15 text-amber-400' : 'border-white/10 bg-white/5 text-amber-400 hover:border-amber-400/50'
         }`}
       >
