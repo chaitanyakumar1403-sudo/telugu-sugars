@@ -1,4 +1,8 @@
 import '@testing-library/jest-dom';
+import { beforeEach } from 'vitest';
+
+// The site opens in Telugu for anyone who hasn't chosen; the tests check the English copy.
+beforeEach(() => localStorage.setItem('telugusugars_lang', 'en'));
 
 // Mock window.matchMedia for JSDOM
 Object.defineProperty(window, 'matchMedia', {

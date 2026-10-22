@@ -1,12 +1,17 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { ChevronDown, ScanText, Search } from 'lucide-react';
-import { BY, CATS, CODES, CON, DISH, GR, ING, byName, decodeLabel, hay, type GroupId, type Ingredient } from '../data/atlasData';
+import { ChevronDown, ScanLine, ScanText, Search } from 'lucide-react';
+import { BY, CATS, CODES, CON, DISH, GR, ING, byName, decodeLabel, hay, tsp, type GroupId, type Ingredient } from '../data/atlasData';
 import AtlasMap, { type ColourMode } from '../components/atlas/AtlasMap';
 import AtlasDetail from '../components/atlas/AtlasDetail';
 import SafetyCheck from '../components/atlas/SafetyCheck';
 import ProductGrid from '../components/atlas/ProductGrid';
 import { LevelPill } from '../components/atlas/atlasUi';
 import { useAtlasText } from '../components/atlas/useAtlasText';
+import AgeVerdicts, { ageRows } from '../components/atlas/AgeVerdicts';
+import Scanner, { type BarcodeResult } from '../components/atlas/Scanner';
+import ShareButton from '../components/atlas/ShareButton';
+import ListenButton from '../components/common/ListenButton';
+import { lookupBarcode } from '../lib/scan';
 
 type Tab = 'products' | 'check' | 'decode' | 'map';
 
@@ -26,14 +31,36 @@ const SAMPLE = 'Refined wheat flour (maida), palm oil, salt, flavour enhancer (I
 
 const label = 'font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500';
 
-/** Paste an ingredient list; every Atlas ingredient found is rated for the chosen age group. */
-const LabelDecoder: React.FC<{ group: GroupId; onOpen: (id: string) => void }> = ({ group, onOpen }) => {
+/** Where the decoder text came from, when it wasn't typed: a photo of the pack, or a barcode lookup. */
+export type LabelSource = { kind: 'photo'; sugar100: number | null } | { kind: 'off'; code: string; name: string; sugar100: number | null } | null;
+
+/** Paste, type or scan an ingredient list; every Atlas ingredient found is rated for every age. */
+const LabelDecoder: React.FC<{
+  group: GroupId;
+  onOpen: (id: string) => void;
+  text: string;
+  setText: (s: string) => void;
+  source: LabelSource;
+  onScan: () => void;
+}> = ({ group, onOpen, text, setText, source, onScan }) => {
   const A = useAtlasText();
-  const [text, setText] = useState('');
   const ids = useMemo(() => decodeLabel(text), [text]);
+  const name = source?.kind === 'off' ? source.name : A.t('card_label');
+  const sugar = source?.sugar100 ?? null;
+  const spoken = () => `${name}. ` + ageRows(ids).map((r) => `${A.groupName(r.id)}: ${A.level(r.level)}.`).join(' ');
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
       <div className="panel flex flex-col p-5 sm:p-6">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={onScan}
+            className="inline-flex min-h-12 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-sm font-bold text-[#fff] shadow-lg shadow-amber-500/30 transition hover:-translate-y-0.5"
+          >
+            <ScanLine className="h-5 w-5" /> {A.t('x_scan')}
+          </button>
+          <span className="min-w-48 flex-1 text-xs leading-relaxed text-slate-400">{A.t('x_or')}</span>
+        </div>
         <label htmlFor="decode" className="flex items-center gap-2 text-sm font-bold text-white">
           <ScanText className="h-4 w-4 text-amber-500" /> {A.t('x_label')}
         </label>
@@ -45,6 +72,11 @@ const LabelDecoder: React.FC<{ group: GroupId; onOpen: (id: string) => void }> =
           placeholder={A.t('x_ph')}
           className="mt-3 w-full flex-1 resize-y rounded-xl border border-white/10 bg-scrim/30 p-4 text-base text-white placeholder:text-slate-500 focus:border-amber-400/60 focus:outline-none sm:text-sm"
         />
+        {source && (
+          <p className="mt-3 rounded-xl bg-amber-500/10 px-4 py-2.5 text-xs leading-relaxed text-amber-200">
+            {source.kind === 'photo' ? A.t('src_photo') : A.t('src_off', { code: source.code, name: source.name })}
+          </p>
+        )}
         <div className="mt-3 flex flex-wrap gap-2">
           <button onClick={() => setText(SAMPLE)} className="rounded-full border border-amber-500/50 px-4 py-1.5 text-xs font-bold text-amber-400 transition-colors hover:bg-amber-500/10">
             {A.t('x_try')}
@@ -61,6 +93,16 @@ const LabelDecoder: React.FC<{ group: GroupId; onOpen: (id: string) => void }> =
         <p className={label}>{text ? A.t('x_found', { n: ids.length }) : A.t('x_results')}</p>
         {!text && <p className="mt-3 text-sm text-slate-400">{A.t('x_hint')}</p>}
         {text && !ids.length && <p className="mt-3 text-sm text-slate-400">{A.t('x_none')}</p>}
+        {text && sugar != null && (
+          <div className="mt-3 flex items-center gap-4 rounded-2xl bg-amber-500/10 p-4">
+            <span className="font-display text-4xl font-extrabold leading-none text-amber-400">{tsp(sugar)}</span>
+            <span className="text-sm text-slate-200">
+              <b>{A.t('sug_title')}</b> · {A.t('sug_tsp', { g: Math.round(sugar * 10) / 10 })}
+              <small className="mt-1 block text-xs text-slate-400">{A.t(source?.kind === 'photo' ? 'sug_photo' : 'sug_off')}</small>
+            </span>
+          </div>
+        )}
+        {ids.length > 0 && <AgeVerdicts ids={ids} focus={group} />}
         <ul className="mt-3 divide-y divide-white/[0.06]">
           {ids.map((id) => {
             const lv = (BY[id] as Ingredient).r[group][0];
@@ -77,6 +119,25 @@ const LabelDecoder: React.FC<{ group: GroupId; onOpen: (id: string) => void }> =
             );
           })}
         </ul>
+        {ids.length > 0 && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <ShareButton
+              path="/atlas"
+              slug={source?.kind === 'off' ? source.name : 'label'}
+              card={() => ({
+                title: name,
+                source: A.t(source?.kind === 'photo' ? 'card_src_photo' : source?.kind === 'off' ? 'card_src_off' : 'card_src_atlas'),
+                tsp: sugar != null ? sugar / 4 : null,
+                tspLabel: A.t('card_tsp100'),
+                rows: ageRows(ids).map((r) => ({
+                  age: A.groupName(r.id), level: r.level, word: A.level(r.level),
+                  why: r.why.length ? A.t('ages_why', { list: r.why.map(A.name).join(', ') }) : '',
+                })),
+              })}
+            />
+            <ListenButton text={spoken} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-bold text-white transition hover:border-amber-500/60" />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -93,6 +154,9 @@ export const AtlasPage: React.FC = () => {
   const [find, setFind] = useState('');
   const [visible, setVisible] = useState<Set<string>>(() => new Set(Object.keys(BY)));
   const [checkSel, setCheckSel] = useState('maltodextrin');
+  const [decodeText, setDecodeText] = useState('');
+  const [source, setSource] = useState<LabelSource>(null);
+  const [scanning, setScanning] = useState(false);
   const tabsRef = useRef<HTMLDivElement>(null);
 
   const matchIds = useMemo(() => {
@@ -122,6 +186,24 @@ export const AtlasPage: React.FC = () => {
     setCheckSel(id);
     setTab('check');
     showTabs();
+  };
+
+  // A scanned or looked-up label lands in the decoder.
+  const fillDecoder = (text: string, src: LabelSource) => {
+    setDecodeText(text);
+    setSource(src);
+    setTab('decode');
+    showTabs();
+  };
+  // A barcode: our own packs first (Dish.ean, from a pack in hand), then Open Food Facts.
+  const onBarcode = async (code: string): Promise<BarcodeResult> => {
+    const mine = DISH.find((d) => d.ean?.includes(code));
+    if (mine) { openCheck(mine.id); return true; }
+    const r = await lookupBarcode(code);
+    if (r.status === 'found') { fillDecoder(r.text, { kind: 'off', code, name: r.name, sugar100: r.sugar100 }); return true; }
+    if (r.status === 'noing') return { name: r.name };
+    if (r.status === 'offline') return { offline: true };
+    return false;
   };
 
   // Concerns live on the map; ingredients and dishes open the safety check
@@ -262,7 +344,16 @@ export const AtlasPage: React.FC = () => {
 
         {tab === 'check' && <SafetyCheck checkSel={checkSel} onPick={setCheckSel} focus={group} />}
 
-        {tab === 'decode' && <LabelDecoder group={group} onOpen={openCheck} />}
+        {tab === 'decode' && (
+          <LabelDecoder
+            group={group}
+            onOpen={openCheck}
+            text={decodeText}
+            setText={(v) => { setDecodeText(v); if (!v.trim()) setSource(null); }}
+            source={source}
+            onScan={() => setScanning(true)}
+          />
+        )}
 
         {tab === 'map' && (
           <>
@@ -343,6 +434,21 @@ export const AtlasPage: React.FC = () => {
           </p>
         </div>
       </div>
+
+      {/* Scan a pack, from any tab */}
+      <button
+        type="button"
+        onClick={() => setScanning(true)}
+        className="fixed bottom-[calc(var(--mobile-nav-height)+16px+env(safe-area-inset-bottom,0px))] right-4 z-40 inline-flex min-h-13 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-[15px] font-extrabold text-[#fff] shadow-xl shadow-amber-700/40 transition hover:-translate-y-0.5 lg:bottom-6"
+      >
+        <ScanLine className="h-5 w-5" /> {A.t('x_scan_short')}
+      </button>
+      <Scanner
+        open={scanning}
+        onClose={() => setScanning(false)}
+        onBarcode={onBarcode}
+        onText={(text, sugar100) => fillDecoder(text, { kind: 'photo', sugar100 })}
+      />
     </div>
   );
 };

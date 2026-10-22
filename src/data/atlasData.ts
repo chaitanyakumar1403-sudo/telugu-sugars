@@ -13,6 +13,8 @@ export type PackShape = 'can' | 'slimcan' | 'pouch' | 'biscuit' | 'bar' | 'jar' 
 export interface Dish {
   id: string; name: string; ing: string[]; pack?: boolean;
   shelf: Shelf; serving: string; sugar: number; brand?: string; art: [PackShape, string, string?];
+  /** Barcodes (EAN-13) of this pack, added only after checking a real pack, so a scan opens it directly */
+  ean?: string[];
 }
 
 export const LV: Record<Level, { t: string; o: number }> = { ok: { t: "Suitable", o: 0 }, limit: { t: "Limit", o: 1 }, care: { t: "Check first", o: 2 }, avoid: { t: "Avoid", o: 3 } };

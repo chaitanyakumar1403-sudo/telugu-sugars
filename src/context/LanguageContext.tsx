@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Language } from '../types/content';
+import { VOICE_STRINGS } from '../i18n/voice';
+import { FOUNDER_STRINGS } from '../i18n/founder';
+import { SCAN_STRINGS } from '../i18n/scan';
 
 interface LanguageContextType {
   language: Language;
@@ -8,7 +11,9 @@ interface LanguageContextType {
   t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
-const TRANSLATIONS: Record<string, { en: string; te: string }> = {
+type Strings = Record<string, { en: string; te: string }>;
+
+const BASE: Strings = {
   nav_stories: { en: 'Stories', te: 'కథనాలు' },
   nav_watch: { en: 'Watch', te: 'వీడియోలు' },
   nav_topics: { en: 'Topics', te: 'అంశాలు' },
@@ -296,20 +301,23 @@ const TRANSLATIONS: Record<string, { en: string; te: string }> = {
   p_aria: { en: '{name}: {verdict} for {age}. Open safety check', te: '{name}: {age} కోసం {verdict}. పూర్తి వివరాలు చూడండి' },
 };
 
+// Feature strings live beside their features (src/i18n/*) and join the one dictionary here.
+const TRANSLATIONS: Strings = { ...BASE, ...VOICE_STRINGS, ...FOUNDER_STRINGS, ...SCAN_STRINGS };
+
 const TITLE_EN = document.title;
 const TITLE_TE = 'తెలుగు సుగర్స్ | Telugu Sugars — ఆధారాలతో ఆహార సైన్స్';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>('en');
-
-  useEffect(() => {
-    const saved = localStorage.getItem('telugusugars_lang') as Language | null;
-    if (saved === 'en' || saved === 'te') {
-      setLanguageState(saved);
-    }
-  }, []);
+  // Telugu first: anyone who hasn't chosen yet (elders, first-time visitors) lands in Telugu; English is one tap away.
+  const [language, setLanguageState] = useState<Language>(() => {
+    try {
+      const saved = localStorage.getItem('telugusugars_lang');
+      if (saved === 'en' || saved === 'te') return saved;
+    } catch { /* private mode: fall through to Telugu */ }
+    return 'te';
+  });
 
   useEffect(() => {
     document.documentElement.lang = language;

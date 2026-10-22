@@ -23,3 +23,6 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 .serena/
+
+# Raw voice takes (processed copies go to public/audio via scripts/prepare-audio.mjs)
+audio-raw/

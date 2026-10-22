@@ -31,6 +31,7 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
     { path: '/research', labelKey: 'nav_research' },
     { path: '/food-labels', labelKey: 'nav_food_labels' },
     { path: '/creators', labelKey: 'nav_creators' },
+    { path: '/founder', labelKey: 'nav_founder' },
   ];
 
   return (
