@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
-import { BY, CATS, DISH, GR, ING, dishRating, hay, type AtlasItem, type GroupId } from '../../data/atlasData';
+import { BY, CATS, DISH, GR, ING, dishRating, hay, tsp, type AtlasItem, type GroupId, type Level } from '../../data/atlasData';
 import { Chip, LEVEL_BORDER, LevelPill } from './atlasUi';
 import { useAtlasText } from './useAtlasText';
+import ShareButton from './ShareButton';
+import ListenButton from '../common/ListenButton';
+import { ATLAS_REC } from './recordings';
 
 interface SafetyCheckProps {
   checkSel: string;
@@ -27,6 +30,15 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
     .filter((b) => b.items.length);
 
   const n = BY[checkSel];
+
+  // Every age's verdict for the picked item, with what drives it: the read-aloud text and the share card.
+  const rows = (x: AtlasItem): { id: GroupId; level: Level; why: string[] }[] =>
+    x.kind === 'con' ? [] : GR.map((g) => {
+      if (x.kind === 'ing') return { id: g.id, level: x.r[g.id][0], why: [] };
+      const dr = dishRating(x, g.id);
+      return { id: g.id, level: dr.level, why: dr.drivers.slice(0, 3).map((d) => A.name(d.id)) };
+    });
+  const spoken = () => `${A.name(n.id)}. ` + rows(n).map((r) => `${A.groupName(r.id)}: ${A.level(r.level)}${n.kind === 'ing' ? '. ' + A.note(n.id, r.id) : ''}.`).join(' ');
 
   // Close the list after a pick and bring the result into view so the click visibly lands
   const pick = (id: string) => {
@@ -87,6 +99,22 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
       {/* Result */}
       <div ref={resultRef} className="panel scroll-mt-44 p-6 sm:p-8">
         <h2 className="font-display text-3xl font-extrabold text-white">{A.name(n.id)}</h2>
+        {n.kind !== 'con' && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <ListenButton rec={ATLAS_REC[n.id]} text={spoken} className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/15 px-5 py-2.5 text-sm font-bold text-white transition hover:border-amber-500/60" />
+            <ShareButton
+              path="/atlas"
+              slug={n.id}
+              card={() => ({
+                title: A.name(n.id),
+                source: A.t('card_src_atlas'),
+                tsp: n.kind === 'dish' && n.sugar > 0 ? tsp(n.sugar) : null,
+                tspLabel: n.kind === 'dish' ? A.t('card_tspserv', { s: A.serving(n) }) : '',
+                rows: rows(n).map((r) => ({ age: A.groupName(r.id), level: r.level, word: A.level(r.level), why: r.why.length ? A.t('ages_why', { list: r.why.join(', ') }) : '' })),
+              })}
+            />
+          </div>
+        )}
         {n.kind === 'ing' && (
           <p className="mt-2 text-sm text-slate-400">
             {A.t('c_concerns', {
