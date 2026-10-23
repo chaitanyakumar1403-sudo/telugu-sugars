@@ -39,20 +39,20 @@ export const InteractiveLabel: React.FC<InteractiveLabelProps> = ({ guide, selec
     <div className="mock-label-paper relative mx-auto w-full max-w-md select-none rounded-2xl border-4 p-6 shadow-2xl shadow-black/60 sm:p-8">
       {/* Front of pack */}
       <div className="mb-4 border-b-8 pb-4">
-        <div className="mb-2 flex items-center justify-between gap-3 text-[11px] font-bold uppercase tracking-widest">
+        <div className="mb-2 flex items-center justify-between gap-3 text-xs font-bold">
           <span>Supermarket Brand Specimen</span>
           <span className={`inline-flex items-center gap-2 rounded ${mark(2)}`}>
             <span className="rounded bg-emerald-700 px-2 py-0.5 text-[10px] text-white!">100% Traditional</span>
             {pin(2)}
           </span>
         </div>
-        <h3 className="font-display text-2xl font-extrabold uppercase leading-tight tracking-tight">{guide.productName}</h3>
+        <h3 className="font-display text-2xl font-extrabold leading-tight">{guide.productName}</h3>
         <p className="mt-1 font-serif text-sm italic text-stone-600!">“Crafted with pure Anakapalle Jaggery & Ancient Ragi Millets”</p>
       </div>
 
       {/* Nutrition facts header */}
       <div className="mb-2 border-b-4 pb-2">
-        <h4 className="text-3xl font-black uppercase tracking-tighter">Nutrition Facts</h4>
+        <h4 className="text-3xl font-black">Nutrition Facts</h4>
         <div className={`mt-1 flex items-center justify-between gap-3 rounded text-xs font-semibold ${mark(0)}`}>
           <span className="inline-flex items-center gap-2">Serving Size: 1 cookie (12g) {pin(0)}</span>
           <span>Servings Per Pack: ~10</span>
@@ -62,7 +62,7 @@ export const InteractiveLabel: React.FC<InteractiveLabelProps> = ({ guide, selec
       {/* Calories */}
       <div className="flex items-baseline justify-between border-b-8 py-2">
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-wider">Amount Per Serving</div>
+          <div className="text-xs font-bold">Amount Per Serving</div>
           <div className="text-3xl font-black">Calories 48</div>
         </div>
         <div className="text-xs font-bold text-stone-600!">Per 100g: 400 kcal</div>

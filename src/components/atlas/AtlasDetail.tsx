@@ -72,7 +72,7 @@ export const AtlasDetail: React.FC<AtlasDetailProps> = ({ sel, onSelect, onOpenC
           <Eyebrow>{A.t('m_leg_con')}</Eyebrow>
           {title}
           <p className="mt-3 text-sm leading-relaxed text-slate-300">{A.desc(n.id)}</p>
-          <p className="mt-6 mb-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">{A.t('d_connected')}</p>
+          <p className="mt-6 mb-2.5 text-xs text-slate-500">{A.t('d_connected')}</p>
           <div className="flex flex-wrap gap-2">
             {ING.filter((i) => i.tags.includes(n.id)).map((i) => <Chip key={i.id} id={i.id} onClick={onSelect} />)}
           </div>
@@ -91,7 +91,7 @@ export const AtlasDetail: React.FC<AtlasDetailProps> = ({ sel, onSelect, onOpenC
           <AgeRows n={n} />
           {DISH.some((d) => d.ing.includes(n.id)) && (
             <>
-              <p className="mt-4 mb-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">{A.t('d_found')}</p>
+              <p className="mt-4 mb-2.5 text-xs text-slate-500">{A.t('d_found')}</p>
               <div className="flex flex-wrap gap-2">
                 {DISH.filter((d) => d.ing.includes(n.id)).map((d) => <Chip key={d.id} id={d.id} onClick={onSelect} />)}
               </div>

@@ -36,7 +36,7 @@ export const TopicDetailPage: React.FC<TopicDetailPageProps> = ({ slug, onNaviga
 
       {/* Topic Header */}
       <div className="border-b border-white/10 pb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-3 border border-amber-500/30">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-3 border border-amber-500/30">
           <Tag className="w-3.5 h-3.5" />
           <span>Curated Pathway</span>
         </div>

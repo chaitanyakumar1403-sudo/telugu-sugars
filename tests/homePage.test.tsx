@@ -4,7 +4,7 @@ import HomePage from '../src/pages/HomePage';
 import { LanguageProvider } from '../src/context/LanguageContext';
 
 describe('HomePage Hero and Interactive Wordmark', () => {
-  it('renders the Inside-IMAX display wordmark and handles interaction toggle', () => {
+  it('renders the running wordmark and turns it orange on hover', () => {
     const onNavigate = vi.fn();
     render(
       <LanguageProvider>

@@ -51,7 +51,7 @@ export const ResearchPage: React.FC = () => {
       {/* Header & Page Title */}
       <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 border-b border-white/10 pb-8">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 text-teal-300 text-xs font-bold uppercase tracking-wider mb-2 border border-teal-500/30">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 text-teal-300 text-xs font-bold mb-2 border border-teal-500/30">
             <Compass className="w-3.5 h-3.5" />
             <span>Research explorer</span>
           </div>
@@ -65,7 +65,7 @@ export const ResearchPage: React.FC = () => {
 
         {/* Claim Selector Dropdown */}
         <div className="flex flex-col gap-1 w-full sm:w-auto">
-          <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+          <label className="text-xs font-bold text-slate-400">
             Claim
           </label>
           <select
@@ -91,7 +91,7 @@ export const ResearchPage: React.FC = () => {
       <div className="p-6 rounded-2xl bg-(--bg-panel) border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-xs font-bold text-slate-400">
               Claim under review
             </span>
             <span
@@ -149,7 +149,7 @@ export const ResearchPage: React.FC = () => {
 
           {/* Mobile-Friendly Study Carousel (PDF Section 7 requirement) */}
           <div className="md:hidden flex flex-col gap-3">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400">
               Studies for this claim
             </span>
             <div className="flex gap-3 overflow-x-auto pb-2 snap-x">

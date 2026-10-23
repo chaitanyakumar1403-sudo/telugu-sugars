@@ -42,7 +42,7 @@ const BASE: Strings = {
   cta_explore: { en: 'Watch today’s video', te: 'ఈరోజు వీడియో చూడండి' },
   cta_browse_evidence: { en: 'Browse Evidence', te: 'పరిశోధన ఆధారాలు' },
   hero_tagline: {
-    en: 'Investigative science and cultural truth behind the sugars we consume.',
+    en: 'What is really in the food and drinks we buy every day, explained in Telugu.',
     te: 'మనం రోజూ తినే, తాగే వాటిలో దాగి ఉన్న చక్కెర, రసాయనాల గురించి సైన్స్ చెప్పే నిజం — మన తెలుగులో.',
   },
   what_study_found: { en: 'What the study found', te: 'పరిశోధనలో తేలిన అంశం' },
@@ -69,11 +69,11 @@ const BASE: Strings = {
   do5_d: { en: 'We take zero money or free products from food, drink or sweetener companies.', te: 'ఫుడ్, డ్రింక్, స్వీటెనర్ కంపెనీల నుంచి ఒక్క రూపాయి గానీ, ఉచిత వస్తువులు గానీ తీసుకోం.' },
   do6_t: { en: 'Soon: our own food', te: 'త్వరలో: మా సొంత ఆహారం' },
   do6_d: { en: 'Our first food outlet is on its way, and after it a food truck.', te: 'మా మొదటి ఫుడ్ ఔట్‌లెట్ త్వరలో వస్తోంది. ఆ తర్వాత ఫుడ్ ట్రక్.' },
-  ch1_kicker: { en: 'Chapter 01', te: 'అధ్యాయం 01' },
+  ch1_kicker: { en: 'The first videos', te: 'మొదటి వీడియోలు' },
   ch1_title: { en: 'How it', te: 'ఎలా' },
   ch1_accent: { en: 'started', te: 'మొదలైంది' },
   ch1_empty: { en: 'The first episodes are on their way.', te: 'మొదటి వీడియోలు త్వరలో వస్తున్నాయి.' },
-  ch2_kicker: { en: 'Chapter 02 · Updated daily', te: 'అధ్యాయం 02 · రోజూ కొత్తది' },
+  ch2_kicker: { en: 'A new video every day', te: 'రోజూ ఒక కొత్త వీడియో' },
   ch2_title: { en: 'How it’s', te: 'ఎలా' },
   ch2_accent: { en: 'going', te: 'సాగుతోంది' },
   ch2_empty: { en: 'A new video lands here every day. Check back tomorrow.', te: 'రోజూ ఇక్కడ ఒక కొత్త వీడియో వస్తుంది. రేపు మళ్ళీ చూడండి.' },
@@ -100,55 +100,44 @@ const BASE: Strings = {
 
   // Footer
   f_about: {
-    en: 'An independent, evidence-first digital publication and interactive research platform investigating dietary sugars, sweeteners, and metabolic truth across Andhra Pradesh, Telangana, and the global Telugu diaspora.',
+    en: 'We read food labels and the research behind them, and explain it in simple Telugu. For families in Andhra Pradesh, Telangana and Telugu people everywhere.',
     te: 'చక్కెర, స్వీటెనర్లు, మనం తినే ఆహారం వెనక ఉన్న నిజాన్ని ఆధారాలతో వెతికే స్వతంత్ర వేదిక — ఆంధ్రప్రదేశ్, తెలంగాణ, ప్రపంచంలోని తెలుగు వారందరి కోసం.',
   },
-  f_sub: { en: 'Subscribe to Monthly Evidence Dispatch', te: 'నెలకోసారి మా ముఖ్యమైన విషయాలు పొందండి' },
+  f_sub: { en: 'Get our monthly email', te: 'నెలకోసారి మా ఈమెయిల్ పొందండి' },
   f_explore: { en: 'Explore', te: 'చూడండి' },
   f_standards: { en: 'Editorial Standards', te: 'మా నియమాలు' },
   f_read: { en: 'Read our standards', te: 'మా నియమాలు చదవండి' },
   f_firewall: {
-    en: 'Telugu Sugars operates under strict conflict-of-interest firewalls. We accept zero financial contributions, sponsored content, or review products from food, beverage, or sweetener corporations.',
+    en: 'We do not take money, sponsored posts or free products from food, drink or sweetener companies.',
     te: 'ఫుడ్, డ్రింక్, స్వీటెనర్ కంపెనీల నుంచి మేము ఎలాంటి డబ్బు, స్పాన్సర్‌షిప్, ఉచిత వస్తువులు తీసుకోం.',
   },
-  f_disclaimer_label: { en: 'Medical Disclaimer:', te: 'గమనిక:' },
+  f_disclaimer_label: { en: 'Please note:', te: 'గమనిక:' },
   f_disclaimer: {
-    en: 'Telugu Sugars is an investigative science publication, not a clinical healthcare provider. Content is for educational, journalistic, and public interest purposes and must never replace personalized consultation with a licensed endocrinologist or certified physician.',
+    en: 'We are not doctors, and nothing here is medical advice. It is general information to help you read labels. For your own health, please talk to your doctor.',
     te: 'తెలుగు సుగర్స్ ఒక పరిశోధన, సమాచార వేదిక. ఆసుపత్రి కాదు. ఇక్కడి సమాచారం అవగాహన కోసం మాత్రమే. మీ ఆరోగ్యం కోసం ఎప్పుడూ డాక్టర్‌ని సంప్రదించండి.',
   },
-  f_rights: { en: 'Telugu Sugars. All Rights Reserved.', te: 'తెలుగు సుగర్స్. అన్ని హక్కులు మావే.' },
+  f_rights: { en: 'Telugu Sugars', te: 'తెలుగు సుగర్స్' },
 
   // Newsletter modal
-  nl_aria: { en: 'Telugu Sugars Evidence Dispatch', te: 'తెలుగు సుగర్స్ నెలవారీ సమాచారం' },
+  nl_aria: { en: 'Telugu Sugars monthly email', te: 'తెలుగు సుగర్స్ నెలవారీ ఈమెయిల్' },
   nl_close: { en: 'Close', te: 'మూసేయండి' },
-  nl_done_t: { en: 'Subscription Confirmed!', te: 'సబ్‌స్క్రిప్షన్ పూర్తయింది!' },
+  nl_done_t: { en: 'Done, you are on the list', te: 'అయిపోయింది, మీ పేరు లిస్ట్‌లో ఉంది' },
   nl_done_d: {
-    en: 'Thank you for trusting Telugu Sugars. You will receive our monthly peer-reviewed clinical dossier with zero promotional noise.',
+    en: 'Thanks. You will get one email a month from us. No ads.',
     te: 'తెలుగు సుగర్స్‌ని నమ్మినందుకు ధన్యవాదాలు. నెలకోసారి, ఎలాంటి ప్రకటనలు లేకుండా, ఆధారాలతో కూడిన మా సమాచారం మీకు వస్తుంది.',
   },
-  nl_kicker: { en: 'Evidence Dispatch • ఉచిత సబ్‌స్క్రిప్షన్', te: 'నెలవారీ సమాచారం • ఉచిత సబ్‌స్క్రిప్షన్' },
-  nl_title: { en: 'Stay Grounded in Metabolic Truth', te: 'మనం తినే దాని వెనక నిజం తెలుసుకోండి' },
+  nl_kicker: { en: 'Monthly email · free', te: 'నెలకోసారి ఈమెయిల్ · ఉచితం' },
+  nl_title: { en: 'One email a month', te: 'నెలకు ఒక్క ఈమెయిల్' },
   nl_lead: {
-    en: 'Receive our monthly forensic breakdowns of supermarket food deceptions, clinical sweetener research, and Telugu dietary investigations.',
+    en: 'The labels we checked that month, our new videos, and what the research says. Short, and in Telugu and English.',
     te: 'సూపర్‌మార్కెట్ ఆహారంలో దాగి ఉన్న మోసాలు, స్వీటెనర్లపై పరిశోధనలు, మన తెలుగు ఆహారపు అలవాట్లపై మా విశ్లేషణ — నెలకోసారి మీ ఈమెయిల్‌కి.',
   },
-  nl_email: { en: 'Email Address:', te: 'ఈమెయిల్ అడ్రస్:' },
+  nl_email: { en: 'Your email', te: 'మీ ఈమెయిల్' },
   nl_consent: {
-    en: 'I explicitly consent to receiving monthly scientific updates. Telugu Sugars guarantees 1-click unsubscribe and promises never to collect sensitive personal medical records or sell subscriber data.',
+    en: 'Yes, send me the monthly email. I can ask to stop any time, and you will never sell or share my email.',
     te: 'నెలకోసారి వచ్చే ఈ సమాచారం కోసం నా అంగీకారం ఇస్తున్నాను. ఒక్క క్లిక్‌తో ఎప్పుడైనా ఆపేయొచ్చు. తెలుగు సుగర్స్ మీ ఆరోగ్య రికార్డులు సేకరించదు, మీ వివరాలు ఎవరికీ అమ్మదు.',
   },
-  nl_submit: { en: 'Confirm Free Subscription', te: 'ఉచితంగా సబ్‌స్క్రైబ్ చేయండి' },
-
-  // Consent banner
-  cb_aria: { en: 'Privacy and analytics consent', te: 'గోప్యత, అనలిటిక్స్ అంగీకారం' },
-  cb_title: { en: 'Your privacy', te: 'మీ గోప్యత' },
-  cb_dismiss: { en: 'Dismiss banner', te: 'మూసేయండి' },
-  cb_body: {
-    en: 'No ad trackers, ever. We only use privacy-friendly analytics to improve our reporting.',
-    te: 'ప్రకటనల ట్రాకర్లు ఎప్పుడూ ఉండవు. మా సమాచారాన్ని మెరుగుపరచడానికి గోప్యతను కాపాడే అనలిటిక్స్ మాత్రమే వాడతాం.',
-  },
-  cb_min: { en: 'Essential only', te: 'అవసరమైనవి మాత్రమే' },
-  cb_accept: { en: 'Accept preferences', te: 'అంగీకరిస్తున్నాను' },
+  nl_submit: { en: 'Subscribe', te: 'సబ్‌స్క్రైబ్ చేయండి' },
 
   // Watch
   vid_today: { en: 'Today', te: 'ఈరోజు' },
@@ -162,9 +151,10 @@ const BASE: Strings = {
     en: 'Studies, sources and the evidence behind every video, gathered in one place. We are building it now.',
     te: 'ప్రతి వీడియో వెనక ఉన్న పరిశోధనలు, ఆధారాలు అన్నీ ఒకే చోట. ఇప్పుడు దీన్ని తయారు చేస్తున్నాం.',
   },
+  soon_meanwhile: { en: 'Until then, these already work:', te: 'అప్పటిదాకా, ఇవి ఇప్పుడే వాడొచ్చు:' },
 
   // Food labels
-  fl_kicker: { en: 'Interactive walkthrough', te: 'నొక్కి చూడండి' },
+  fl_kicker: { en: 'Tap and see', te: 'నొక్కి చూడండి' },
   fl_title: { en: 'Read the', te: 'లేబుల్' },
   fl_accent: { en: 'Label', te: 'చదవండి' },
   fl_lead: {
@@ -173,7 +163,7 @@ const BASE: Strings = {
   },
   fl_tap: { en: 'Tap a numbered pin', te: 'నంబర్ పిన్ మీద నొక్కండి' },
   fl_pin_aria: { en: 'Inspect hotspot: {t}', te: 'చూడండి: {t}' },
-  fl_aliases: { en: 'Common Sugar Aliases Found in Telugu Supermarkets', te: 'మన సూపర్‌మార్కెట్ ప్యాకెట్లలో చక్కెరకు ఉండే వేరే పేర్లు' },
+  fl_aliases: { en: 'Other names sugar hides under on our packets', te: 'మన సూపర్‌మార్కెట్ ప్యాకెట్లలో చక్కెరకు ఉండే వేరే పేర్లు' },
   fl_a1: { en: 'Maltodextrin', te: 'మాల్టోడెక్స్ట్రిన్ (Maltodextrin)' },
   fl_a1d: { en: 'Starch derivative • GI ~130', te: 'స్టార్చ్ నుంచి చేసేది • GI ~130' },
   fl_a2: { en: 'Invert Sugar', te: 'ఇన్వర్ట్ షుగర్ (Invert Sugar)' },
@@ -189,7 +179,7 @@ const BASE: Strings = {
   hs_advice: { en: 'Buyer checklist', te: 'కొనేముందు చూడాల్సినవి' },
 
   // Ingredient Atlas
-  a_kicker: { en: 'Interactive · {i} ingredients · {p} products', te: '{i} పదార్థాలు · {p} ప్యాకెట్లు, వంటకాలు' },
+  a_kicker: { en: '{i} ingredients · {p} products', te: '{i} పదార్థాలు · {p} ప్యాకెట్లు, వంటకాలు' },
   a_title: { en: 'Ingredient', te: 'ప్యాకెట్‌లో' },
   a_accent: { en: 'Atlas', te: 'ఏముంది?' },
   a_lede: {
@@ -305,7 +295,7 @@ const BASE: Strings = {
 const TRANSLATIONS: Strings = { ...BASE, ...VOICE_STRINGS, ...FOUNDER_STRINGS, ...SCAN_STRINGS };
 
 const TITLE_EN = document.title;
-const TITLE_TE = 'తెలుగు సుగర్స్ | Telugu Sugars — ఆధారాలతో ఆహార సైన్స్';
+const TITLE_TE = 'తెలుగు సుగర్స్ | Telugu Sugars — మన ఆహారంలో అసలు ఏముంది';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 

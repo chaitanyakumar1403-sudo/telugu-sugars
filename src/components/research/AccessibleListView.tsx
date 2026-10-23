@@ -16,7 +16,7 @@ export const AccessibleListView: React.FC<AccessibleListViewProps> = ({
   return (
     <div className="w-full overflow-x-auto rounded-xl border border-white/10 bg-scrim/40">
       <table className="w-full text-left text-xs text-slate-300" aria-label="Evidence Studies Table">
-        <thead className="bg-white/5 border-b border-white/10 text-slate-400 font-bold uppercase tracking-wider">
+        <thead className="bg-white/5 border-b border-white/10 text-slate-400 font-bold">
           <tr>
             <th scope="col" className="p-4">Study / Paper Title</th>
             <th scope="col" className="p-4">Study Design</th>

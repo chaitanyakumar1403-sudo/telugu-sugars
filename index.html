@@ -2,21 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍬</text></svg>" />
-    <meta name="theme-color" content="#1f1d1b" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23ff6a00'/><text x='32' y='43' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' font-size='28' fill='%23fff'>TS</text></svg>" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Telugu Sugars | తెలుగు సుగర్స్ — Evidence-Based Metabolic Science & Editorial Journal</title>
-    <meta name="description" content="Telugu Sugars is an independent, evidence-first digital publication and interactive research platform investigating dietary sugars, sweeteners, and metabolic truth across Telugu communities." />
+    <title>Telugu Sugars | తెలుగు సుగర్స్ — what is really in our food</title>
+    <meta name="description" content="Telugu Sugars reads the labels on everyday food and drinks and explains, in simple Telugu, what is inside and who can eat it. Daily videos, an ingredient checker and a pack scanner." />
     
-    <!-- Fonts: Bricolage Grotesque (body), Syne (display), JetBrains Mono (labels), Noto Sans Telugu, Mandali -->
+    <!-- Fonts: Bricolage Grotesque (site), Noto Sans Telugu + Mandali (Telugu), JetBrains Mono (numbers); Syne, Plus Jakarta, Caveat, Gurajada, Space Mono (founder page); Cormorant (label mock) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Caveat:wght@500..700&family=Gurajada&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@500;600;700&family=Mandali&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
     <script>
-      // Set theme and text size before first paint: saved choice, else the OS preference
+      // Set theme and text size before first paint: saved choice, else white (the brand); "system" follows the phone
       try {
         var t = localStorage.getItem('telugusugars_theme');
-        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        if (t === 'system') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (t !== 'light' && t !== 'dark') t = 'light';
         document.documentElement.dataset.theme = t;
         var z = localStorage.getItem('telugusugars_size');
         if (z === 'big' || z === 'bigger') document.documentElement.dataset.size = z;

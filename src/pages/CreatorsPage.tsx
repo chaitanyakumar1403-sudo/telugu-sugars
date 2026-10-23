@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Sparkles } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { InstagramLink, InstagramIcon, INSTAGRAM_HANDLE } from '../components/common/InstagramLink';
 
@@ -40,17 +40,15 @@ export const CreatorsPage: React.FC = () => {
     // .container is unlayered CSS and beats Tailwind's max-w-*, so the width cap lives on an inner wrapper
     <div className="container py-12 sm:py-20">
       <div className="mx-auto flex max-w-xl flex-col items-center text-center">
-        <span className="reveal inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-500">
-          <Sparkles className="h-4 w-4" /> {t('cr_kicker')}
-        </span>
-        <h1 className="reveal display-title mt-4 text-[clamp(2rem,7vw,3.75rem)] text-white" style={{ '--d': '80ms' } as React.CSSProperties}>
+        <span className="text-sm font-semibold text-amber-400">{t('cr_kicker')}</span>
+        <h1 className="display-title mt-2 text-[clamp(2rem,7vw,3.75rem)] text-white">
           {t('cr_title')}
         </h1>
-        <p className="reveal mt-5 text-base leading-relaxed text-slate-300 sm:text-lg" style={{ '--d': '160ms' } as React.CSSProperties}>
+        <p className="mt-5 text-base leading-relaxed text-slate-300 sm:text-lg">
           {t('cr_lead')}
         </p>
 
-        <div className="reveal panel mt-10 w-full p-6 text-left sm:p-8" style={{ '--d': '220ms' } as React.CSSProperties}>
+        <div className="panel mt-10 w-full p-6 text-left sm:p-8">
           {status === 'done' ? (
             <div role="status" className="flex flex-col items-center gap-3 py-8 text-center">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-teal-500/20 text-teal-400">
@@ -86,7 +84,7 @@ export const CreatorsPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full rounded-xl bg-amber-400 py-3.5 text-sm font-bold text-[#fff] shadow-lg shadow-amber-500/25 transition-all hover:bg-amber-300 disabled:opacity-50"
+                className="w-full rounded-xl bg-amber-400 py-3.5 text-sm font-bold text-[#fff] transition-all hover:bg-amber-300 disabled:opacity-50"
               >
                 {status === 'sending' ? t('cr_sending') : t('cr_submit')}
               </button>
@@ -94,15 +92,15 @@ export const CreatorsPage: React.FC = () => {
           )}
         </div>
 
-        <InstagramLink className="reveal group mt-6 flex w-full items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-left transition-colors hover:border-amber-500/50">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-[#fff] shadow-lg shadow-amber-500/30">
+        <InstagramLink className="group mt-6 flex w-full items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-left transition-colors hover:border-amber-500/50">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-[#fff]">
             <InstagramIcon className="h-5 w-5" />
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-xs text-slate-400">{t('cr_dm_t')}</span>
             <span className="block truncate text-sm font-semibold text-white">{t('cr_dm_d')} · @{INSTAGRAM_HANDLE}</span>
           </span>
-          <span aria-hidden="true" className="text-amber-400 transition-transform group-hover:translate-x-1">→</span>
+          <span aria-hidden="true" className="text-amber-400">→</span>
         </InstagramLink>
       </div>
     </div>

@@ -553,7 +553,6 @@
    clip-path keeps the page's fixed overlays (fan shadow, lamp, curtain, rails) from spilling onto the footer. */
 .fd { position: relative; isolation: isolate; clip-path: inset(0); overflow-x: clip; background: var(--white); color: var(--ink); font-family: var(--f-body); -webkit-font-smoothing: antialiased; }
 .fd .cloth { position: absolute; inset: 0; z-index: -1; }
-html.fd-on .cursor-ring { display: none !important; }
 .fd .say { position: relative; overflow: hidden; }
 .fd .say[aria-pressed="true"] { background: var(--paper-ink); }
 .fd .say svg { width: 15px; height: 15px; }

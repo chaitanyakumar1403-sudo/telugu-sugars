@@ -1,22 +1,26 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
-export const ComingSoonPage: React.FC<{ title: string }> = ({ title }) => {
+// A section that isn't built yet: say so plainly and point to what already works.
+export const ComingSoonPage: React.FC<{ title: string; onNavigate: (path: string) => void }> = ({ title, onNavigate }) => {
   const { t } = useLanguage();
   return (
-    <div className="hero-stage relative isolate overflow-hidden">
-      <div className="container flex min-h-[72svh] flex-col items-center justify-center gap-8 text-center">
-        <span className="reveal inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-amber-400">
-          <span className="live-dot h-2 w-2 rounded-full bg-amber-500 shadow-[0_0_10px_#ff6a00]" /> {t('coming_soon')}
-        </span>
-        <h1 className="reveal display-title text-7xl text-white sm:text-9xl" style={{ '--d': '120ms' } as React.CSSProperties}>
-          {title}<span aria-hidden="true" className="text-amber-500">.</span>
+    <div className="container py-16 sm:py-24">
+      <div className="max-w-2xl">
+        <p className="text-sm font-semibold text-amber-400">{t('coming_soon')}</p>
+        {/* Sized to the screen so long words (English "Research") never run off a phone */}
+        <h1 className="mt-2 font-display text-[clamp(2.5rem,11vw,5.5rem)] font-extrabold leading-none text-white [overflow-wrap:anywhere]">
+          {title}
         </h1>
-        <div className="reveal notice flex max-w-xl items-center gap-3 px-6 py-4 text-left" style={{ '--d': '240ms' } as React.CSSProperties}>
-          <span className="live-dot h-2 w-2 shrink-0 rounded-full bg-amber-500" />
-          <p className="text-sm text-slate-300 sm:text-base">
-            {t('soon_research')}
-          </p>
+        <p className="mt-6 text-lg leading-relaxed text-slate-300">{t('soon_research')}</p>
+        <p className="mt-10 text-base text-slate-400">{t('soon_meanwhile')}</p>
+        <div className="mt-3 flex flex-wrap gap-3">
+          <button onClick={() => onNavigate('/watch')} className="rounded-full bg-amber-500 px-5 py-3 text-sm font-bold text-[#fff] hover:bg-amber-600">
+            {t('nav_watch')}
+          </button>
+          <button onClick={() => onNavigate('/atlas')} className="rounded-full border border-white/20 px-5 py-3 text-sm font-bold text-white hover:border-amber-400">
+            {t('nav_atlas')}
+          </button>
         </div>
       </div>
     </div>

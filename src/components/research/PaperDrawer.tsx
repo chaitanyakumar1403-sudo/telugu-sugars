@@ -51,11 +51,11 @@ export const PaperDrawer: React.FC<PaperDrawerProps> = ({
         <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white/10 text-slate-300 border border-white/10">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/10 text-slate-300 border border-white/10">
                 {paper.studyType}
               </span>
               {relationship && (
-                <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider border ${relBadgeColor}`}>
+                <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${relBadgeColor}`}>
                   {relationship.relationshipType}
                 </span>
               )}
@@ -101,7 +101,7 @@ export const PaperDrawer: React.FC<PaperDrawerProps> = ({
 
         {/* Findings (PDF Section 4: What the study found) */}
         <div className="flex flex-col gap-2">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-teal-400 flex items-center gap-1.5">
+          <h4 className="text-xs font-bold text-teal-400 flex items-center gap-1.5">
             <CheckCircle className="w-4 h-4" />
             <span>{t('what_study_found')}</span>
           </h4>
@@ -112,7 +112,7 @@ export const PaperDrawer: React.FC<PaperDrawerProps> = ({
 
         {/* Crucial Limitations (PDF Section 6: Limitations) */}
         <div className="flex flex-col gap-2">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+          <h4 className="text-xs font-bold text-rose-400 flex items-center gap-1.5">
             <AlertCircle className="w-4 h-4" />
             <span>Study Limitations & Confounders</span>
           </h4>

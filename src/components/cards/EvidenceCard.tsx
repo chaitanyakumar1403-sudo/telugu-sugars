@@ -27,7 +27,7 @@ export const EvidenceCard: React.FC<EvidenceCardProps> = ({ claim, paper, onExpl
       <div>
         {/* Header: Evidence Grade Pill & Source Year */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${gradeColor}`}>
+          <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${gradeColor}`}>
             Status: {claim.evidenceGrade}
           </span>
           {paper && (

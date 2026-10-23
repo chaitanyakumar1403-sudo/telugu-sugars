@@ -3,10 +3,7 @@ import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import Header from './components/common/Header';
 import MobileBottomNav from './components/common/MobileBottomNav';
 import Footer from './components/common/Footer';
-import ConsentBanner from './components/common/ConsentBanner';
 import NewsletterModal from './components/common/NewsletterModal';
-import WelcomeGreeting from './components/common/WelcomeGreeting';
-import CursorRing from './components/common/CursorRing';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -38,21 +35,6 @@ export function AppContent() {
     }
   }, []);
 
-  // Fade sections in as they scroll into view; re-scan whenever the page changes
-  useEffect(() => {
-    const els = document.querySelectorAll('.reveal:not(.is-in)');
-    if (!('IntersectionObserver' in window)) {
-      els.forEach((el) => el.classList.add('is-in'));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add('is-in'), io.unobserve(e.target))),
-      { rootMargin: '0px 0px -8% 0px' },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [currentPath]);
-
   const navigateTo = (path: string) => {
     if (typeof window !== 'undefined') {
       window.history.pushState({}, '', path);
@@ -72,7 +54,7 @@ export function AppContent() {
     }
 
     if (currentPath.startsWith('/research')) {
-      return <ComingSoonPage title={t('nav_research')} />;
+      return <ComingSoonPage title={t('nav_research')} onNavigate={navigateTo} />;
     }
 
     if (currentPath.startsWith('/food-labels')) {
@@ -129,16 +111,10 @@ export function AppContent() {
       {/* Mobile Sticky Bottom Navigation (48px tap targets) */}
       <MobileBottomNav activePath={currentPath} onNavigate={navigateTo} />
 
-      <WelcomeGreeting />
-
-      <CursorRing />
-
       <NewsletterModal
         isOpen={isNewsletterOpen}
         onClose={() => setIsNewsletterOpen(false)}
       />
-
-      <ConsentBanner />
     </div>
   );
 }

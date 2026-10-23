@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Check, X, Sparkles } from 'lucide-react';
+import { Mail, Check, X } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface NewsletterModalProps {
@@ -27,7 +27,7 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-scrim/80 backdrop-blur-md flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-scrim/80 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-label={t('nl_aria')}
@@ -53,10 +53,7 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-4 h-4" />
-              <span>{t('nl_kicker')}</span>
-            </div>
+            <p className="text-amber-400 text-sm font-semibold">{t('nl_kicker')}</p>
 
             <div>
               <h3 className="text-2xl font-extrabold text-white">
@@ -102,7 +99,7 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
             <button
               type="submit"
               disabled={!email || !consentChecked}
-              className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-[#fff] font-bold text-sm shadow-lg shadow-amber-500/25 transition-all"
+              className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-[#fff] font-bold text-sm transition-all"
             >
               {t('nl_submit')}
             </button>

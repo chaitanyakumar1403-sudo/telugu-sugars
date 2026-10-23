@@ -14,7 +14,7 @@ export const TopicsPage: React.FC<TopicsPageProps> = ({ onSelectTopic }) => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl flex flex-col gap-8 pb-24">
       <div className="border-b border-white/10 pb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2 border border-amber-500/30">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-2 border border-amber-500/30">
           <Tag className="w-3.5 h-3.5" />
           <span>Curated Topic Pathways</span>
         </div>
@@ -39,7 +39,7 @@ export const TopicsPage: React.FC<TopicsPageProps> = ({ onSelectTopic }) => {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center transition-transform">
                     <Tag className="w-6 h-6" />
                   </div>
                   <span className="text-xs font-mono text-slate-400">

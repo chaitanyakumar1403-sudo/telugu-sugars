@@ -20,16 +20,10 @@ const MODES: ColourMode[] = ['type', 'inf', 'youth', 'mid', 'old'];
 
 const QUICK = ['d-maggi', 'd-dietcoke', 'sugar', 'maltodextrin', 'aspartame', 'c-glycemic'];
 const FACE: Record<GroupId, string> = { inf: '👶', youth: '🧒', mid: '🧑', old: '🧓' };
-const FLOATING: [string, string, string][] = [
-  ['maltodextrin', 'right-[6%] top-[14%]', '0s'],
-  ['E951', 'right-[2%] top-[30%]', '1.2s'],
-  ['invert syrup', 'right-[22%] top-[48%]', '2.1s'],
-  ['INS 635', 'right-[4%] top-[60%]', '0.6s'],
-  ['150d', 'right-[16%] top-[78%]', '1.7s'],
-];
+const STEP = ['అ', 'ఆ', 'ఇ']; // steps are lettered, never numbered (house style)
 const SAMPLE = 'Refined wheat flour (maida), palm oil, salt, flavour enhancer (INS 627, INS 631), sugar, maltodextrin, antioxidant (INS 319), colour (150d)';
 
-const label = 'font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500';
+const label = 'text-xs text-slate-500';
 
 /** Where the decoder text came from, when it wasn't typed: a photo of the pack, or a barcode lookup. */
 export type LabelSource = { kind: 'photo'; sugar100: number | null } | { kind: 'off'; code: string; name: string; sugar100: number | null } | null;
@@ -55,7 +49,7 @@ const LabelDecoder: React.FC<{
           <button
             type="button"
             onClick={onScan}
-            className="inline-flex min-h-12 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-sm font-bold text-[#fff] shadow-lg shadow-amber-500/30 transition hover:-translate-y-0.5"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-sm font-bold text-[#fff] transition"
           >
             <ScanLine className="h-5 w-5" /> {A.t('x_scan')}
           </button>
@@ -223,25 +217,20 @@ export const AtlasPage: React.FC = () => {
   return (
     <div className="pb-20">
       {/* Hero */}
-      <section className="atlas-hero container relative pt-12 sm:pt-16">
-        <div aria-hidden="true" className="absolute inset-0 hidden lg:block">
-          {FLOATING.map(([t, pos, d]) => (
-            <span key={t} className={`float-tag ${pos}`} style={{ '--d': d } as React.CSSProperties}>{t}</span>
-          ))}
-        </div>
+      <section className="container relative pt-12 sm:pt-16">
 
-        <p className="reveal font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-500">
+        <p className="text-sm font-semibold text-amber-400">
           {A.t('a_kicker', { i: ING.length, p: DISH.length })}
         </p>
-        <h1 className="reveal display-title mt-4 text-[clamp(2rem,10.5vw,8rem)] text-white" style={{ '--d': '80ms' } as React.CSSProperties}>
+        <h1 className="display-title mt-2 text-[clamp(2.5rem,10.5vw,6.5rem)] text-white">
           {A.t('a_title')} <span className="accent">{A.t('a_accent')}</span>
         </h1>
-        <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-slate-300" style={{ '--d': '160ms' } as React.CSSProperties}>
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">
           {A.t('a_lede')}
         </p>
 
         {/* Search */}
-        <div className="reveal relative z-30 mt-8 max-w-2xl" style={{ '--d': '220ms' } as React.CSSProperties}>
+        <div className="relative z-30 mt-8 max-w-2xl">
           <Search className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500" />
           <input
             type="search"
@@ -250,7 +239,7 @@ export const AtlasPage: React.FC = () => {
             onKeyDown={(e) => { if (e.key === 'Enter' && found[0]) goTo(found[0].id); }}
             placeholder={A.t('a_search_ph')}
             aria-label={A.t('a_search_aria')}
-            className="w-full rounded-2xl border border-white/10 bg-white/[0.04] py-4 pl-12 pr-4 text-base text-white shadow-xl shadow-black/20 placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.04] py-4 pl-12 pr-4 text-base text-white placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none"
           />
           {found.length > 0 && (
             <ul className="panel absolute inset-x-0 top-full mt-2 overflow-hidden p-1.5" style={{ background: 'var(--bg-panel)' }}>
@@ -265,7 +254,7 @@ export const AtlasPage: React.FC = () => {
             </ul>
           )}
         </div>
-        <div className="reveal mt-4 flex flex-wrap gap-2" style={{ '--d': '260ms' } as React.CSSProperties}>
+        <div className="mt-4 flex flex-wrap gap-2">
           {QUICK.map((id) => (
             <button
               key={id}
@@ -278,18 +267,18 @@ export const AtlasPage: React.FC = () => {
         </div>
 
         {/* How to use */}
-        <h2 className="reveal mt-12 font-sans text-base font-bold text-white">{A.t('a_how')}</h2>
+        <h2 className="mt-12 font-sans text-base font-bold text-white">{A.t('a_how')}</h2>
         <ol className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
           {[A.t('a_how1'), A.t('a_how2'), A.t('a_how3')].map((s, i) => (
-            <li key={i} className="reveal panel flex items-start gap-3 p-4" style={{ '--d': `${i * 80}ms` } as React.CSSProperties}>
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-[#fff] shadow-lg shadow-amber-500/30">{i + 1}</span>
+            <li key={i} className="panel flex items-start gap-3 p-4">
+              <span aria-hidden="true" className="w-6 shrink-0 font-telugu text-xl font-bold leading-none text-amber-500">{STEP[i]}</span>
               <p className="text-sm font-medium leading-snug text-slate-200">{s}</p>
             </li>
           ))}
         </ol>
 
         {/* Stats */}
-        <dl className="reveal mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4">
+        <dl className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4">
           {stats.map(([n, l]) => (
             <div key={l} className="flex flex-col-reverse">
               <dt className="mt-2 text-xs text-slate-400">{l}</dt>
@@ -300,7 +289,7 @@ export const AtlasPage: React.FC = () => {
       </section>
 
       {/* Sticky tabs + who's eating */}
-      <div ref={tabsRef} className="sticky top-[72px] z-40 mt-14 scroll-mt-[72px] border-y border-white/[0.06] bg-(--bg-obsidian)/85 backdrop-blur-xl">
+      <div ref={tabsRef} className="sticky top-[72px] z-40 mt-14 scroll-mt-[72px] border-y border-white/[0.06] bg-(--bg-obsidian)">
         <div className="container flex flex-col gap-3 py-3 lg:flex-row lg:items-end lg:justify-between">
           <div role="tablist" aria-label={A.t('a_tabs_aria')} className="no-scrollbar flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-white/10 bg-white/[0.03] p-1">
             {TABS.map((id) => (
@@ -310,7 +299,7 @@ export const AtlasPage: React.FC = () => {
                 aria-selected={tab === id}
                 onClick={() => setTab(id)}
                 className={`shrink-0 whitespace-nowrap rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors ${
-                  tab === id ? 'bg-amber-500 text-[#fff] shadow-lg shadow-amber-500/30' : 'text-slate-300 hover:text-white'
+                  tab === id ? 'bg-amber-500 text-[#fff]' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {A.t(`a_tab_${id}`)}
@@ -439,7 +428,7 @@ export const AtlasPage: React.FC = () => {
       <button
         type="button"
         onClick={() => setScanning(true)}
-        className="fixed bottom-[calc(var(--mobile-nav-height)+16px+env(safe-area-inset-bottom,0px))] right-4 z-40 inline-flex min-h-13 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-[15px] font-extrabold text-[#fff] shadow-xl shadow-amber-700/40 transition hover:-translate-y-0.5 lg:bottom-6"
+        className="fixed bottom-[calc(var(--mobile-nav-height)+16px+env(safe-area-inset-bottom,0px))] right-4 z-40 inline-flex min-h-13 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-[15px] font-extrabold text-[#fff] transition lg:bottom-6"
       >
         <ScanLine className="h-5 w-5" /> {A.t('x_scan_short')}
       </button>

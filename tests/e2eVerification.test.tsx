@@ -28,6 +28,6 @@ describe('Full Application Production Flow', () => {
     // 5. Navigate to Standards
     const standardsLinks = screen.getAllByRole('button', { name: /standards|ప్రమాణాలు/i });
     fireEvent.click(standardsLinks[0]);
-    expect(screen.getByText(/Editorial & Scientific Standards/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'How we work' })).toBeInTheDocument();
   });
 });

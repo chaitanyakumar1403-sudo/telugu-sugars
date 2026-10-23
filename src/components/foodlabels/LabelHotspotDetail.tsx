@@ -26,11 +26,11 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
     >
       <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-amber-500 text-[#fff] shadow-lg shadow-amber-500/30 flex items-center justify-center font-bold">
+          <div className="w-8 h-8 rounded-lg bg-amber-500 text-[#fff] flex items-center justify-center font-bold">
             !
           </div>
           <div>
-            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block">
+            <span className="text-xs font-bold text-amber-400 block">
               {t('hs_kicker')}
             </span>
             <h4 className="font-display text-xl font-extrabold text-white leading-tight">
@@ -60,7 +60,7 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
 
       {/* Scientific Reality */}
       <div className="flex flex-col gap-1.5">
-        <div className="text-xs font-bold text-rose-400 flex items-center gap-1.5 uppercase tracking-wider">
+        <div className="text-xs font-bold text-rose-400 flex items-center gap-1.5">
           <AlertTriangle className="w-4 h-4" />
           <span>{t('hs_reality')}</span>
         </div>
@@ -71,7 +71,7 @@ export const LabelHotspotDetail: React.FC<LabelHotspotDetailProps> = ({
 
       {/* Consumer Advice */}
       <div className="flex flex-col gap-1.5 pt-1">
-        <div className="text-xs font-bold text-teal-400 flex items-center gap-1.5 uppercase tracking-wider">
+        <div className="text-xs font-bold text-teal-400 flex items-center gap-1.5">
           <CheckCircle className="w-4 h-4" />
           <span>{t('hs_advice')}</span>
         </div>

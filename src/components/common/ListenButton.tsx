@@ -12,7 +12,7 @@ interface ListenButtonProps {
 }
 
 const BASE =
-  'relative inline-flex w-fit items-center gap-2 overflow-hidden rounded-full bg-amber-500 px-6 py-3 text-sm font-bold text-[#fff] shadow-lg shadow-amber-500/30 transition hover:-translate-y-0.5 hover:bg-amber-600';
+  'relative inline-flex w-fit items-center gap-2 overflow-hidden rounded-full bg-amber-500 px-6 py-3 text-sm font-bold text-[#fff] transition hover:bg-amber-600';
 
 /**
  * Listen / వినండి. Plays Dheeraj's recording for this language when it exists (with a progress line

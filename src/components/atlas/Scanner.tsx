@@ -123,7 +123,7 @@ export const Scanner: React.FC<ScannerProps> = ({ open, onClose, onBarcode, onTe
       onCancel={(e) => { e.preventDefault(); onClose(); }}
       onClose={onClose}
       aria-labelledby="scan-title"
-      className="m-auto h-dvh max-h-dvh w-screen max-w-none overflow-hidden bg-(--bg-panel) p-0 text-white backdrop:bg-black/70 backdrop:backdrop-blur-sm sm:h-auto sm:max-h-[94dvh] sm:w-[min(560px,100vw)] sm:rounded-3xl"
+      className="m-auto h-dvh max-h-dvh w-screen max-w-none overflow-hidden bg-(--bg-panel) p-0 text-white backdrop:bg-black/70 sm:h-auto sm:max-h-[94dvh] sm:w-[min(560px,100vw)] sm:rounded-3xl"
     >
       <div className="flex h-full flex-col">
         <div className="flex items-center justify-between gap-3 px-4 pb-3 pt-[calc(14px+env(safe-area-inset-top,0px))]">
@@ -136,8 +136,8 @@ export const Scanner: React.FC<ScannerProps> = ({ open, onClose, onBarcode, onTe
         <div className={`relative overflow-hidden ${camera ? 'min-h-72 flex-1 bg-black sm:aspect-[4/3.4] sm:flex-none' : 'bg-white/[0.04]'}`}>
           <video ref={video} playsInline muted className={camera ? 'absolute inset-0 h-full w-full object-cover' : 'hidden'} />
           {camera && (
-            <div aria-hidden="true" className="pointer-events-none absolute inset-x-[8%] inset-y-[14%] rounded-2xl border-2 border-amber-500 shadow-[0_0_0_100vmax_rgba(0,0,0,.35)]">
-              <span className="absolute inset-x-[6%] top-1/2 h-0.5 rounded bg-amber-500 shadow-[0_0_12px_#ff6a00] motion-safe:animate-pulse" />
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-[8%] inset-y-[14%] rounded-2xl border-2 border-amber-500">
+              <span className="absolute inset-x-[6%] top-1/2 h-0.5 rounded bg-amber-500 motion-safe:animate-pulse" />
             </div>
           )}
           <p className={camera ? 'absolute inset-x-3 bottom-3 rounded-xl bg-black/55 px-3 py-2.5 text-center text-sm leading-relaxed' : 'm-4 text-center text-sm leading-relaxed text-slate-300'}>
@@ -152,7 +152,7 @@ export const Scanner: React.FC<ScannerProps> = ({ open, onClose, onBarcode, onTe
             type="button"
             disabled={busy}
             onClick={() => { const v = video.current; if (camera && v) read(v, v.videoWidth, v.videoHeight); else file.current?.click(); }}
-            className="inline-flex min-h-13 flex-[1_1_180px] items-center justify-center gap-2 rounded-full bg-amber-500 px-4 py-3 text-[15px] font-extrabold text-[#fff] shadow-lg shadow-amber-500/30 disabled:cursor-wait disabled:opacity-60"
+            className="inline-flex min-h-13 flex-[1_1_180px] items-center justify-center gap-2 rounded-full bg-amber-500 px-4 py-3 text-[15px] font-extrabold text-[#fff] disabled:cursor-wait disabled:opacity-60"
           >
             <ScanLine className="h-5 w-5" /> {t('sc_read')}
           </button>

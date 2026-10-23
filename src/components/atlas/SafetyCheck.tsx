@@ -78,7 +78,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
           {blocks.length === 0 && <p className="p-2 text-sm text-slate-400">{A.t('c_none')}</p>}
           {blocks.map((b) => (
             <div key={b.title} className="mb-2">
-              <h3 className="px-2 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{b.title}</h3>
+              <h3 className="px-2 pb-1 pt-3 text-xs text-slate-500">{b.title}</h3>
               {b.items.map((x) => (
                 <button
                   key={x.id}
@@ -137,7 +137,7 @@ export const SafetyCheck: React.FC<SafetyCheckProps> = ({ checkSel, onPick, focu
           {GR.map((g) => {
             const level = n.kind === 'ing' ? n.r[g.id][0] : n.kind === 'dish' ? dishRating(n, g.id).level : 'ok';
             return (
-              <div key={g.id} className={`rounded-xl border border-white/10 border-l-4 bg-white/[0.02] p-5 transition-shadow ${LEVEL_BORDER[level]} ${g.id === focus ? 'ring-2 ring-amber-500/70 shadow-lg shadow-amber-500/20' : ''}`}>
+              <div key={g.id} className={`rounded-xl border border-white/10 border-l-4 bg-white/[0.02] p-5 transition-shadow ${LEVEL_BORDER[level]} ${g.id === focus ? 'ring-2 ring-amber-500/70' : ''}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="text-base font-bold text-white">{A.groupName(g.id)}</h3>
