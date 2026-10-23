@@ -428,7 +428,7 @@ export const AtlasPage: React.FC = () => {
       <button
         type="button"
         onClick={() => setScanning(true)}
-        className="fixed bottom-[calc(var(--mobile-nav-height)+16px+env(safe-area-inset-bottom,0px))] right-4 z-40 inline-flex min-h-13 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-[15px] font-extrabold text-[#fff] transition lg:bottom-6"
+        className="fixed bottom-[calc(16px+env(safe-area-inset-bottom,0px))] right-4 z-40 inline-flex min-h-13 items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-[15px] font-extrabold text-[#fff] transition lg:bottom-6"
       >
         <ScanLine className="h-5 w-5" /> {A.t('x_scan_short')}
       </button>

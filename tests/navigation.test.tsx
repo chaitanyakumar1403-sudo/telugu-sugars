@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { LanguageProvider } from '../src/context/LanguageContext';
 import Header from '../src/components/common/Header';
-import MobileBottomNav from '../src/components/common/MobileBottomNav';
 
 describe('Navigation & Bilingual Switcher', () => {
   it('switches language between English and Telugu', () => {
@@ -11,7 +10,6 @@ describe('Navigation & Bilingual Switcher', () => {
     render(
       <LanguageProvider>
         <Header activePath="/" onNavigate={onNavigate} />
-        <MobileBottomNav activePath="/" onNavigate={onNavigate} />
       </LanguageProvider>
     );
 
@@ -19,7 +17,7 @@ describe('Navigation & Bilingual Switcher', () => {
     expect(langBtn).toBeInTheDocument();
     fireEvent.click(langBtn);
 
-    // Both desktop and mobile nav display translated labels
+    // The nav shows translated labels
     expect(screen.getAllByText(/పరిశోధన/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/వీడియోలు/i).length).toBeGreaterThan(0);
   });

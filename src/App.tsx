@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import Header from './components/common/Header';
-import MobileBottomNav from './components/common/MobileBottomNav';
 import Footer from './components/common/Footer';
 import NewsletterModal from './components/common/NewsletterModal';
 
@@ -108,8 +107,6 @@ export function AppContent() {
         onOpenNewsletter={() => setIsNewsletterOpen(true)}
       />
 
-      {/* Mobile Sticky Bottom Navigation (48px tap targets) */}
-      <MobileBottomNav activePath={currentPath} onNavigate={navigateTo} />
 
       <NewsletterModal
         isOpen={isNewsletterOpen}

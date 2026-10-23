@@ -86,6 +86,7 @@ const BASE: Strings = {
   nav_home: { en: 'Home', te: 'హోమ్' },
   nav_atlas_short: { en: 'Atlas', te: 'ఏముంది?' },
   nav_brand_aria: { en: 'Telugu Sugars Home', te: 'తెలుగు సుగర్స్ హోమ్' },
+  nav_menu: { en: 'Menu', te: 'మెనూ' },
   nav_main_aria: { en: 'Main Navigation', te: 'ముఖ్య మెనూ' },
   nav_mobile_aria: { en: 'Mobile Bottom Navigation', te: 'కింది మెనూ' },
   disp_aria: { en: 'Display settings: colours and text size', te: 'చూపు: రంగులు, అక్షరాల సైజు' },

@@ -45,7 +45,6 @@
   --text-primary: #f5f1ec;
   --text-secondary: #a8a29e;
 
-  --mobile-nav-height: 64px;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-full: 9999px;
@@ -340,12 +339,6 @@ html:lang(te) .font-mono { font-family: var(--font-telugu); }
 .mock-label-paper .border-4 { border: 4px solid #000000; }
 .mock-label-paper .divide-black > * + * { border-top: 1px solid #000000; }
 
-/* Mobile bottom navigation clearance */
-@media (max-width: 1023px) {
-  body {
-    padding-bottom: var(--mobile-nav-height);
-  }
-}
 
 /* ---------- Ingredient Atlas map ---------- */
 .atlas-link {

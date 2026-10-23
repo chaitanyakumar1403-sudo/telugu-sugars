@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import { InstagramLink, InstagramIcon } from './InstagramLink';
 import { useLanguage } from '../../context/LanguageContext';
 import LanguageToggle from './LanguageToggle';
@@ -11,6 +12,10 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
   const { t } = useLanguage();
+  // Phones and tablets: the links live in a menu under the header (no bottom tab bar)
+  const [open, setOpen] = useState(false);
+  useEffect(() => setOpen(false), [activePath]);
+  const go = (path: string) => { setOpen(false); onNavigate(path); };
 
   const navItems = [
     { path: '/atlas', labelKey: 'nav_atlas' },
@@ -69,8 +74,37 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
           </InstagramLink>
           <ThemeToggle />
           <LanguageToggle />
+          <button
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={t('nav_menu')}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white lg:hidden"
+          >
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </div>
+
+      {open && (
+        <nav id="mobile-menu" className="border-t border-white/10 bg-(--bg-obsidian) lg:hidden" aria-label={t('nav_main_aria')}>
+          <div className="container flex flex-col py-2">
+            {[{ path: '/', labelKey: 'nav_home' }, ...navItems].map((item) => {
+              const isActive = item.path === '/' ? activePath === '/' : activePath === item.path || activePath.startsWith(item.path + '/');
+              return (
+                <button
+                  key={item.path}
+                  onClick={() => go(item.path)}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`border-b border-white/5 py-3.5 text-left text-lg font-semibold last:border-0 ${isActive ? 'text-amber-400' : 'text-white'}`}
+                >
+                  {t(item.labelKey)}
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      )}
     </header>
   );
 };
