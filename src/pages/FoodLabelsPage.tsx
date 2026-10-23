@@ -3,7 +3,7 @@ import { FoodLabelHotspot } from '../types/content';
 import { getFoodLabelGuides } from '../services/contentService';
 import InteractiveLabel from '../components/foodlabels/InteractiveLabel';
 import LabelHotspotDetail from '../components/foodlabels/LabelHotspotDetail';
-import { Sparkles, ShieldCheck, Eye } from 'lucide-react';
+import { ShieldCheck, Eye } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export const FoodLabelsPage: React.FC = () => {
@@ -18,11 +18,9 @@ export const FoodLabelsPage: React.FC = () => {
   return (
     <div className="container flex flex-col gap-14 pb-28 pt-12 sm:pt-16">
       {/* Header */}
-      <header className="reveal max-w-3xl">
-        <p className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">
-          <Sparkles className="h-3.5 w-3.5" /> {t('fl_kicker')}
-        </p>
-        <h1 className="display-title mt-3 text-6xl text-white sm:text-8xl">
+      <header className="max-w-3xl">
+        <p className="text-sm font-semibold text-amber-400">{t('fl_kicker')}</p>
+        <h1 className="display-title mt-2 text-[clamp(2.75rem,11vw,5.5rem)] text-white">
           {t('fl_title')} <span className="accent">{t('fl_accent')}</span>
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300">
@@ -34,7 +32,7 @@ export const FoodLabelsPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Mock Packaging Label Graphic */}
         <div className="lg:col-span-6 flex flex-col items-center">
-          <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-400 ring-1 ring-inset ring-amber-500/30">
+          <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 px-3 py-1 text-xs font-semibold text-amber-400 ring-1 ring-inset ring-amber-500/30">
             <Eye className="w-4 h-4" /> {t('fl_tap')}
           </span>
           <InteractiveLabel

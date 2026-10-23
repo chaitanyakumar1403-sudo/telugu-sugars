@@ -31,7 +31,7 @@ export const ThemeToggle: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>(() => {
     const t = read(THEME_KEY);
-    return t === 'light' || t === 'dark' ? t : 'system';
+    return t === 'system' || t === 'dark' ? t : 'light';
   });
   const [size, setSize] = useState<Size>(() => {
     const z = read(SIZE_KEY);
@@ -41,7 +41,7 @@ export const ThemeToggle: React.FC = () => {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme === 'system' ? systemTheme() : theme;
-    write(THEME_KEY, theme === 'system' ? null : theme);
+    write(THEME_KEY, theme === 'light' ? null : theme);
     if (theme !== 'system') return;
     const mq = matchMedia('(prefers-color-scheme: light)');
     const on = () => (document.documentElement.dataset.theme = systemTheme());
@@ -67,7 +67,7 @@ export const ThemeToggle: React.FC = () => {
 
   const opt = (on: boolean) =>
     `flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm font-semibold transition-colors ${
-      on ? 'bg-amber-500 text-[#fff] shadow-lg shadow-amber-500/30' : 'text-slate-300 hover:bg-white/5 hover:text-white'
+      on ? 'bg-amber-500 text-[#fff]' : 'text-slate-300 hover:bg-white/5 hover:text-white'
     }`;
 
   return (
@@ -86,8 +86,8 @@ export const ThemeToggle: React.FC = () => {
       </button>
 
       {open && (
-        <div className="panel absolute right-0 top-12 z-50 w-64 bg-(--bg-panel) p-3 animate-[greet-in_350ms_var(--ease-spring)]">
-          <p className="px-1 pb-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{t('theme_title')}</p>
+        <div className="panel absolute right-0 top-12 z-50 w-64 bg-(--bg-panel) p-3 animate-[pop-in_150ms_ease-out]">
+          <p className="px-1 pb-1.5 text-xs text-slate-500">{t('theme_title')}</p>
           <div className="flex flex-col gap-1">
             {THEMES.map(({ id, icon: Icon }) => (
               <button key={id} onClick={() => setTheme(id)} aria-pressed={theme === id} className={opt(theme === id)}>
@@ -95,7 +95,7 @@ export const ThemeToggle: React.FC = () => {
               </button>
             ))}
           </div>
-          <p className="px-1 pb-1.5 pt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{t('size_title')}</p>
+          <p className="px-1 pb-1.5 pt-4 text-xs text-slate-500">{t('size_title')}</p>
           <div className="grid grid-cols-3 gap-1.5">
             {SIZES.map(({ id, cls }) => (
               <button

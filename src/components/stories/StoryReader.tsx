@@ -53,14 +53,14 @@ export const StoryReader: React.FC<StoryReaderProps> = ({ story, glossaryTerms }
     >
       {/* Reading Progress Top Bar */}
       <div
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 z-50 transition-all duration-150"
+        className="fixed top-0 left-0 h-1 bg-amber-500 z-50 transition-all duration-150"
         style={{ width: `${scrollProgress}%` }}
       />
 
       {/* Reader Controls Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-3 rounded-xl bg-white/5 border border-white/10 text-xs">
         <div className="flex items-center gap-2">
-          <span className="text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1">
+          <span className="text-slate-400 font-bold flex items-center gap-1">
             <Type className="w-3.5 h-3.5 text-amber-400" /> Font:
           </span>
           <button

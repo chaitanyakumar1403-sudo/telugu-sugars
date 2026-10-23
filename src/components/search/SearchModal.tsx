@@ -91,7 +91,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-scrim/80 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 sm:pt-20"
+      className="fixed inset-0 z-50 bg-scrim/80 flex items-start justify-center p-4 sm:p-6 sm:pt-20"
       role="dialog"
       aria-modal="true"
       aria-label="Universal Search Engine"
@@ -148,7 +148,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         <div className="p-4 overflow-y-auto flex-grow flex flex-col gap-2">
           {!query ? (
             <div className="flex flex-col gap-3 py-4">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                 <span>Suggested Clinical Queries</span>
               </span>

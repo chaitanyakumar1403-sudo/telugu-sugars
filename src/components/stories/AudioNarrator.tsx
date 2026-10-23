@@ -33,7 +33,7 @@ export const AudioNarrator: React.FC<AudioNarratorProps> = ({ audioUrl, storyTit
   };
 
   return (
-    <div className="flex items-center justify-between gap-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 backdrop-blur-md">
+    <div className="flex items-center justify-between gap-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
       <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} />
 
       <div className="flex items-center gap-3">

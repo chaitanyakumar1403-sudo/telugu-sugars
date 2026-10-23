@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, ShoppingBag, Sparkles } from 'lucide-react';
+import { Play, ShoppingBag } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { GOING, STARTED, youtubeId, type Video } from '../../data/videos';
 
@@ -16,8 +16,8 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
   const isToday = v.date === today();
 
   return (
-    <article id={`video-${v.date}`} className="reveal group flex flex-col gap-4 scroll-mt-28">
-      <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-(--bg-panel) shadow-xl transition-[box-shadow,border-color] duration-500 group-hover:border-amber-500/40 group-hover:shadow-amber-500/25">
+    <article id={`video-${v.date}`} className="group flex flex-col gap-4 scroll-mt-28">
+      <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-(--bg-panel) shadow-xl transition-[box-shadow,border-color] duration-500 group-hover:border-amber-500/40">
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
@@ -32,19 +32,19 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
               src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
               alt=""
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out"
             />
             <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-amber-400 text-[#fff] shadow-2xl shadow-amber-500/40 transition-transform duration-500 ease-out group-hover:scale-125">
+            <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-amber-400 text-[#fff] transition-transform duration-500 ease-out">
               <Play className="ml-1 h-6 w-6 fill-current" />
             </span>
             {isToday && (
-              <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#fff]">
-                <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#fff]" /> {t('vid_today')}
+              <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-[#fff]">
+                {t('vid_today')}
               </span>
             )}
             {day && (
-              <span className="absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 font-mono text-[11px] font-bold text-[#fff] backdrop-blur">
+              <span className="absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 font-mono text-[11px] font-bold text-[#fff]">
                 {t('vid_day', { n: day })}
               </span>
             )}
@@ -53,20 +53,20 @@ const VideoCard: React.FC<{ v: Video; day?: number }> = ({ v, day }) => {
       </div>
 
       <div>
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">{fmt(v.date, language)}</p>
+        <p className="text-xs text-slate-500">{fmt(v.date, language)}</p>
         <h3 className="mt-1 text-lg font-bold leading-snug text-white transition-colors group-hover:text-amber-300">{title}</h3>
       </div>
 
       {v.links?.length ? (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">{t('vid_affiliate')}</span>
+          <span className="text-xs text-slate-500">{t('vid_affiliate')}</span>
           {v.links.map((l) => (
             <a
               key={l.url}
               href={l.url}
               target="_blank"
               rel="sponsored nofollow noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1.5 text-xs font-semibold text-amber-300 transition hover:-translate-y-0.5 hover:bg-amber-400/20"
+              className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1.5 text-xs font-semibold text-amber-300 transition hover:bg-amber-400/20"
             >
               <ShoppingBag className="h-3.5 w-3.5" /> {l.label}
             </a>
@@ -108,17 +108,16 @@ const Streak: React.FC = () => {
 };
 
 const Empty: React.FC<{ text: string }> = ({ text }) => (
-  <div className="reveal notice flex items-center gap-4 px-6 py-6 sm:px-8">
-    <Sparkles className="live-dot h-5 w-5 shrink-0 text-amber-500" />
+  <div className="notice px-5 py-5 sm:px-7">
     <p className="text-base text-slate-200 sm:text-lg">{text}</p>
   </div>
 );
 
 const Heading: React.FC<{ kicker: string; title: string; accent: string; children?: React.ReactNode }> = ({ kicker, title, accent, children }) => (
-  <div className="reveal mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+  <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
     <div>
-      <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">{kicker}</p>
-      <h2 className="display-title mt-3 text-6xl text-white sm:text-8xl">
+      <p className="text-sm font-semibold text-amber-400">{kicker}</p>
+      <h2 className="display-title mt-2 text-[clamp(2.5rem,10vw,5rem)] text-white">
         {title} <span className="accent">{accent}</span>
       </h2>
     </div>
@@ -130,7 +129,7 @@ export const VideoSections: React.FC<{ limit?: number }> = ({ limit }) => {
   const { t } = useLanguage();
   const going = limit ? GOING.slice(0, limit) : GOING;
   return (
-    <div className="flex flex-col gap-28">
+    <div className="flex flex-col gap-24">
       <section className="container" aria-label={`${t('ch1_title')} ${t('ch1_accent')}`}>
         <Heading kicker={t('ch1_kicker')} title={t('ch1_title')} accent={t('ch1_accent')} />
         {STARTED.length ? (
@@ -146,7 +145,7 @@ export const VideoSections: React.FC<{ limit?: number }> = ({ limit }) => {
         <Heading kicker={t('ch2_kicker')} title={t('ch2_title')} accent={t('ch2_accent')}>
           <div className="flex flex-col gap-3 sm:items-end">
             <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300">
-              <span className="live-dot h-2 w-2 rounded-full bg-amber-500 shadow-[0_0_10px_#ff6a00]" />
+              <span className="h-2 w-2 rounded-full bg-amber-500" />
               {GOING.length ? t('vid_count', { n: GOING.length }) : t('ch2_day1')}
             </span>
             <Streak />

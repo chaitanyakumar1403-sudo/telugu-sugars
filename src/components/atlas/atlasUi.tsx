@@ -60,5 +60,5 @@ export const Chip: React.FC<{ id: string; onClick?: (id: string) => void }> = ({
 };
 
 export const Eyebrow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-amber-400/90">{children}</p>
+  <p className="text-xs text-amber-400/90">{children}</p>
 );

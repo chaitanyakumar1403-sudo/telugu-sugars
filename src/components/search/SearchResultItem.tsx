@@ -53,7 +53,7 @@ export const SearchResultItem: React.FC<SearchResultItemProps> = ({ item, onSele
 
         <div className="flex flex-col gap-0.5">
           <div className="flex items-center gap-2">
-            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${badgeColor}`}>
+            <span className={`px-2 py-0.5 rounded text-xs font-bold border ${badgeColor}`}>
               {item.badge}
             </span>
             <span className="text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors leading-snug">

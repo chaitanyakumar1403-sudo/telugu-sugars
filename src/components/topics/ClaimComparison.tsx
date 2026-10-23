@@ -31,7 +31,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
     <div className="glass-card p-6 sm:p-8 rounded-2xl bg-(--bg-panel) flex flex-col gap-8 shadow-2xl">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2 border border-amber-500/30">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-2 border border-amber-500/30">
             <ArrowRightLeft className="w-3.5 h-3.5" />
             <span>Interactive Scientific Comparison</span>
           </div>
@@ -47,7 +47,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
       {/* Selectors */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-bold text-amber-400 uppercase tracking-wider">
+          <label className="text-xs font-bold text-amber-400">
             Claim A:
           </label>
           <select
@@ -65,7 +65,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-bold text-teal-400 uppercase tracking-wider">
+          <label className="text-xs font-bold text-teal-400">
             Claim B:
           </label>
           <select
@@ -87,7 +87,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Column 1: What Evidence Supports */}
         <div className="p-5 rounded-xl bg-teal-500/10 border border-teal-500/30 flex flex-col gap-3">
-          <h4 className="text-xs font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
+          <h4 className="text-xs font-bold text-teal-400 flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-teal-400" />
             <span>What Evidence Supports</span>
           </h4>
@@ -105,7 +105,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
 
         {/* Column 2: Where Evidence Reaches Its Limits */}
         <div className="p-5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-col gap-3">
-          <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+          <h4 className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
             <AlertTriangle className="w-4 h-4 text-amber-400" />
             <span>Where Evidence Reaches Its Limits</span>
           </h4>
@@ -123,7 +123,7 @@ export const ClaimComparison: React.FC<ClaimComparisonProps> = ({ claims }) => {
 
         {/* Column 3: What Remains Unknown */}
         <div className="p-5 rounded-xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
-          <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
+          <h4 className="text-xs font-bold text-rose-400 flex items-center gap-1.5">
             <HelpCircle className="w-4 h-4 text-rose-400" />
             <span>What Remains Unknown</span>
           </h4>

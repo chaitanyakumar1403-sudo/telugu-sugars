@@ -55,7 +55,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
   return (
     <div className="relative w-full h-[520px] rounded-2xl bg-(--bg-obsidian) border border-white/10 overflow-hidden shadow-2xl flex items-center justify-center">
       {/* Controls Bar */}
-      <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 p-1 rounded-xl bg-scrim/60 border border-white/10 backdrop-blur-md">
+      <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 p-1 rounded-xl bg-scrim/60 border border-white/10">
         <button
           onClick={() => setZoomLevel((z) => Math.min(1.4, z + 0.1))}
           className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
@@ -92,7 +92,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-20 flex flex-wrap items-center gap-3 p-2 rounded-xl bg-scrim/60 border border-white/10 text-[11px] text-slate-300 backdrop-blur-md">
+      <div className="absolute bottom-4 left-4 z-20 flex flex-wrap items-center gap-3 p-2 rounded-xl bg-scrim/60 border border-white/10 text-[11px] text-slate-300">
         <span className="flex items-center gap-1.5 font-bold">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" /> Supports
         </span>
@@ -106,7 +106,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
 
       {/* "How to read this map" Explanatory Modal (PDF Section 6 Requirement) */}
       {showHowToRead && (
-        <div className="absolute inset-0 z-30 bg-scrim/85 backdrop-blur-md p-6 flex flex-col justify-center items-center text-center">
+        <div className="absolute inset-0 z-30 bg-scrim/85 p-6 flex flex-col justify-center items-center text-center">
           <div className="max-w-md bg-(--bg-panel) border border-amber-500/40 rounded-2xl p-6 shadow-2xl">
             <h4 className="text-lg font-bold text-amber-300 mb-2 flex items-center justify-center gap-2">
               <Info className="w-5 h-5" />
@@ -172,7 +172,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
           <circle cx={centerX} cy={centerY} r={78} fill="#12151b" stroke="#d4a359" strokeWidth="2" />
           <foreignObject x={centerX - 62} y={centerY - 52} width={124} height={104}>
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <span className="font-mono text-[8px] font-bold uppercase tracking-[0.16em] text-amber-400">Claim</span>
+              <span className="text-[8px] font-bold text-amber-400">Claim</span>
               <span className="mt-1 line-clamp-3 text-[10.5px] font-semibold leading-snug text-white">{claimText}</span>
               <span className="mt-1 text-[8.5px] text-slate-400">Grade: {claim.evidenceGrade}</span>
             </div>
@@ -209,7 +209,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
                 stroke={color}
                 strokeWidth={isSelected ? 3 : 2}
                 style={{ transformBox: "fill-box", transformOrigin: "center" }}
-                className="transition-transform duration-200 group-hover:scale-110"
+                className="transition-transform duration-200"
               />
               <text x={x} y={y + 4} textAnchor="middle" fill="#f8fafc" fontSize="11" fontWeight="700">
                 {paper.year}

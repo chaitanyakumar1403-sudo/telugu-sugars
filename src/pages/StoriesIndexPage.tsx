@@ -13,7 +13,7 @@ export const StoriesIndexPage: React.FC<StoriesIndexPageProps> = ({ onSelectStor
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl flex flex-col gap-8 pb-24">
       <div className="border-b border-white/10 pb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2 border border-amber-500/30">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-2 border border-amber-500/30">
           <BookOpen className="w-3.5 h-3.5" />
           <span>Investigative Catalog</span>
         </div>

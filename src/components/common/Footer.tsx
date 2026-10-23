@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
                   TELUGU SUGARS
                 </span>
                 <span className="text-[11px] text-[#fff]/90 font-telugu">
-                  తెలుగు సుగర్స్ • ఎవిడెన్స్ జర్నల్
+                  తెలుగు సుగర్స్
                 </span>
               </div>
             </div>
@@ -36,21 +36,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
 
             <button
               onClick={onOpenNewsletter}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#fff] text-[#e85d00] font-bold shadow-lg shadow-black/10 hover:-translate-y-0.5 transition-colors w-fit"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#fff] text-[#e85d00] font-bold shadow-lg shadow-black/10 transition-colors w-fit"
             >
               <Mail className="w-3.5 h-3.5" />
               <span>{t('f_sub')}</span>
             </button>
 
-            <InstagramLink className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#fff]/40 text-[#fff] font-bold hover:bg-[#fff]/10 hover:-translate-y-0.5 transition-all w-fit">
+            <InstagramLink className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#fff]/40 text-[#fff] font-bold hover:bg-[#fff]/10 transition-all w-fit">
               <InstagramIcon className="w-3.5 h-3.5" />
               <span>{t('contact_us')}</span>
             </InstagramLink>
           </div>
 
-          {/* Sitemaps (PDF Recommended URL Patterns) */}
+          {/* Site links */}
           <div className="md:col-span-3 flex flex-col gap-3">
-            <h4 className="font-mono font-bold text-[#fff] uppercase tracking-[0.16em] text-[11px]">
+            <h4 className="font-bold text-[#fff] text-xs">
               {t('f_explore')}
             </h4>
             <div className="flex flex-col gap-2">
@@ -69,9 +69,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
             </div>
           </div>
 
-          {/* Institutional Transparency */}
+          {/* Standards */}
           <div className="md:col-span-4 flex flex-col gap-3">
-            <h4 className="font-mono font-bold text-[#fff] uppercase tracking-[0.16em] text-[11px]">
+            <h4 className="font-bold text-[#fff] text-xs">
               {t('f_standards')}
             </h4>
             <div className="flex flex-col gap-2">
@@ -89,7 +89,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenNewsletter }) 
           </div>
         </div>
 
-        {/* Safety Disclaimer (PDF Page 3 & 6 Directive) */}
+        {/* Not medical advice */}
         <div className="pt-6 border-t border-[#fff]/25 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#fff]/80">
           <p className="max-w-3xl">
             <strong>{t('f_disclaimer_label')}</strong> {t('f_disclaimer')}

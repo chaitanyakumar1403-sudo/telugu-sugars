@@ -27,11 +27,11 @@ const BODY: Record<PackShape, string> = {
 const PackArt: React.FC<{ d: Dish }> = ({ d }) => {
   const [shape, c, band] = d.art;
   return (
-    <div className="relative flex h-40 items-center justify-center transition-transform duration-500 ease-[var(--ease-spring)] group-hover:-translate-y-1.5 group-hover:rotate-[-3deg] group-hover:scale-105">
+    <div className="relative flex h-40 items-center justify-center transition-transform duration-500 ease-[var(--ease-spring)] group-hover:-translate-y-1.5 group-hover:rotate-[-3deg]">
       {/* Steam for hot drinks */}
       {shape === 'mug' && (
         <span aria-hidden="true" className="absolute top-3 flex gap-2 text-amber-200/60">
-          <span className="steam">∫</span><span className="steam [animation-delay:400ms]">∫</span>
+          <span className="steam">∫</span><span className="steam">∫</span>
         </span>
       )}
       {/* Neck / cap */}
@@ -39,7 +39,7 @@ const PackArt: React.FC<{ d: Dish }> = ({ d }) => {
         <span className={`absolute rounded-t-md ${shape === 'bottle' ? 'h-5 w-6 bg-[#fff]' : 'h-4 w-16 bg-[#3a2a22]'}`} style={{ top: shape === 'bottle' ? 'calc(50% - 4.4rem)' : 'calc(50% - 3.6rem)' }} />
       )}
       <div
-        className={`pack-gloss relative flex items-center justify-center overflow-hidden ${BODY[shape]}`}
+        className={`relative flex items-center justify-center overflow-hidden ${BODY[shape]}`}
         style={{ background: `linear-gradient(160deg, color-mix(in srgb, ${c} 85%, #fff), ${c} 45%, color-mix(in srgb, ${c} 65%, #000))`, boxShadow: `0 22px 40px -18px ${c}` }}
       >
         {(shape === 'can' || shape === 'slimcan' || shape === 'tub') && <span className="absolute inset-x-0 top-0 h-3 bg-gradient-to-b from-[#fff] to-[#cbd5e1]" />}
@@ -149,7 +149,7 @@ export const ProductGrid: React.FC<{ group: GroupId; onOpen: (id: string) => voi
               {/* Shelf: darker stage behind the pack */}
               <div className="relative bg-[radial-gradient(ellipse_at_50%_70%,rgba(255,255,255,0.06),transparent_70%)] px-4 pt-4" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-obsidian) 55%, transparent)' }}>
                 <div className="flex items-start justify-between gap-2">
-                  <span className="rounded-md border border-white/10 bg-white/[0.05] px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-slate-300">
+                  <span className="rounded-md border border-white/10 bg-white/[0.05] px-2 py-1 text-xs font-bold text-slate-300">
                     {d.brand ?? A.t(d.pack ? 'p_typical' : 'p_home')}
                   </span>
                   {d.pack && (

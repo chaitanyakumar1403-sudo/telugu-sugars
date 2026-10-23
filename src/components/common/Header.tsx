@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import { InstagramLink, InstagramIcon } from './InstagramLink';
 import { useLanguage } from '../../context/LanguageContext';
 import LanguageToggle from './LanguageToggle';
@@ -11,19 +12,10 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
   const { t } = useLanguage();
-  const bar = useRef<HTMLDivElement>(null);
-
-  // Orange reading-progress line along the top edge
-  useEffect(() => {
-    const on = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      bar.current?.style.setProperty('--p', String(max > 0 ? scrollY / max : 0));
-    };
-    on();
-    addEventListener('scroll', on, { passive: true });
-    addEventListener('resize', on);
-    return () => { removeEventListener('scroll', on); removeEventListener('resize', on); };
-  }, [activePath]);
+  // Phones and tablets: the links live in a menu under the header (no bottom tab bar)
+  const [open, setOpen] = useState(false);
+  useEffect(() => setOpen(false), [activePath]);
+  const go = (path: string) => { setOpen(false); onNavigate(path); };
 
   const navItems = [
     { path: '/atlas', labelKey: 'nav_atlas' },
@@ -35,8 +27,7 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-(--bg-obsidian)/80 backdrop-blur-xl">
-      <div ref={bar} className="scroll-progress" aria-hidden="true" />
+    <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-(--bg-obsidian)">
       <div className="container flex h-18 items-center justify-between gap-2 sm:gap-4">
         {/* Brand Wordmark */}
         <button
@@ -44,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
           className="flex min-w-0 items-center gap-2 text-left sm:gap-3"
           aria-label={t('nav_brand_aria')}
         >
-          <div className="flex h-9 w-9 shrink-0 items-center sm:h-10 sm:w-10 justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 font-display text-base font-extrabold text-[#fff] shadow-lg shadow-amber-500/30">
+          <div className="flex h-9 w-9 shrink-0 items-center sm:h-10 sm:w-10 justify-center rounded-lg bg-amber-500 font-display text-base font-extrabold text-[#fff]">
             TS
           </div>
           <div className="flex min-w-0 flex-col overflow-hidden leading-tight">
@@ -65,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
                 aria-current={isActive ? 'page' : undefined}
                 className={`rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${
                   isActive
-                    ? 'bg-amber-500 text-[#fff] shadow-lg shadow-amber-500/30'
+                    ? 'bg-amber-500 text-[#fff]'
                     : 'text-slate-300 hover:bg-white/5 hover:text-white'
                 }`}
               >
@@ -83,8 +74,37 @@ export const Header: React.FC<HeaderProps> = ({ activePath, onNavigate }) => {
           </InstagramLink>
           <ThemeToggle />
           <LanguageToggle />
+          <button
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={t('nav_menu')}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white lg:hidden"
+          >
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </div>
+
+      {open && (
+        <nav id="mobile-menu" className="border-t border-white/10 bg-(--bg-obsidian) lg:hidden" aria-label={t('nav_main_aria')}>
+          <div className="container flex flex-col py-2">
+            {[{ path: '/', labelKey: 'nav_home' }, ...navItems].map((item) => {
+              const isActive = item.path === '/' ? activePath === '/' : activePath === item.path || activePath.startsWith(item.path + '/');
+              return (
+                <button
+                  key={item.path}
+                  onClick={() => go(item.path)}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`border-b border-white/5 py-3.5 text-left text-lg font-semibold last:border-0 ${isActive ? 'text-amber-400' : 'text-white'}`}
+                >
+                  {t(item.labelKey)}
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      )}
     </header>
   );
 };
