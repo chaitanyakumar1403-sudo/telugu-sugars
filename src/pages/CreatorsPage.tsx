@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { InstagramLink, InstagramIcon, INSTAGRAM_HANDLE } from '../components/common/InstagramLink';
-
-// FormSubmit relays each submission to this inbox; no backend needed.
-// The first ever submission sends a one-time activation email that must be confirmed.
-const ENDPOINT = 'https://formsubmit.co/ajax/telugusugars@gmail.com';
+import { sendToInbox } from '../lib/inbox';
 
 const FIELDS = [
   { name: 'name', label: 'cr_name', type: 'text', autoComplete: 'name' },
@@ -23,17 +20,8 @@ export const CreatorsPage: React.FC = () => {
     const data = Object.fromEntries(new FormData(e.currentTarget));
     if (data._honey) return; // bot filled the hidden field
     setStatus('sending');
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...data, _subject: `New creator registration: ${data.name}`, _template: 'table' }),
-      });
-      const json = await res.json().catch(() => ({}));
-      setStatus(res.ok && String(json.success) === 'true' ? 'done' : 'error');
-    } catch {
-      setStatus('error');
-    }
+    const ok = await sendToInbox(`New creator registration: ${data.name}`, data);
+    setStatus(ok ? 'done' : 'error');
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Check, X } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { sendToInbox } from '../../lib/inbox';
 
 interface NewsletterModalProps {
   isOpen: boolean;
@@ -11,18 +12,24 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
+  const submitted = status === 'done';
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Each sign-up arrives in the team inbox (same FormSubmit route as the creators form)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || !consentChecked) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      onClose();
-    }, 2500);
+    if (new FormData(e.currentTarget).get('_honey')) return; // bot filled the hidden field
+    setStatus('sending');
+    const ok = await sendToInbox(`Monthly email sign-up: ${email}`, { email, consent: 'yes' });
+    setStatus(ok ? 'done' : 'error');
+  };
+
+  const close = () => {
+    if (status !== 'sending') setStatus('idle');
+    onClose();
   };
 
   return (
@@ -32,9 +39,9 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
       aria-modal="true"
       aria-label={t('nl_aria')}
     >
-      <div className="w-full max-w-lg bg-(--bg-panel) border border-amber-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
+      <div className="w-full max-w-lg bg-(--bg-panel) border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
         <button
-          onClick={onClose}
+          onClick={close}
           className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-white"
           aria-label={t('nl_close')}
         >
@@ -82,7 +89,9 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
               </div>
             </div>
 
-            {/* Explicit Consent Checkbox (PDF Section 5 & 8 requirement) */}
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+
+            {/* Explicit consent before we keep anyone's email */}
             <label className="flex items-start gap-2.5 text-xs text-slate-300 cursor-pointer">
               <input
                 type="checkbox"
@@ -96,12 +105,14 @@ export const NewsletterModal: React.FC<NewsletterModalProps> = ({ isOpen, onClos
               </span>
             </label>
 
+            {status === 'error' && <p role="alert" className="text-sm text-red-400">{t('nl_error')}</p>}
+
             <button
               type="submit"
-              disabled={!email || !consentChecked}
-              className="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-[#fff] font-bold text-sm transition-all"
+              disabled={!email || !consentChecked || status === 'sending'}
+              className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-[#fff] font-bold text-sm"
             >
-              {t('nl_submit')}
+              {status === 'sending' ? t('cr_sending') : t('nl_submit')}
             </button>
           </form>
         )}
