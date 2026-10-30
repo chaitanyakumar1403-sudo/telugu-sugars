@@ -6,7 +6,8 @@ import { canSpeak, claim, deviceVoice, hasRecording, recUrl, release } from './v
 
 export type VoiceState = 'idle' | 'rec' | 'tts';
 
-export function useVoice(rec: string | undefined, text: string | (() => string)) {
+/** onAudio: hands over the playing recording (or null when it stops), e.g. to drive a level meter. */
+export function useVoice(rec: string | undefined, text: string | (() => string), onAudio?: (a: HTMLAudioElement | null) => void) {
   const { language } = useLanguage();
   const [mine, setMine] = useState(false);
   const [voice, setVoice] = useState(() => !!deviceVoice(language));
@@ -32,7 +33,7 @@ export function useVoice(rec: string | undefined, text: string | (() => string))
     if (state !== 'idle') { stopRef.current(); return; }
     let audio: HTMLAudioElement | null = null;
     const stop = () => {
-      if (audio) { audio.pause(); audio = null; }
+      if (audio) { audio.pause(); audio = null; onAudio?.(null); }
       if (canSpeak()) speechSynthesis.cancel();
       setState('idle');
       setPct(0);
@@ -43,6 +44,7 @@ export function useVoice(rec: string | undefined, text: string | (() => string))
     claim(stop);
     if (mine && rec) {
       const a = (audio = new Audio(recUrl(rec, language)));
+      onAudio?.(a);
       a.ontimeupdate = () => { if (a.duration) setPct(a.currentTime / a.duration); };
       a.onended = stop;
       a.onerror = stop;

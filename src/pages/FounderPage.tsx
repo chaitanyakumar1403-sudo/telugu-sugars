@@ -1,10 +1,12 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { INSTAGRAM_URL } from '../components/common/InstagramLink';
 import { useVoice } from '../lib/useVoice';
 import portrait from '../assets/portrait.webp';
 import { ART } from './founder/art';
 import LetterBoard from './founder/LetterBoard';
+import { meter, setDesk, useEntrances, useTilt } from './founder/motion';
+import { rise } from './founder/rise';
 import './founder/founder.css';
 
 interface FounderPageProps {
@@ -34,10 +36,6 @@ const X_ICON = (
 const ARROW = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10" /></svg>
 );
-
-/** "Six things *I’m building.*" → the starred words in tiger orange. */
-const accent = (text: string) =>
-  text.split(/(\*[^*]+\*)/).map((p, i) => (p.startsWith('*') ? <em key={i}>{p.slice(1, -1)}</em> : <React.Fragment key={i}>{p}</React.Fragment>));
 
 /** The work label's "Work Facts" box, like the nutrition panel on a food packet. */
 const Facts: React.FC<{ w: (typeof WORKS)[number] }> = ({ w }) => {
@@ -78,20 +76,37 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
   const sheetRef = useRef<HTMLDialogElement>(null);
   const letterRef = useRef<HTMLDialogElement>(null);
   const deskRef = useRef<HTMLDivElement>(null);
-  const voice = useVoice('founder', () => t('fd.listen'));
+  // The record player's bars follow Dheeraj's recorded voice (routed through an analyser while it plays).
+  const eqRef = useRef<HTMLDivElement>(null);
+  const unmeter = useRef<() => void>(() => {});
+  const voice = useVoice('founder', () => t('fd.listen'), (a) => {
+    unmeter.current();
+    unmeter.current = a && eqRef.current ? meter(a, Array.from(eqRef.current.children) as HTMLElement[]) : () => {};
+  });
+  useEffect(() => () => unmeter.current(), []);
+  // Elements the motion hooks attach to
+  const [rootEl, setRootEl] = useState<HTMLDivElement | null>(null);
+  const [deskEl, setDeskEl] = useState<HTMLDivElement | null>(null);
+  const deskNode = useCallback((el: HTMLDivElement | null) => { deskRef.current = el; setDeskEl(el); }, []);
+  useEntrances(rootEl);
+  useTilt(deskEl, !focus);
+  // Every time the desk appears (found ధ, or a returning visit), it is set piece by piece.
+  // Just found: the board was taller than the desk, so jump back to the top before the desk is set.
+  const justFound = useRef(false);
+  useLayoutEffect(() => {
+    if (!deskEl) return;
+    if (justFound.current) { justFound.current = false; scrollTo({ top: 0, behavior: 'instant' }); }
+    setDesk(deskEl);
+  }, [deskEl]);
   // The desk stays behind the letter board until ధ is found (remembered for this visit).
   const [open, setOpen] = useState(() => { try { return sessionStorage.getItem('fd-dha') === '1'; } catch { return false; } });
-  const [entering, setEntering] = useState(false);
   const reveal = () => {
     try { sessionStorage.setItem('fd-dha', '1'); } catch { /* private mode */ }
-    setEntering(true);
+    justFound.current = true;
     setOpen(true);
-    // The board is taller than the desk: bring the top of the desk into view as it arrives.
-    requestAnimationFrame(() => scrollTo({ top: 0, behavior: 'smooth' }));
   };
   const letters = () => {
     setFocus(null);
-    setEntering(false);
     setOpen(false);
   };
 
@@ -151,7 +166,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
   const playing = voice.state !== 'idle';
 
   return (
-    <div className="fdk">
+    <div ref={setRootEl} className="fdk">
       {/* The desk */}
       <section className="desk-wrap" aria-labelledby="fdName">
         <h1 className="sr-only" id="fdName">{t('fd.doc')}</h1>
@@ -165,7 +180,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
 
         {!open && <LetterBoard onFound={reveal} />}
         {open && (
-        <div ref={deskRef} className={['desk', focus ? 'is-focus' : '', entering ? 'enter' : ''].filter(Boolean).join(' ')}>
+        <div ref={deskNode} className={focus ? 'desk is-focus' : 'desk'}>
           {/* The postcard: Dheeraj on a stamp */}
           <article {...objProps('card')}>
             <svg className="clip" viewBox="0 0 40 92" aria-hidden="true"><path d="M27 62V18a8 8 0 0 0-16 0v52a12 12 0 0 0 24 0V22" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" /></svg>
@@ -228,7 +243,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
           </aside>
 
           {/* The record player: Dheeraj's own voice */}
-          <aside {...objProps('record')} data-playing={playing || undefined}>
+          <aside {...objProps('record')} data-playing={playing || undefined} data-meter={voice.state === 'rec' || undefined}>
             <div className="deck">
               <div className="vinyl" aria-hidden="true"><div className="lab"><b>తెలుగు</b><span>Sugars</span></div></div>
               <span className="arm" aria-hidden="true" />
@@ -237,6 +252,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
               <p className="nk"><span>{playing ? t('fd.d.air') : t('fd.d.off')}::</span></p>
               <p className="trk">{t('fd.d.track')}</p>
               <p className="art">{t('fd.d.artist')}</p>
+              <div className="eq" ref={eqRef} aria-hidden="true">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ '--b': i } as React.CSSProperties} />)}</div>
             </div>
             {voice.available ? (
               <button type="button" className="play" onClick={voice.toggle} aria-pressed={playing}>
@@ -267,10 +283,10 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
 
       {/* అ: the work, labelled like food packets */}
       <section className="sec" id="s-work" aria-labelledby="workTitle">
-        <Head l="అ" k={t('fd.s.work')} id="workTitle" sub={t('fd.work.sub')}>{accent(t('fd.say.2'))}</Head>
+        <Head l="అ" k={t('fd.s.work')} id="workTitle" sub={t('fd.work.sub')}>{rise(t('fd.say.2'))}</Head>
         <div className="works">
           {WORKS.map((wk, i) => (
-            <button key={wk.k} type="button" className="wcard" onClick={() => setWork(i)}>
+            <button key={wk.k} type="button" className="wcard" onClick={() => setWork(i)} style={{ '--i': i, '--dx': `${[-150, 0, 150][i % 3]}px`, '--dr': `${[-11, 4, 10][i % 3]}deg` } as React.CSSProperties}>
               <span className="wbadge" aria-hidden="true">{LETTERS[i]}</span>
               <span className="wart" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ART[wk.art] }} />
               <Facts w={wk} />
@@ -303,7 +319,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
 
       {/* ఆ: the bill */}
       <section className="sec bill" id="s-bill" aria-labelledby="billTitle">
-        <Head l="ఆ" k={t('fd.s.bill')} id="billTitle" sub={t('fd.bill.sub')}>{accent(t('fd.say.3'))}</Head>
+        <Head l="ఆ" k={t('fd.s.bill')} id="billTitle" sub={t('fd.bill.sub')}>{rise(t('fd.say.3'))}</Head>
         <div className="receipt" role="group" aria-labelledby="billTitle">
           <div className="c big">TELUGU SUGARS</div><div className="c">{t('fd.r.head')}</div><hr />
           {row(t('fd.r.date'), fmt(receiptDate))}{row(t('fd.r.day'), `#${days}`)}<hr />
@@ -320,20 +336,20 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
 
       {/* ఇ: the rules */}
       <section className="sec" id="s-rules" aria-labelledby="rulesTitle">
-        <Head l="ఇ" k={t('fd.s.rules')} id="rulesTitle">{t('fd.rules.t')}</Head>
+        <Head l="ఇ" k={t('fd.s.rules')} id="rulesTitle">{rise(t('fd.rules.t'))}</Head>
         <ol className="rules">
-          {[1, 2, 3, 4].map((n, i) => <li key={n}><b aria-hidden="true">{LETTERS[i]}</b><span>{t(`fd.r${n}`)}</span></li>)}
+          {[1, 2, 3, 4].map((n, i) => <li key={n} style={{ '--i': i } as React.CSSProperties}><b aria-hidden="true">{LETTERS[i]}</b><span>{t(`fd.r${n}`)}</span></li>)}
         </ol>
       </section>
 
       {/* ఈ: write to me */}
       <section className="sec write" id="s-contact" aria-labelledby="writeTitle">
-        <Head l="ఈ" k={t('fd.s.write')} id="writeTitle" sub={t('fd.c.body')}>{t('fd.c.title')}</Head>
+        <Head l="ఈ" k={t('fd.s.write')} id="writeTitle" sub={t('fd.c.body')}>{rise(t('fd.c.title'))}</Head>
         <ul className="links">
-          <li><a href="/creators" onClick={go('/creators')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg><span>{t('fd.c.join')}</span></a></li>
-          <li><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" /></svg><span>{t('fd.c.insta')}</span></a></li>
-          <li><a href="/watch" onClick={go('/watch')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="4" /><path d="m10 9 5 3-5 3z" /></svg><span>{t('fd.c.watch')}</span></a></li>
-          <li><a href="/atlas" onClick={go('/atlas')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg><span>{t('fd.c.atlas')}</span></a></li>
+          <li style={{ '--i': 0 } as React.CSSProperties}><a href="/creators" onClick={go('/creators')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg><span>{t('fd.c.join')}</span></a></li>
+          <li style={{ '--i': 1 } as React.CSSProperties}><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" /></svg><span>{t('fd.c.insta')}</span></a></li>
+          <li style={{ '--i': 2 } as React.CSSProperties}><a href="/watch" onClick={go('/watch')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="4" /><path d="m10 9 5 3-5 3z" /></svg><span>{t('fd.c.watch')}</span></a></li>
+          <li style={{ '--i': 3 } as React.CSSProperties}><a href="/atlas" onClick={go('/atlas')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg><span>{t('fd.c.atlas')}</span></a></li>
         </ul>
       </section>
     </div>

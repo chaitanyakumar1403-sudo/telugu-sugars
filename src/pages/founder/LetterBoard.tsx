@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { canSpeak, deviceVoice } from '../../lib/voice';
+import { keyLift, stampFound, typeset } from './motion';
+import { rise } from './rise';
 
 /** The Telugu alphabet in chart order: [letter, how it sounds]. */
 const VOWELS: [string, string][] = [
@@ -30,6 +32,20 @@ export const LetterBoard: React.FC<{ onFound: () => void }> = ({ onFound }) => {
   const [aloud, setAloud] = useState(true);
   const [hasVoice, setHasVoice] = useState(() => !!deviceVoice('te'));
   const timers = useRef<number[]>([]);
+  const boardRef = useRef<HTMLDivElement>(null);
+  const trayRef = useRef<HTMLDivElement>(null);
+
+  // Arrival: the letters are typeset into the case; then the keys rise under the pointer.
+  useEffect(() => {
+    if (boardRef.current) typeset(boardRef.current);
+    return trayRef.current ? keyLift(trayRef.current) : undefined;
+  }, []);
+  // Found: ధ flies onto the stamp and everything else falls out of the case.
+  useEffect(() => {
+    const b = boardRef.current;
+    const hit = b?.querySelector<HTMLElement>('.tile.hit');
+    if (found && b && hit) stampFound(b, hit, b.querySelector<HTMLElement>('.lb-stamp b'));
+  }, [found]);
 
   useEffect(() => {
     const update = () => setHasVoice(!!deviceVoice('te'));
@@ -84,14 +100,14 @@ export const LetterBoard: React.FC<{ onFound: () => void }> = ({ onFound }) => {
   );
 
   return (
-    <div className={found ? 'lboard found' : 'lboard'}>
+    <div ref={boardRef} className={found ? 'lboard found' : 'lboard'}>
       <div className="lb-head">
         <p className="nk"><span>{t('fd.l.k')} ::</span></p>
-        <h2 className="lb-q">{t('fd.l.title')}</h2>
+        <h2 className="lb-q">{rise(t('fd.l.title'))}</h2>
         <p className="lb-ask">{t('fd.l.ask')}</p>
       </div>
 
-      <div className="lb-case">
+      <div ref={trayRef} className="lb-case">
         <p className="lb-lab">{t('fd.l.vowels')}</p>
         <div className="lb-grid v">{VOWELS.map((x, i) => tile(x, i))}</div>
         <p className="lb-lab">{t('fd.l.cons')}</p>
