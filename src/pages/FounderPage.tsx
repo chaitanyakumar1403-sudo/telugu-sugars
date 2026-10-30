@@ -4,6 +4,7 @@ import { INSTAGRAM_URL } from '../components/common/InstagramLink';
 import { useVoice } from '../lib/useVoice';
 import portrait from '../assets/portrait.webp';
 import { ART } from './founder/art';
+import LetterBoard from './founder/LetterBoard';
 import './founder/founder.css';
 
 interface FounderPageProps {
@@ -78,6 +79,21 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
   const letterRef = useRef<HTMLDialogElement>(null);
   const deskRef = useRef<HTMLDivElement>(null);
   const voice = useVoice('founder', () => t('fd.listen'));
+  // The desk stays behind the letter board until ధ is found (remembered for this visit).
+  const [open, setOpen] = useState(() => { try { return sessionStorage.getItem('fd-dha') === '1'; } catch { return false; } });
+  const [entering, setEntering] = useState(false);
+  const reveal = () => {
+    try { sessionStorage.setItem('fd-dha', '1'); } catch { /* private mode */ }
+    setEntering(true);
+    setOpen(true);
+    // The board is taller than the desk: bring the top of the desk into view as it arrives.
+    requestAnimationFrame(() => scrollTo({ top: 0, behavior: 'smooth' }));
+  };
+  const letters = () => {
+    setFocus(null);
+    setEntering(false);
+    setOpen(false);
+  };
 
   useEffect(() => { document.title = t('fd.doc'); }, [t, language]);
   useEffect(() => {
@@ -144,9 +160,12 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
           <li><span>{t('fd.d.base')}::</span>{t('fd.d.vizag')}</li>
           <li><span>{t('fd.d.day')}::</span>#{days}</li>
           <li><span>{t('fd.d.lang')}::</span>TE · EN</li>
+          {open && <li className="again"><button type="button" onClick={letters}>అ–ఱ · {t('fd.l.again')}</button></li>}
         </ul>
 
-        <div ref={deskRef} className={focus ? 'desk is-focus' : 'desk'}>
+        {!open && <LetterBoard onFound={reveal} />}
+        {open && (
+        <div ref={deskRef} className={['desk', focus ? 'is-focus' : '', entering ? 'enter' : ''].filter(Boolean).join(' ')}>
           {/* The postcard: Dheeraj on a stamp */}
           <article {...objProps('card')}>
             <svg className="clip" viewBox="0 0 40 92" aria-hidden="true"><path d="M27 62V18a8 8 0 0 0-16 0v52a12 12 0 0 0 24 0V22" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" /></svg>
@@ -234,6 +253,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
 
           {focus && <button type="button" className="unfocus" aria-label={t('fd.close')} onClick={() => setFocus(null)}>{X_ICON}</button>}
         </div>
+        )}
       </section>
 
       {/* The letter, from "About me" */}

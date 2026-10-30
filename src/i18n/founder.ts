@@ -132,4 +132,16 @@ export const FOUNDER_STRINGS: Record<string, { en: string; te: string }> = {
   "fd.s.bill": { en: "THE BILL", te: "బిల్లు" },
   "fd.s.rules": { en: "RULES", te: "నియమాలు" },
   "fd.s.write": { en: "WRITE TO ME", te: "నాకు రాయండి" },
+  // The letter board (2026-10-30): all 54 letters; tapping ధ (Dheeraj) opens the desk
+  "fd.l.k": { en: "THE ALPHABET", te: "వర్ణమాల" },
+  "fd.l.title": { en: "My name starts with one of these letters.", te: "నా పేరు ఈ అక్షరాల్లో ఒకదానితో మొదలవుతుంది." },
+  "fd.l.ask": { en: "Find it and tap it to meet me.", te: "అది వెతికి నొక్కండి, నన్ను కలవండి." },
+  "fd.l.vowels": { en: "Vowels · అచ్చులు", te: "అచ్చులు" },
+  "fd.l.cons": { en: "Consonants · హల్లులు", te: "హల్లులు" },
+  "fd.l.miss": { en: "That is {l}, “{r}”. Not my letter. Try again.", te: "అది {l}. నా అక్షరం కాదు, మళ్ళీ చూడండి." },
+  "fd.l.hint": { en: "A hint: Dheeraj is written ధీరజ్. Find ధ.", te: "చిన్న సూచన: ధీరజ్ అనే పేరు ధ తో మొదలవుతుంది." },
+  "fd.l.found": { en: "ధ, for Dheeraj. Opening my desk…", te: "ధ, ధీరజ్ లోని ధ. నా టేబుల్ తెరుస్తున్నా…" },
+  "fd.l.say": { en: "Say each letter", te: "అక్షరం చదివి వినిపించు" },
+  "fd.l.skip": { en: "Skip, just show me", te: "దాటవేయండి, చూపించండి" },
+  "fd.l.again": { en: "Letters", te: "అక్షరాలు" },
 };
