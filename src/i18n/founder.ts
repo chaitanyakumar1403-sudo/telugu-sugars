@@ -144,4 +144,12 @@ export const FOUNDER_STRINGS: Record<string, { en: string; te: string }> = {
   "fd.l.say": { en: "Say each letter", te: "అక్షరం చదివి వినిపించు" },
   "fd.l.skip": { en: "Skip, just show me", te: "దాటవేయండి, చూపించండి" },
   "fd.l.again": { en: "Letters", te: "అక్షరాలు" },
+  // Say hello back (2026-11-01): the visitor answers Dheeraj on the record player
+  "fd.h.back": { en: "Say hello back", te: "మీరూ నమస్తే చెప్పండి" },
+  "fd.h.rec": { en: "Listening… {s}s · tap to stop", te: "వింటున్నా… {s} సె · ఆపడానికి నొక్కండి" },
+  "fd.h.yours": { en: "Your hello", te: "మీ నమస్తే" },
+  "fd.h.again": { en: "Record again", te: "మళ్ళీ రికార్డ్ చేయండి" },
+  "fd.h.more": { en: "Tell your full story", te: "మీ పూర్తి కథ చెప్పండి" },
+  "fd.h.private": { en: "Stays on your phone.", te: "మీ ఫోన్‌లోనే ఉంటుంది." },
+  "fd.c.voices": { en: "Inclusive Voices: tell your food story", te: "అందరి గొంతులు: మీ ఆహారం కథ చెప్పండి" },
 };

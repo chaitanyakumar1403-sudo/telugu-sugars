@@ -21,6 +21,10 @@
         document.documentElement.dataset.theme = t;
         var z = localStorage.getItem('telugusugars_size');
         if (z === 'big' || z === 'bigger') document.documentElement.dataset.size = z;
+        // Accessibility switches from the display menu
+        if (localStorage.getItem('telugusugars_contrast') === '1') document.documentElement.dataset.contrast = 'more';
+        if (localStorage.getItem('telugusugars_read') === '1') document.documentElement.dataset.read = 'easy';
+        if (localStorage.getItem('telugusugars_motion') === '1') document.documentElement.dataset.motion = 'off';
       } catch (e) {}
     </script>
   </head>

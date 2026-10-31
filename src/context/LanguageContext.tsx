@@ -3,6 +3,8 @@ import { Language } from '../types/content';
 import { VOICE_STRINGS } from '../i18n/voice';
 import { FOUNDER_STRINGS } from '../i18n/founder';
 import { SCAN_STRINGS } from '../i18n/scan';
+import { VOICES_STRINGS } from '../i18n/voices';
+import { ACCESS_STRINGS } from '../i18n/access';
 
 interface LanguageContextType {
   language: Language;
@@ -294,7 +296,7 @@ const BASE: Strings = {
 };
 
 // Feature strings live beside their features (src/i18n/*) and join the one dictionary here.
-const TRANSLATIONS: Strings = { ...BASE, ...VOICE_STRINGS, ...FOUNDER_STRINGS, ...SCAN_STRINGS };
+const TRANSLATIONS: Strings = { ...BASE, ...VOICE_STRINGS, ...FOUNDER_STRINGS, ...SCAN_STRINGS, ...VOICES_STRINGS, ...ACCESS_STRINGS };
 
 const TITLE_EN = document.title;
 const TITLE_TE = 'తెలుగు సుగర్స్ | Telugu Sugars — మన ఆహారంలో అసలు ఏముంది';

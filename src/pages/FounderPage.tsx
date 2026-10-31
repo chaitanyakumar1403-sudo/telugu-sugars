@@ -5,6 +5,7 @@ import { useVoice } from '../lib/useVoice';
 import portrait from '../assets/portrait.webp';
 import { ART } from './founder/art';
 import LetterBoard from './founder/LetterBoard';
+import HelloBack from './founder/HelloBack';
 import { meter, setDesk, useEntrances, useTilt } from './founder/motion';
 import { rise } from './founder/rise';
 import './founder/founder.css';
@@ -265,6 +266,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
               <p className="nov">{t('fd.d.novoice')}</p>
             )}
             {voice.state === 'rec' && <span className="prog" aria-hidden="true"><span style={{ width: `${Math.round(voice.pct * 100)}%` }} /></span>}
+            <HelloBack onNavigate={onNavigate} />
           </aside>
 
           {focus && <button type="button" className="unfocus" aria-label={t('fd.close')} onClick={() => setFocus(null)}>{X_ICON}</button>}
@@ -350,6 +352,7 @@ export const FounderPage: React.FC<FounderPageProps> = ({ onNavigate }) => {
           <li style={{ '--i': 1 } as React.CSSProperties}><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" /></svg><span>{t('fd.c.insta')}</span></a></li>
           <li style={{ '--i': 2 } as React.CSSProperties}><a href="/watch" onClick={go('/watch')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="4" /><path d="m10 9 5 3-5 3z" /></svg><span>{t('fd.c.watch')}</span></a></li>
           <li style={{ '--i': 3 } as React.CSSProperties}><a href="/atlas" onClick={go('/atlas')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg><span>{t('fd.c.atlas')}</span></a></li>
+          <li style={{ '--i': 4 } as React.CSSProperties}><a href="/voices" onClick={go('/voices')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg><span>{t('fd.c.voices')}</span></a></li>
         </ul>
       </section>
     </div>

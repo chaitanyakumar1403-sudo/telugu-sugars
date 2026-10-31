@@ -1,8 +1,11 @@
 // Founder page motion: the choreography that CSS alone can't do (FLIP flights, gravity, pointer parallax,
-// the voice meter). Every function is a no-op when the reader prefers reduced motion.
+// the voice meter). Every function is a no-op when the reader prefers reduced motion, or has switched
+// "Stop animations" on in the display menu.
 import { useEffect } from 'react';
 
-export const calm = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+export const calm = () =>
+  document.documentElement.dataset.motion === 'off' ||
+  (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches);
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 const BOUNCE = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
 const SETTLE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';

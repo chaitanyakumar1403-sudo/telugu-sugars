@@ -424,3 +424,29 @@ html:lang(te) .font-mono { font-family: var(--font-telugu); }
 
 /* Steam marks over home-cooked dishes */
 .steam { display: inline-block; font-size: 18px; opacity: 0.7; }
+
+/* ---------- Accessibility switches (display menu → <html data-…>) ---------- */
+/* Higher contrast: secondary text becomes primary-strength, borders become visible, links are underlined */
+:root[data-contrast='more'] {
+  --color-slate-300: var(--color-white);
+  --color-slate-400: var(--color-slate-200);
+  --color-slate-500: var(--color-slate-200);
+  --hairline: rgba(127, 127, 127, 0.6);
+  --border-subtle: rgba(127, 127, 127, 0.55);
+  --border-medium: rgba(127, 127, 127, 0.75);
+}
+:root[data-contrast='more'] main a:not([class*='rounded']) { text-decoration: underline; text-underline-offset: 3px; }
+:root[data-contrast='more'] .fdk { --mute: var(--ink); --line: rgba(127, 127, 127, 0.6); --dark-mute: var(--dark-ink); }
+
+/* Easy reading: more air between lines and words (letters stay together in Telugu) */
+:root[data-read='easy'] main :is(p, li, dd, label, blockquote) { line-height: 1.9 !important; word-spacing: 0.14em; }
+:root[data-read='easy']:not(:lang(te)) main :is(p, li, dd, label, blockquote) { letter-spacing: 0.02em; }
+
+/* Stop animations: everything holds still, whatever the phone's own setting */
+:root[data-motion='off'] *, :root[data-motion='off'] ::before, :root[data-motion='off'] ::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0s !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

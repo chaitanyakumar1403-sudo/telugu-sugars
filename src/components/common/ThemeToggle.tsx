@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Moon, Smartphone, Sun, Type } from 'lucide-react';
+import { AlignLeft, Contrast, Moon, Pause, Smartphone, Square, Sun, Type, Volume2 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { canSpeak, claim, deviceVoice, release } from '../../lib/voice';
 
 type Theme = 'system' | 'light' | 'dark';
 type Size = 'normal' | 'big' | 'bigger';
@@ -25,7 +26,25 @@ const SIZES: { id: Size; cls: string }[] = [
   { id: 'bigger', cls: 'text-base' },
 ];
 
-/** Display menu: colour scheme + text size. index.html applies both before first paint. */
+// Accessibility switches: each sets <html data-…> (index.html applies them before first paint) and is remembered.
+const FLAGS = [
+  { attr: 'contrast', on: 'more', label: 'acc_contrast', icon: Contrast },
+  { attr: 'read', on: 'easy', label: 'acc_read', icon: AlignLeft },
+  { attr: 'motion', on: 'off', label: 'acc_calm', icon: Pause },
+] as const;
+type Flag = (typeof FLAGS)[number]['attr'];
+
+/** The page's main text in pieces short enough for every speech engine (long utterances stop early on Chrome). */
+const pageChunks = () => {
+  const text = (document.querySelector('main')?.innerText || '').replace(/[ \t]+/g, ' ');
+  return text
+    .split(/\n+|(?<=[.!?।])\s+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 1)
+    .flatMap((s) => s.match(/.{1,220}(\s|$)/g) || [s]);
+};
+
+/** Display menu: colour scheme, text size and the accessibility switches. index.html applies them before first paint. */
 export const ThemeToggle: React.FC = () => {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
@@ -38,6 +57,52 @@ export const ThemeToggle: React.FC = () => {
     return z === 'big' || z === 'bigger' ? z : 'normal';
   });
   const ref = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
+  const [flags, setFlags] = useState<Record<Flag, boolean>>(() => ({
+    contrast: read('telugusugars_contrast') === '1',
+    read: read('telugusugars_read') === '1',
+    motion: read('telugusugars_motion') === '1',
+  }));
+  const [reading, setReading] = useState(false);
+  const stopReading = useRef<() => void>(() => {});
+
+  useEffect(() => {
+    for (const f of FLAGS) {
+      if (flags[f.attr]) document.documentElement.dataset[f.attr] = f.on;
+      else delete document.documentElement.dataset[f.attr];
+      write(`telugusugars_${f.attr}`, flags[f.attr] ? '1' : null);
+    }
+  }, [flags]);
+  useEffect(() => () => stopReading.current(), []);
+  useEffect(() => { stopReading.current(); }, [language]);
+
+  // Read the whole page aloud in the reader's language, a sentence at a time.
+  const hasVoice = canSpeak() && !!deviceVoice(language);
+  const toggleReading = () => {
+    if (reading) { stopReading.current(); return; }
+    const v = deviceVoice(language);
+    if (!v) return;
+    const queue = pageChunks();
+    let live = true;
+    const stop = () => { live = false; speechSynthesis.cancel(); setReading(false); release(stop); stopReading.current = () => {}; };
+    const next = () => {
+      if (!live) return;
+      const s = queue.shift();
+      if (!s) { stop(); return; }
+      const u = new SpeechSynthesisUtterance(s);
+      u.voice = v;
+      u.lang = v.lang;
+      u.rate = language === 'te' ? 0.9 : 0.95;
+      u.onend = next;
+      u.onerror = stop;
+      speechSynthesis.speak(u);
+    };
+    claim(stop);
+    stopReading.current = stop;
+    speechSynthesis.cancel();
+    setReading(true);
+    next();
+  };
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme === 'system' ? systemTheme() : theme;
@@ -86,7 +151,7 @@ export const ThemeToggle: React.FC = () => {
       </button>
 
       {open && (
-        <div className="panel absolute right-0 top-12 z-50 w-64 bg-(--bg-panel) p-3 animate-[pop-in_150ms_ease-out]">
+        <div className="panel absolute right-0 top-12 z-50 max-h-[80vh] w-64 overflow-y-auto bg-(--bg-panel) p-3 animate-[pop-in_150ms_ease-out]">
           <p className="px-1 pb-1.5 text-xs text-slate-500">{t('theme_title')}</p>
           <div className="flex flex-col gap-1">
             {THEMES.map(({ id, icon: Icon }) => (
@@ -109,6 +174,18 @@ export const ThemeToggle: React.FC = () => {
                 {t(`size_${id}`)}
               </button>
             ))}
+          </div>
+          <p className="px-1 pb-1.5 pt-4 text-xs text-slate-500">{t('acc_title')}</p>
+          <div className="flex flex-col gap-1">
+            {FLAGS.map(({ attr, label, icon: Icon }) => (
+              <button key={attr} onClick={() => setFlags((f) => ({ ...f, [attr]: !f[attr] }))} aria-pressed={flags[attr]} className={opt(flags[attr])}>
+                <Icon className="h-4 w-4" /> {t(label)}
+              </button>
+            ))}
+            <button onClick={toggleReading} disabled={!hasVoice} aria-pressed={reading} className={`${opt(reading)} disabled:opacity-50`}>
+              {reading ? <Square className="h-4 w-4 fill-current" /> : <Volume2 className="h-4 w-4" />} {t(reading ? 'acc_aloud_stop' : 'acc_aloud')}
+            </button>
+            {!hasVoice && <p className="px-1 pt-1 text-xs text-slate-500">{t('acc_novoice')}</p>}
           </div>
         </div>
       )}
