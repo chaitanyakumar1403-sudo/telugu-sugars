@@ -17,6 +17,7 @@
   --shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 2px 4px rgba(31, 26, 23, 0.06), 0 22px 44px -22px rgba(31, 26, 23, 0.35);
   position: relative;
   isolation: isolate;
+  overflow-x: clip; /* cards slide in from beyond the edges */
   color: var(--ink);
   font-family: var(--font-sans);
   background-color: var(--paper);
@@ -57,10 +58,15 @@
 .fdk .desk { position: relative; flex: 1; width: 100%; max-width: 1120px; min-height: 620px; margin: 0 auto; }
 .fdk .obj {
   position: absolute;
-  transition: translate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), rotate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease, filter 0.35s ease;
+  transition: transform 0.45s ease-out, translate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), rotate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease, filter 0.35s ease;
 }
 @media (min-width: 900px) {
   .fdk .obj { cursor: zoom-in; }
+  /* The desk leans toward the pointer (--px/--py from motion.ts); --z is each object's depth */
+  .fdk .obj { transform: perspective(1100px) translate3d(calc(var(--px, 0) * var(--z, 0) * 1px), calc(var(--py, 0) * var(--z, 0) * 1px), 0) rotateX(calc(var(--py, 0) * -3deg)) rotateY(calc(var(--px, 0) * 4deg)); }
+  .fdk .o-card { --z: -8; }
+  .fdk .o-notes { --z: 16; }
+  .fdk .o-record { --z: 12; }
   .fdk .obj.on { cursor: default; }
   .fdk .desk.is-focus .obj:not(.on) { opacity: 0.16; filter: blur(3px); pointer-events: none; }
   .fdk .obj.on { z-index: 20; rotate: 0deg; }
@@ -262,10 +268,134 @@
 .fdk .links a:hover { border-color: var(--tiger); color: var(--tiger-ink); }
 .fdk .links svg { width: 18px; height: 18px; flex: none; }
 
+/* ---------- the letter board: all 54 Telugu letters; ధ opens the desk ---------- */
+.fdk .lboard { position: relative; width: 100%; max-width: 780px; margin: 18px auto 0; }
+.fdk .lb-head { text-align: center; }
+.fdk .lb-head .nk { justify-content: center; color: var(--tiger-ink); }
+.fdk .lb-q { margin: 10px auto 0; max-width: 680px; font-size: clamp(26px, 4vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance; }
+.fdk .lb-ask { margin: 8px 0 0; font-size: 17px; color: var(--mute); }
+.fdk .lb-case { position: relative; margin-top: 18px; padding: 16px 18px 4px; border-radius: 18px; background: var(--sheet); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.fdk .lb-lab { margin: 0 0 10px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
+.fdk .lb-grid { display: grid; gap: 7px; margin-bottom: 14px; }
+.fdk .lb-grid.v { grid-template-columns: repeat(9, minmax(0, 1fr)); }
+.fdk .lb-grid.c { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+@media (max-width: 700px) {
+  .fdk .lb-case { padding: 16px 12px 4px; }
+  .fdk .lb-grid { gap: 6px; }
+  .fdk .lb-grid.v { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  /* five to a row: each row is one group of the chart (క ఖ గ ఘ ఙ, చ ఛ జ ఝ ఞ …) */
+  .fdk .lb-grid.c { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+/* Each letter is a letterpress block */
+.fdk .tile {
+  position: relative; aspect-ratio: 1 / 0.96; min-height: 44px; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  border-radius: 10px; border: 1px solid var(--line); cursor: pointer;
+  background: linear-gradient(#fffdf9, #f4ede3); box-shadow: 0 2px 0 #e2d7c9, 0 7px 10px -7px rgba(31, 26, 23, 0.35);
+  transition: translate 0.15s ease, box-shadow 0.15s ease, background 0.25s ease, opacity 0.45s ease, rotate 0.45s ease, scale 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+[data-theme='dark'] .fdk .tile { background: linear-gradient(#2e2a26, #26221f); box-shadow: 0 2px 0 #14120f, 0 7px 10px -7px rgba(0, 0, 0, 0.6); }
+.fdk .tile .g { font-family: 'Noto Sans Telugu', sans-serif; font-weight: 600; font-size: clamp(19px, 2.4vw, 26px); line-height: 1.15; color: var(--ink); }
+.fdk .tile small { font-family: var(--mono); font-size: 9.5px; color: var(--mute); opacity: 0.75; }
+.fdk .tile { translate: 0 calc(var(--lift, 0px) * -1); }
+.fdk .tile:hover { translate: 0 calc(-2px - var(--lift, 0px)); box-shadow: 0 4px 0 #e2d7c9, 0 12px 16px -8px rgba(31, 26, 23, 0.35); }
+[data-theme='dark'] .fdk .tile:hover { box-shadow: 0 4px 0 #14120f, 0 12px 16px -8px rgba(0, 0, 0, 0.6); }
+.fdk .tile:active { translate: 0 1px; box-shadow: 0 1px 0 #e2d7c9; }
+.fdk .tile:focus-visible { outline: 2px solid var(--tiger); outline-offset: 2px; }
+.fdk .tile.shake { animation: fdk-shake 0.42s ease; }
+@keyframes fdk-shake { 20% { rotate: -6deg; } 45% { rotate: 5deg; } 70% { rotate: -3deg; } 100% { rotate: 0deg; } }
+.fdk .tile.hint { box-shadow: 0 0 0 3px rgba(253, 106, 2, 0.5), 0 2px 0 #e2d7c9; animation: fdk-hint 1.6s ease-in-out infinite; }
+@keyframes fdk-hint { 50% { box-shadow: 0 0 0 7px rgba(253, 106, 2, 0.12), 0 2px 0 #e2d7c9; } }
+
+/* Found: ధ turns orange, every other block drops away, then ధ → ధీరజ్ is stamped */
+.fdk .tile.hit { z-index: 5; background: var(--tiger); border-color: var(--tiger); box-shadow: 0 14px 28px -10px rgba(253, 106, 2, 0.7); }
+.fdk .tile.hit .g, .fdk .tile.hit small { color: #fff; opacity: 1; }
+.fdk .lboard.found .tile { pointer-events: none; }
+.fdk .lboard.found .lb-lab { opacity: 0; transition: opacity 0.3s; }
+.fdk .lb-stamp {
+  position: absolute; left: 50%; top: 58%; translate: -50% -50%; z-index: 3; pointer-events: none;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 18px; width: min(560px, 92%); text-align: center;
+  rotate: -2deg;
+}
+/* The flying ధ block lands on this ధ (motion.ts); the name slides out of it */
+.fdk .lb-stamp b { opacity: 0; animation: fdk-show 0.01s 0.74s forwards; }
+.fdk .lb-stamp span { animation: fdk-slide 0.5s 0.84s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.fdk .lb-stamp strong { animation: fdk-slide 0.6s 0.92s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.fdk .lb-stamp em { animation: fdk-slide 0.5s 1.15s ease both; }
+@keyframes fdk-show { to { opacity: 1; } }
+@keyframes fdk-slide { from { opacity: 0; transform: translateX(-26px); } }
+.fdk .lb-ink { position: absolute; z-index: 2; width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--tiger); pointer-events: none; transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+.fdk .lb-stamp b { font-family: 'Noto Sans Telugu', sans-serif; font-size: clamp(70px, 12vw, 120px); line-height: 1; color: var(--tiger); }
+.fdk .lb-stamp span { font-size: 40px; color: var(--mute); }
+.fdk .lb-stamp strong { font-family: 'Noto Sans Telugu', sans-serif; font-size: clamp(50px, 9vw, 88px); line-height: 1; color: var(--ink); }
+.fdk .lb-stamp em { flex-basis: 100%; font-style: normal; font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--mute); }
+
+.fdk .lb-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-top: 14px; }
+.fdk .lb-msg { margin: 0; min-height: 1.5em; font-size: 15px; }
+.fdk .lb-act { display: flex; flex-wrap: wrap; gap: 8px; }
+.fdk .chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); background: var(--sheet); font-size: 13px; font-weight: 600; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.fdk .chip svg { width: 15px; height: 15px; }
+.fdk .chip[aria-pressed='true'] { border-color: var(--tiger); color: var(--tiger-ink); }
+.fdk .chip.ghost { background: transparent; }
+.fdk .chip:hover { border-color: var(--tiger); }
+
+/* Back to the letters, from the status strip */
+.fdk .strip .again { padding: 0; border-color: rgba(253, 106, 2, 0.45); }
+.fdk .strip .again button { padding: 4px 8px; border: 0; background: none; font: inherit; color: var(--tiger-ink); cursor: pointer; }
+
+
+/* ---------- motion: words rise, sections enter once, the voice meter ---------- */
+.fdk .wd { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.16em 0.02em 0.18em; margin: -0.16em -0.02em -0.18em; }
+.fdk .wd > * { display: inline-block; translate: 0 118%; }
+.fdk .sec.in .wd > *, .fdk .lboard .wd > * { animation: fdk-rise 0.85s calc(0.08s + var(--w) * 70ms) cubic-bezier(0.2, 0.85, 0.25, 1) forwards; }
+@keyframes fdk-rise { to { translate: 0 0; } }
+
+.fdk .sec:not(.in) .sh .k, .fdk .sec:not(.in) .sh .sub, .fdk .sec:not(.in) .wcard, .fdk .sec:not(.in) .receipt, .fdk .sec:not(.in) .rules li, .fdk .sec:not(.in) .links li { opacity: 0; }
+.fdk .sec.in .sh .k { animation: fdk-up 0.6s both; }
+.fdk .sec.in .sh .k b { animation: fdk-spin 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.fdk .sec.in .sh .sub { animation: fdk-up 0.7s 0.45s both; }
+/* Work labels are dealt onto the table like cards */
+.fdk .sec.in .wcard { animation: fdk-deal 0.95s calc(0.3s + var(--i) * 110ms) cubic-bezier(0.2, 0.9, 0.3, 1.12) both; }
+@keyframes fdk-deal { from { opacity: 0; transform: translate(var(--dx, 0), 150px) rotate(var(--dr, 0deg)) scale(0.92); } }
+/* The bill prints, line by line */
+.fdk .sec.in .receipt { animation: fdk-print 2s 0.35s steps(24, end) both; }
+@keyframes fdk-print { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+.fdk .sec.in .rules li { animation: fdk-up 0.75s calc(0.25s + var(--i) * 130ms) cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.fdk .sec.in .rules li b { animation: fdk-spin 0.7s calc(0.35s + var(--i) * 130ms) cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.fdk .sec.in .links li { animation: fdk-pop 0.6s calc(0.4s + var(--i) * 90ms) cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes fdk-up { from { opacity: 0; transform: translateY(36px); } }
+@keyframes fdk-spin { from { opacity: 0; transform: scale(0.3) rotate(-120deg); } }
+@keyframes fdk-pop { from { opacity: 0; transform: translateY(14px) scale(0.7); } }
+
+/* The record player's level meter: driven by the recording (motion.ts meter), or a soft loop for the device voice */
+.fdk .eq { display: flex; align-items: flex-end; gap: 3px; height: 26px; margin-top: 10px; }
+.fdk .eq i { flex: 1; height: 100%; border-radius: 2px; background: var(--tiger); opacity: 0.85; transform-origin: 50% 100%; transform: scaleY(0.12); transition: transform 0.08s linear; }
+.fdk .o-record[data-playing]:not([data-meter]) .eq i { animation: fdk-eq 0.8s ease-in-out infinite alternate; animation-delay: calc(var(--b) * -73ms); }
+@keyframes fdk-eq { 0% { transform: scaleY(0.15); } 40% { transform: scaleY(0.8); } 100% { transform: scaleY(0.35); } }
+
+/* Say hello back: the visitor answers on the record player (founder/HelloBack.tsx) */
+.fdk .hello { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.fdk .hb { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 12px; border-radius: 10px; border: 1px dashed rgba(255, 255, 255, 0.3); background: transparent; color: var(--dark-ink) !important; font-size: 13px; font-weight: 700; cursor: pointer; transition: border-color 0.2s; }
+.fdk .hb svg { width: 16px; height: 16px; flex: none; }
+.fdk .hb:hover, .fdk .hb.on { border-color: var(--tiger); border-style: solid; }
+.fdk .hb .lvl { display: block; width: 46px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
+.fdk .hb .lvl i { display: block; height: 100%; background: var(--tiger); transform-origin: 0 50%; transition: transform 60ms linear; }
+.fdk .hb-done { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fdk .hb.mine { flex: 1; width: auto; border-style: solid; }
+.fdk .hb.x { flex: none; width: auto; padding: 9px 13px; font-size: 15px; }
+.fdk .hello .more { flex-basis: 100%; font-size: 12.5px; font-weight: 700; color: var(--tiger); text-decoration: none; }
+.fdk .hello .more:hover { text-decoration: underline; }
+.fdk .hb-note { margin: 0; font-size: 11px; color: var(--dark-mute); }
+
 /* Telugu: spaced-out letters pull the clusters apart, so Telugu labels keep normal spacing */
-html:lang(te) .fdk .nk, html:lang(te) .fdk .strip, html:lang(te) .fdk .stamp figcaption, html:lang(te) .fdk .route, html:lang(te) .fdk .sh .k, html:lang(te) .fdk .kv { letter-spacing: normal; }
+html:lang(te) .fdk .nk, html:lang(te) .fdk .strip, html:lang(te) .fdk .stamp figcaption, html:lang(te) .fdk .route, html:lang(te) .fdk .sh .k, html:lang(te) .fdk .kv, html:lang(te) .fdk .lb-lab { letter-spacing: normal; }
 
 @media (prefers-reduced-motion: reduce) {
   .fdk .obj, .fdk .arm, .fdk .wcard { transition: none; }
   .fdk .o-record[data-playing] .vinyl { animation: none; }
+  .fdk .tile, .fdk .tile.shake, .fdk .tile.hint, .fdk .lb-stamp, .fdk .lb-stamp * { animation: none; transition: none; }
+  .fdk .lb-stamp b { opacity: 1; }
+  .fdk .lboard.found .tile:not(.hit) { opacity: 0; }
+  .fdk .wd > * { translate: none; }
+  .fdk .sec.in *, .fdk .lboard .wd > *, .fdk .eq i { animation: none !important; }
+  .fdk .sec .sh .k, .fdk .sec .sh .sub, .fdk .sec .wcard, .fdk .sec .receipt, .fdk .sec .rules li, .fdk .sec .links li { opacity: 1 !important; }
 }

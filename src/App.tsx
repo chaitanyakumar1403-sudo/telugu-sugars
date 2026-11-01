@@ -12,6 +12,7 @@ import FoodLabelsPage from './pages/FoodLabelsPage';
 import EditorialStandardsPage from './pages/EditorialStandardsPage';
 import AtlasPage from './pages/AtlasPage';
 import CreatorsPage from './pages/CreatorsPage';
+import VoicesPage from './pages/VoicesPage';
 import FounderPage from './pages/FounderPage';
 
 export function AppContent() {
@@ -69,7 +70,11 @@ export function AppContent() {
     }
 
     if (currentPath === '/creators') {
-      return <CreatorsPage />;
+      return <CreatorsPage onNavigate={navigateTo} />;
+    }
+
+    if (currentPath === '/voices') {
+      return <VoicesPage />;
     }
 
     if (currentPath === '/about/editorial-standards') {

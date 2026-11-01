@@ -11,7 +11,7 @@ const FIELDS = [
   { name: 'address', label: 'cr_address', type: 'text', autoComplete: 'street-address' },
 ] as const;
 
-export const CreatorsPage: React.FC = () => {
+export const CreatorsPage: React.FC<{ onNavigate?: (path: string) => void }> = ({ onNavigate }) => {
   const { t } = useLanguage();
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
 
@@ -90,6 +90,20 @@ export const CreatorsPage: React.FC = () => {
           </span>
           <span aria-hidden="true" className="text-amber-400">→</span>
         </InstagramLink>
+
+        {/* Inclusive Voices: for the people who would never fill a creator form */}
+        <a
+          href="/voices"
+          onClick={(e) => { if (onNavigate) { e.preventDefault(); onNavigate('/voices'); } }}
+          className="group mt-3 flex w-full items-center gap-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-left transition-colors hover:border-amber-500"
+        >
+          <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-amber-500 font-telugu text-lg font-bold text-[#fff]">అ</span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-bold text-white">{t('iv_card_t')}</span>
+            <span className="block text-sm text-slate-300">{t('iv_card_d')}</span>
+          </span>
+          <span aria-hidden="true" className="text-amber-400">→</span>
+        </a>
       </div>
     </div>
   );
